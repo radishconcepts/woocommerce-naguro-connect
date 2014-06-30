@@ -1,6 +1,9 @@
 <?php
 
 class WC_Naguro {
+	/** @var \WC_Request_Handler */
+	public $request_handler;
+
 	/** @var Naguro_Handler_Factory */
 	public $handler_factory;
 
@@ -10,6 +13,7 @@ class WC_Naguro {
 	public function __construct() {
 		$this->always_include();
 
+		$this->request_handler = new WC_Request_Handler();
 		$this->handler_factory = new Naguro_Handler_Factory();
 		$this->model_repository = new Naguro_Model_Repository();
 
@@ -20,9 +24,14 @@ class WC_Naguro {
 	 * Contains includes that should be included in every single request
 	 */
 	private function always_include() {
+		include_once( 'naguro-library/application/abstracts/abstract-request-handler.php' );
+
 		include_once( 'naguro-library/application/interfaces/interface-api-handler.php' );
+
 		include_once( 'naguro-library/application/handler-factory.php' );
 		include_once( 'naguro-library/application/model-repository.php' );
+
+		include_once( 'class-wc-request-handler.php' );
 	}
 
 	/**
