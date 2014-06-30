@@ -1,0 +1,3 @@
+[submodule "includes/naguro-library"]
+	path = includes/naguro-library
+	url = git@github.com:Merchandise/naguro-connector-library.git
