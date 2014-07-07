@@ -21,6 +21,7 @@ class WC_Naguro {
 		$this->model_repository = new Naguro_Model_Repository( $this->request_factory );
 		$this->request_handler = new WC_Request_Handler( $this->handler_factory, $this->model_repository );
 
+		$this->admin_init();
 		$this->setup_handler();
 	}
 
@@ -45,5 +46,12 @@ class WC_Naguro {
 	private function setup_handler() {
 		include( NAGURO_PLUGIN_PATH . 'includes/class-wp-api-handler.php' );
 		$this->handler_factory->register_api_handler( new WP_API_Handler() );
+	}
+
+	private function admin_init() {
+		if ( is_admin() && ( !defined( 'DOING_AJAX' ) || false == DOING_AJAX ) ) {
+			include( NAGURO_PLUGIN_PATH . 'includes/admin/class-wc-naguro-product-admin.php' );
+			new WC_Naguro_Product_Admin();
+		}
 	}
 }
