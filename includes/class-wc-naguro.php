@@ -17,12 +17,7 @@ class WC_Naguro {
 		add_action( 'init', array( $this, 'conditional_include' ) );
 
 		$this->always_include();
-
-		$this->request_factory = new Naguro_Request_Factory();
-		$this->handler_factory = new Naguro_Handler_Factory();
-		$this->model_repository = new Naguro_Model_Repository( $this->request_factory );
-		$this->request_handler = new WC_Request_Handler( $this->handler_factory, $this->model_repository );
-
+		$this->initialize_library_objects();
 		$this->admin_init();
 		$this->setup_handler();
 	}
@@ -42,7 +37,16 @@ class WC_Naguro {
 
 		include_once( NAGURO_PLUGIN_PATH . 'includes/class-wc-request-handler.php' );
 		include_once( NAGURO_PLUGIN_PATH . 'includes/class-wc-naguro-product.php' );
+	}
 
+	/**
+	 * Initializes the main objects from the library to be used in the plugin
+	 */
+	private function initialize_library_objects() {
+		$this->request_factory  = new Naguro_Request_Factory();
+		$this->handler_factory  = new Naguro_Handler_Factory();
+		$this->model_repository = new Naguro_Model_Repository( $this->request_factory );
+		$this->request_handler  = new WC_Request_Handler( $this->handler_factory, $this->model_repository );
 	}
 
 	/**
