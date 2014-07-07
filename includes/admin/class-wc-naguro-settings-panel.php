@@ -9,7 +9,7 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function product_data_tabs( $tabs ) {
-		$tabs['purchase_information'] = array(
+		$tabs['naguro'] = array(
 			'label'  => __( 'Naguro', 'woocommerce-naguro-connect' ),
 			'target' => 'woocommerce_naguro_settings',
 			'class'  => array( 'show_if_naguro' ),
