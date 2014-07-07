@@ -14,11 +14,15 @@ class WC_Naguro {
 	public $model_repository;
 
 	public function __construct() {
-		add_action( 'init', array( $this, 'conditional_include' ) );
-
 		$this->always_include();
 		$this->initialize_library_objects();
-		$this->admin_init();
+
+		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || false == DOING_AJAX ) ) {
+			$this->admin_init();
+		} else {
+			add_action( 'init', array( $this, 'conditional_include' ) );
+		}
+
 		$this->setup_handler();
 	}
 
@@ -61,10 +65,8 @@ class WC_Naguro {
 	 * Prepare the administration panel specific files and classes
 	 */
 	private function admin_init() {
-		if ( is_admin() && ( !defined( 'DOING_AJAX' ) || false == DOING_AJAX ) ) {
-			include( NAGURO_PLUGIN_PATH . 'includes/admin/class-wc-naguro-product-admin.php' );
-			new WC_Naguro_Product_Admin();
-		}
+		include( NAGURO_PLUGIN_PATH . 'includes/admin/class-wc-naguro-product-admin.php' );
+		new WC_Naguro_Product_Admin();
 	}
 
 	/**
