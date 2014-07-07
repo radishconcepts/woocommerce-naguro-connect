@@ -14,9 +14,6 @@ class WC_Naguro {
 	public $model_repository;
 
 	public function __construct() {
-		define( 'NAGURO_PLUGIN_PATH', trailingslashit( dirname( dirname( __FILE__ ) ) ) );
-		define( 'NAGURO_LIB_PATH', NAGURO_PLUGIN_PATH . 'includes/naguro-library/application/' );
-
 		$this->always_include();
 
 		$this->request_factory = new Naguro_Request_Factory();
@@ -39,14 +36,14 @@ class WC_Naguro {
 		include_once( NAGURO_LIB_PATH . 'model-repository.php' );
 		include_once( NAGURO_LIB_PATH . 'request-factory.php' );
 
-		include_once( 'class-wc-request-handler.php' );
+		include_once( NAGURO_PLUGIN_PATH . 'includes/class-wc-request-handler.php' );
 	}
 
 	/**
 	 * Setup the WordPress specific API request handler
 	 */
 	private function setup_handler() {
-		include( 'class-wp-api-handler.php' );
+		include( NAGURO_PLUGIN_PATH . 'includes/class-wp-api-handler.php' );
 		$this->handler_factory->register_api_handler( new WP_API_Handler() );
 	}
 }
