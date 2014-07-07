@@ -1,6 +1,9 @@
 <?php
 
 class WC_Naguro {
+	/** @var Naguro_Request_Factory */
+	public $request_factory;
+
 	/** @var \WC_Request_Handler */
 	public $request_handler;
 
@@ -11,11 +14,15 @@ class WC_Naguro {
 	public $model_repository;
 
 	public function __construct() {
+		define( 'NAGURO_PLUGIN_PATH', trailingslashit( dirname( dirname( __FILE__ ) ) ) );
+		define( 'NAGURO_LIB_PATH', NAGURO_PLUGIN_PATH . 'includes/naguro-library/application/' );
+
 		$this->always_include();
 
-		$this->request_handler = new WC_Request_Handler();
+		$this->request_factory = new Naguro_Request_Factory();
 		$this->handler_factory = new Naguro_Handler_Factory();
-		$this->model_repository = new Naguro_Model_Repository();
+		$this->model_repository = new Naguro_Model_Repository( $this->request_factory );
+		$this->request_handler = new WC_Request_Handler( $this->handler_factory, $this->model_repository );
 
 		$this->setup_handler();
 	}
@@ -24,12 +31,13 @@ class WC_Naguro {
 	 * Contains includes that should be included in every single request
 	 */
 	private function always_include() {
-		include_once( 'naguro-library/application/abstracts/abstract-request-handler.php' );
+		include_once( NAGURO_LIB_PATH . 'abstracts/abstract-request-handler.php' );
 
-		include_once( 'naguro-library/application/interfaces/interface-api-handler.php' );
+		include_once( NAGURO_LIB_PATH . 'interfaces/interface-api-handler.php' );
 
-		include_once( 'naguro-library/application/handler-factory.php' );
-		include_once( 'naguro-library/application/model-repository.php' );
+		include_once( NAGURO_LIB_PATH . 'handler-factory.php' );
+		include_once( NAGURO_LIB_PATH . 'model-repository.php' );
+		include_once( NAGURO_LIB_PATH . 'request-factory.php' );
 
 		include_once( 'class-wc-request-handler.php' );
 	}
