@@ -1,0 +1,11 @@
+{
+	"require": {
+		"Merchandise/naguro-connector-library": "dev-master"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url":  "git@github.com:Merchandise/naguro-connector-library.git"
+		}
+	]
+}

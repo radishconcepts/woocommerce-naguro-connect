@@ -9,7 +9,7 @@
  */
 
 define( 'NAGURO_PLUGIN_PATH', trailingslashit( dirname( __FILE__ ) ) );
-define( 'NAGURO_LIB_PATH', NAGURO_PLUGIN_PATH . 'includes/naguro-library/application/' );
+define( 'NAGURO_LIB_PATH', NAGURO_PLUGIN_PATH . 'vendor/Merchandise/naguro-connector-library/application/' );
 
 function wc_naguro_connect_init() {
 	include( NAGURO_PLUGIN_PATH . 'includes/class-wc-naguro.php' );
