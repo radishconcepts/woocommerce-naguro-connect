@@ -30,7 +30,7 @@ class WC_Naguro {
 	 * Contains includes that should be included in every single request
 	 */
 	private function always_include() {
-		include_once( NAGURO_LIB_PATH . 'abstracts/abstract-request-handler.php' );
+		include_once( NAGURO_LIB_PATH . 'abstracts/abstract-request.php' );
 		include_once( NAGURO_LIB_PATH . 'abstracts/abstract-product.php' );
 
 		include_once( NAGURO_LIB_PATH . 'interfaces/interface-api-handler.php' );
@@ -39,7 +39,6 @@ class WC_Naguro {
 		include_once( NAGURO_LIB_PATH . 'model-repository.php' );
 		include_once( NAGURO_LIB_PATH . 'request-factory.php' );
 
-		include_once( NAGURO_PLUGIN_PATH . 'includes/class-wc-request-handler.php' );
 		include_once( NAGURO_PLUGIN_PATH . 'includes/class-wc-naguro-product.php' );
 	}
 
@@ -50,7 +49,6 @@ class WC_Naguro {
 		$this->request_factory  = new Naguro_Request_Factory();
 		$this->handler_factory  = new Naguro_Handler_Factory();
 		$this->model_repository = new Naguro_Model_Repository( $this->request_factory );
-		$this->request_handler  = new WC_Request_Handler( $this->handler_factory, $this->model_repository );
 	}
 
 	/**
