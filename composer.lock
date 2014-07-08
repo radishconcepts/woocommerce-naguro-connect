@@ -11,7 +11,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Merchandise/naguro-connector-library.git",
-                "reference": "7fa3158c8eb173a1a1d4b784f2b94fe5f55ada1e"
+                "reference": "307e11d3cd9994b461a154b7d37e18a7fd580d2e"
             },
             "dist": {
                 "type": "zip",
@@ -27,7 +27,7 @@
                 "source": "https://github.com/Merchandise/naguro-connector-library/tree/master",
                 "issues": "https://github.com/Merchandise/naguro-connector-library/issues"
             },
-            "time": "2014-07-08 07:54:43"
+            "time": "2014-07-08 08:56:21"
         }
     ],
     "packages-dev": [],
