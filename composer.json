@@ -1,11 +1,11 @@
 {
 	"require": {
-		"Merchandise/naguro-connector-library": "dev-master"
+		"radishconcepts/naguro-connector-library": "dev-master"
 	},
 	"repositories": [
 		{
 			"type": "vcs",
-			"url":  "git@github.com:Merchandise/naguro-connector-library.git"
+			"url":  "git@github.com:radishconcepts/naguro-connector-library.git"
 		}
 	]
 }

@@ -1,21 +1,22 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "de976d8d623075c3d14edf5308349bb0",
+    "hash": "f41d0209c5c5307dd02c9d6738eadd82",
     "packages": [
         {
-            "name": "Merchandise/naguro-connector-library",
+            "name": "radishconcepts/naguro-connector-library",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:Merchandise/naguro-connector-library.git",
-                "reference": "333bfb6052f6f73f2cc837df0de4dbc647ce634e"
+                "url": "git@github.com:radishconcepts/naguro-connector-library.git",
+                "reference": "8b3c3d610616696e7b8e1a26f6fadb316dda09e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Merchandise/naguro-connector-library/archive/master.zip",
+                "url": "https://github.com/radishconcepts/naguro-connector-library/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -23,19 +24,29 @@
                 "phpunit/phpunit": "4.1.*"
             },
             "type": "library",
-            "support": {
-                "source": "https://github.com/Merchandise/naguro-connector-library/tree/master",
-                "issues": "https://github.com/Merchandise/naguro-connector-library/issues"
+            "autoload": {
+                "classmap": [
+                    "application/abstracts",
+                    "application/core",
+                    "application/interfaces",
+                    "application/models",
+                    "application/requests"
+                ]
             },
-            "time": "2014-07-08 13:42:22"
+            "support": {
+                "source": "https://github.com/radishconcepts/naguro-connector-library/tree/master",
+                "issues": "https://github.com/radishconcepts/naguro-connector-library/issues"
+            },
+            "time": "2014-08-20 13:16:21"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "merchandise/naguro-connector-library": 20
+        "radishconcepts/naguro-connector-library": 20
     },
+    "prefer-stable": false,
     "platform": [],
     "platform-dev": []
 }
