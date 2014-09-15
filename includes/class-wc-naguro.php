@@ -30,15 +30,6 @@ class WC_Naguro {
 	 * Contains includes that should be included in every single request
 	 */
 	private function always_include() {
-		include_once( NAGURO_LIB_PATH . 'abstracts/abstract-request.php' );
-		include_once( NAGURO_LIB_PATH . 'abstracts/abstract-product.php' );
-
-		include_once( NAGURO_LIB_PATH . 'interfaces/interface-api-handler.php' );
-
-		include_once( NAGURO_LIB_PATH . 'handler-factory.php' );
-		include_once( NAGURO_LIB_PATH . 'model-repository.php' );
-		include_once( NAGURO_LIB_PATH . 'request-factory.php' );
-
 		include_once( NAGURO_PLUGIN_PATH . 'includes/class-wc-naguro-product.php' );
 	}
 
