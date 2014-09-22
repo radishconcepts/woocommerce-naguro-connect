@@ -20,3 +20,7 @@
     margin: 0 0 24px 0;
     padding: 12px 0;
 }
+
+.naguro-design-areas-container-ghost {
+    display: none;
+}
