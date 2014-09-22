@@ -7,6 +7,9 @@ class WC_Naguro_Settings_Panel {
 
 		add_action( 'woocommerce_process_product_meta', array( $this, 'save_panel_settings' ), 10, 1 );
 		add_action( 'woocommerce_product_data_panels', array( $this, 'product_data_panels' ), 10, 0 );
+
+		wp_enqueue_script("wc-naguro", NAGURO_PLUGIN_URL . "assets/js/wc-naguro.js");
+		wp_enqueue_style("wc-naguro", NAGURO_PLUGIN_URL . "assets/css/wc-naguro.css");
 	}
 
 	public function product_data_tabs( $tabs ) {
