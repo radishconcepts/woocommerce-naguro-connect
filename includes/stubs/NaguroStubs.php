@@ -3,7 +3,12 @@
 class NaguroStubs {
 	static function get_design_areas() {
 		return array(
-			"lol" => "aids"
+			array(
+				"name"              => "Front",
+				"size_description"  => "25mm x 12.3mm",
+				"output_width"      => 25,
+				"output_height"     => 12.3
+			)
 		);
 	}
 

@@ -49,7 +49,7 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_areas() {
-		$design_areas = NaguroStubs::get_empty_design_areas(); //@todo: de echte design areas ophalen
+		$design_areas = NaguroStubs::get_design_areas(); //@todo: de echte design areas ophalen
 
 		echo "<div class='wc-metaboxes naguro-design-areas'>";
 
