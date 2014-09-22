@@ -13,6 +13,7 @@ class WC_Naguro {
 	/** @var Naguro_Model_Repository */
 	public $model_repository;
 
+	/** @var string */
 	static $prefix = "naguro_";
 
 	public function __construct() {
