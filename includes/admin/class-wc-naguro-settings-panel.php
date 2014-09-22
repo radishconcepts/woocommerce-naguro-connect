@@ -25,8 +25,13 @@ class WC_Naguro_Settings_Panel {
 	public function product_data_panels() {
 		echo '<div id="woocommerce_naguro_settings" class="panel woocommerce_options_panel show_if_naguro">';
 
-		$this->add_enable_checkbox();
-		$this->add_design_areas();
+		echo '<div class="options_group">';
+			$this->add_enable_checkbox();
+		echo '</div>';
+
+		echo '<div class="options_group">';
+			$this->add_design_areas();
+		echo '</div>';
 
 		echo '</div>';
 	}
@@ -43,9 +48,12 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_areas() {
 		$design_areas = NaguroStubs::get_empty_design_areas(); //@todo: de echte design areas ophalen
 
+		echo "<div class='wc-metaboxes naguro-design-areas'>";
+
 		if (0 === sizeof( $design_areas )) {
-			echo "Sorry, u heeft aids.";
+
 		}
 
+		echo "</div>";
 	}
 }
