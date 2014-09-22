@@ -69,13 +69,17 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area($design_area = array()) {
 		echo '<article class="naguro-design-area">';
 
+		$this->add_design_area_name($design_area);
+
+		echo '</article>';
+	}
+
+	public function add_design_area_name($design_area = array()) {
 		woocommerce_wp_text_input(array(
 			"label"         => "Name",
 			"placeholder"   => "Name of the design area",
 			"name"          => WC_Naguro::$prefix . "designarea_name",
 			"value"         => (isset($design_area["name"]) ? $design_area["name"] : "" )
 		));
-
-		echo '</article>';
 	}
 }
