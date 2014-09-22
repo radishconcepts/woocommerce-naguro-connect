@@ -71,6 +71,8 @@ class WC_Naguro_Settings_Panel {
 
 		$this->add_design_area_name($design_area);
 		$this->add_design_area_size_description($design_area);
+		$this->add_design_area_output_width($design_area);
+		$this->add_design_area_output_height($design_area);
 
 		echo '</article>';
 	}
@@ -89,8 +91,28 @@ class WC_Naguro_Settings_Panel {
 			"label"         => "Size description",
 			"placeholder"   => "Size description",
 			"description"   => "Textual description that will be shown in the Naguro designer (eg '25mm x 12.3mm')",
-			"name"          => WC_Naguro::$prefix . "designarea_size_description",
+			"name"          => WC_Naguro::$prefix . "designarea_output_width",
 			"value"         => (isset($design_area["size_description"]) ? $design_area["size_description"] : "" )
+		));
+	}
+
+	public function add_design_area_output_width($design_area = array()) {
+		woocommerce_wp_text_input(array(
+			"label"         => "Print width",
+			"placeholder"   => "Width of the printable area",
+			"description"   => "Width of the printable area in millimeters without the unit (eg '25')",
+			"name"          => WC_Naguro::$prefix . "designarea_output_width",
+			"value"         => (isset($design_area["output_width"]) ? $design_area["output_width"] : "" )
+		));
+	}
+
+	public function add_design_area_output_height($design_area = array()) {
+		woocommerce_wp_text_input(array(
+			"label"         => "Print height",
+			"placeholder"   => "Height of the printable area",
+			"description"   => "Height of the printable area in millimeters without the unit (eg '12.5')",
+			"name"          => WC_Naguro::$prefix . "designarea_output_height",
+			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "" )
 		));
 	}
 }
