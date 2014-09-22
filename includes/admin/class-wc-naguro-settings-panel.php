@@ -57,9 +57,11 @@ class WC_Naguro_Settings_Panel {
 			echo "<p>No design areas found for this product.</p>";
 		}
 
-		echo '<section class="naguro-design-areas-container">';
-		$this->add_design_area();
-		echo '</section>';
+		foreach ( $design_areas as $design_area ) {
+			echo '<section class="naguro-design-areas-container">';
+			$this->add_design_area($design_area);
+			echo '</section>';
+		}
 
 		echo '<button type="button" class="button button-primary">Add new design area</button>';
 
