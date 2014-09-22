@@ -89,7 +89,7 @@ class WC_Naguro_Settings_Panel {
 			"label"         => "Size description",
 			"placeholder"   => "Size description",
 			"description"   => "Textual description that will be shown in the Naguro designer (eg '25mm x 12.3mm')",
-			"name"          => WC_Naguro::$prefix . "designarea_name",
+			"name"          => WC_Naguro::$prefix . "designarea_size_description",
 			"value"         => (isset($design_area["size_description"]) ? $design_area["size_description"] : "" )
 		));
 	}
