@@ -1,4 +1,5 @@
 <?php
+require(NAGURO_PLUGIN_PATH . "includes/stubs/NaguroStubs.php");
 
 class WC_Naguro_Settings_Panel {
 	public function __construct() {
@@ -25,6 +26,7 @@ class WC_Naguro_Settings_Panel {
 		echo '<div id="woocommerce_naguro_settings" class="panel woocommerce_options_panel show_if_naguro">';
 
 		$this->add_enable_checkbox();
+		$this->add_design_areas();
 
 		echo '</div>';
 	}
@@ -36,5 +38,10 @@ class WC_Naguro_Settings_Panel {
 			"value"         => "yes", //@todo: hier leuk de true / false waarde als 'yes'/'no' uitpoepen.
 			"description"   => "Enable the customer to configure this product with the Naguro designer"
 		));
+	}
+
+	public function add_design_areas() {
+		$design_areas = NaguroStubs::get_design_areas();
+		print_r($design_areas);
 	}
 }
