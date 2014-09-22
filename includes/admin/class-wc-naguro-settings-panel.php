@@ -26,7 +26,7 @@ class WC_Naguro_Settings_Panel {
 		woocommerce_wp_checkbox(array(
 			"label"     => "Naguro is on",
 			"name"      => WC_Naguro::$prefix . "exists",
-			"value"     => "yes"
+			"value"     => "yes" //@todo: hier leuk de true / false waarde als 'yes'/'no' uitpoepen.
 		));
 		echo '</div>';
 	}
