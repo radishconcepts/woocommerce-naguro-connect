@@ -1,3 +1,8 @@
 .naguro-design-areas {
     padding: 10px 0;
 }
+
+.options_group .naguro-design-areas p {
+    padding: 0;
+    margin: 0;
+}

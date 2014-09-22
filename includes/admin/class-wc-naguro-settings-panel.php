@@ -54,7 +54,7 @@ class WC_Naguro_Settings_Panel {
 		echo "<div class='wc-metaboxes naguro-design-areas'>";
 
 		if (0 === sizeof( $design_areas )) {
-			echo "No design areas found for this product.";
+			echo "<p>No design areas found for this product.</p>";
 		}
 
 		echo "</div>";
