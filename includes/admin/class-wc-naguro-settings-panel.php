@@ -57,8 +57,14 @@ class WC_Naguro_Settings_Panel {
 			echo "<p>No design areas found for this product.</p>";
 		}
 
+
+
 		echo '<button type="button" class="button button-primary">Add new design area</button>';
 
 		echo "</div>";
+	}
+
+	public function add_design_area($design_area = array()) {
+		
 	}
 }
