@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:radishconcepts/naguro-connector-library.git",
-                "reference": "8b3c3d610616696e7b8e1a26f6fadb316dda09e4"
+                "reference": "0cd00e15f6d5062dc660f313147eb664ad551168"
             },
             "dist": {
                 "type": "zip",
@@ -37,7 +37,7 @@
                 "source": "https://github.com/radishconcepts/naguro-connector-library/tree/master",
                 "issues": "https://github.com/radishconcepts/naguro-connector-library/issues"
             },
-            "time": "2014-08-20 13:16:21"
+            "time": "2014-09-22 12:25:14"
         },
         {
             "name": "xrstf/composer-php52",
