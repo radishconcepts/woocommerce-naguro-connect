@@ -24,3 +24,10 @@
 .naguro-design-areas-container-ghost {
     display: none;
 }
+
+.options_group .naguro-design-areas p.naguro-upload-notice {
+    margin: 12px;
+    padding: 4px 12px;
+    border: 1px solid #DFDFDF;
+    font-style: italic;
+}

@@ -81,6 +81,7 @@ class WC_Naguro_Settings_Panel {
 		$this->add_design_area_size_description($design_area);
 		$this->add_design_area_output_width($design_area);
 		$this->add_design_area_output_height($design_area);
+		$this->add_design_area_background($design_area);
 
 		echo '</article>';
 	}
@@ -122,5 +123,21 @@ class WC_Naguro_Settings_Panel {
 			"name"          => WC_Naguro::$prefix . "designarea_output_height",
 			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "" )
 		));
+	}
+
+	public function add_design_area_background($design_area = array()) {
+		if (isset($design_area['product_image'])) {
+			echo "";
+		} else {
+			woocommerce_wp_text_input(array(
+				"label"         => "Design area image",
+				"description"   => "Upload an image that will serve as the image that will be designed on",
+				"name"          => WC_Naguro::$prefix . "designarea_product_image",
+				"value"         => "",
+				"type"          => "file"
+			));
+
+			echo "<p class='naguro-upload-notice'>Upload an image before defining the printable area.</p>";
+		}
 	}
 }
