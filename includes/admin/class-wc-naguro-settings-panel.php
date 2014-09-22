@@ -70,6 +70,7 @@ class WC_Naguro_Settings_Panel {
 		echo '<article class="naguro-design-area">';
 
 		$this->add_design_area_name($design_area);
+		$this->add_design_area_size_description($design_area);
 
 		echo '</article>';
 	}
@@ -78,6 +79,16 @@ class WC_Naguro_Settings_Panel {
 		woocommerce_wp_text_input(array(
 			"label"         => "Name",
 			"placeholder"   => "Name of the design area",
+			"name"          => WC_Naguro::$prefix . "designarea_name",
+			"value"         => (isset($design_area["name"]) ? $design_area["name"] : "" )
+		));
+	}
+
+	public function add_design_area_size_description($design_area = array()) {
+		woocommerce_wp_text_input(array(
+			"label"         => "Size description",
+			"placeholder"   => "Size description",
+			"description"   => "Textual description that will be shown in the Naguro designer (eg '25mm x 12.3mm')",
 			"name"          => WC_Naguro::$prefix . "designarea_name",
 			"value"         => (isset($design_area["name"]) ? $design_area["name"] : "" )
 		));
