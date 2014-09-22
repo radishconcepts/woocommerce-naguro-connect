@@ -31,9 +31,10 @@ class WC_Naguro_Settings_Panel {
 
 	public function add_enable_checkbox() {
 		woocommerce_wp_checkbox(array(
-			"label"     => "Enable Naguro on product",
-			"name"      => WC_Naguro::$prefix . "exists",
-			"value"     => "yes" //@todo: hier leuk de true / false waarde als 'yes'/'no' uitpoepen.
+			"label"         => "Naguro product?",
+			"name"          => WC_Naguro::$prefix . "exists",
+			"value"         => "yes", //@todo: hier leuk de true / false waarde als 'yes'/'no' uitpoepen.
+			"description"   => "Enable the customer to configure this product with the Naguro designer"
 		));
 	}
 }
