@@ -10,3 +10,12 @@
 .naguro-design-areas .button-primary {
     margin-top: 12px;
 }
+
+.naguro-design-areas-container {
+    margin: 12px 0;
+}
+
+.naguro-design-area {
+    border: 1px solid #DFDFDF;
+    margin: 0 0 24px 0;
+}
