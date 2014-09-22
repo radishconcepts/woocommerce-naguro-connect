@@ -41,7 +41,7 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_areas() {
-		$design_areas = NaguroStubs::get_design_areas();
-		print_r($design_areas);
+		$design_areas = NaguroStubs::get_design_areas(); //@todo: de echte design areas ophalen
+
 	}
 }
