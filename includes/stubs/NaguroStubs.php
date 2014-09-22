@@ -6,4 +6,8 @@ class NaguroStubs {
 			"lol" => "aids"
 		);
 	}
+
+	static function get_empty_design_areas() {
+		return array();
+	}
 } 
