@@ -8,7 +8,7 @@ class NaguroStubs {
 				"size_description"  => "25mm x 12.3mm",
 				"output_width"      => 25,
 				"output_height"     => 12.3,
-				"product_image"     => NAGURO_PLUGIN_URL . "/includes/stubs/background.png"
+				"product_image"     => NAGURO_PLUGIN_URL . "includes/stubs/background.png"
 			)
 		);
 	}
