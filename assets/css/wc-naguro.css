@@ -11,6 +11,10 @@
     /*margin-top: 12px;*/
 }
 
+#woocommerce_naguro_settings .button {
+    margin-right: 12px;
+}
+
 .naguro-design-areas-container {
     margin: 12px 0;
 }
