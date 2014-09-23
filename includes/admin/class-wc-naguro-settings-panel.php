@@ -59,7 +59,7 @@ class WC_Naguro_Settings_Panel {
 		if (0 === sizeof( $design_areas )) {
 			echo "<p>No design areas found for this product.</p>";
 		}
-		
+
 		echo '<section class="naguro-design-areas-container-ghost">';
 		$this->add_design_area(array());
 		echo '</section>';

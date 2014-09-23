@@ -10,6 +10,11 @@
                });
            }
         });
+
+        $("#naguro-add-new-design-area").click(function () {
+            var copy = $(".naguro-design-areas-container-ghost .naguro-design-area").clone();
+            copy.appendTo($(".naguro-design-areas-container"));
+        });
     });
 
     function init_imgselectarea() {
