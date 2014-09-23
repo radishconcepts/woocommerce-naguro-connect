@@ -4,6 +4,10 @@
            if (this.href.indexOf("woocommerce_naguro_settings") !== -1) {
                 //THANKS WC!
                 setTimeout(init_imgselectarea, 50);
+           } else {
+               $('.naguro-printable-product img').imgAreaSelect({
+                   remove: true
+               });
            }
         });
     });
