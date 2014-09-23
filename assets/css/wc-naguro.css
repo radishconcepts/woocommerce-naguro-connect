@@ -39,5 +39,10 @@
 
 .naguro-printable-product img {
     display: block;
-    width: 100%;
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.options_group .naguro-design-areas p.naguro-text-container {
+    margin: 5px 12px;
 }
