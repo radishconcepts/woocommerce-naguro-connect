@@ -30,7 +30,15 @@
                 x1: pos.x1,
                 y1: pos.y1,
                 x2: pos.x2,
-                y2: pos.y2
+                y2: pos.y2,
+                onSelectEnd: function (img, selection) {
+                    var printWidth = (selection.width / $(img).width()) * 100;
+                    var printHeight = (selection.height / $(img).height()) * 100;
+                    var left = (selection.x1 / $(img).width()) * 100;
+                    var top = (selection.y1 / $(img).height()) * 100;
+
+                    console.log(printWidth, printHeight, left, top);
+                }
             });
         });
     }
