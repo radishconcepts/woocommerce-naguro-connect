@@ -14,10 +14,23 @@
             var img = obj.find("img");
             var imgWidth = img.width();
             var imgHeight = img.height();
+            var printWidth = parseFloat(obj.find(".naguro_designarea_print_width").val());
+            var printHeight = parseFloat(obj.find(".naguro_designarea_print_height").val());
+            var left = parseFloat(obj.find(".naguro_designarea_left").val());
+            var top = parseFloat(obj.find(".naguro_designarea_top").val());
 
+            var pos = {
+                x1: imgWidth * (left / 100), y1: imgHeight * (top / 100)
+            };
+            pos.x2 = pos.x1 + (imgWidth * (printWidth / 100));
+            pos.y2 = pos.y1 + (imgHeight * (printHeight / 100));
 
             img.imgAreaSelect({
-                handles: true
+                handles: true,
+                x1: pos.x1,
+                y1: pos.y1,
+                x2: pos.x2,
+                y2: pos.y2
             });
         });
     }
