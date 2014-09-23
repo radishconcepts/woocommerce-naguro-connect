@@ -34,4 +34,10 @@
 
 .naguro-printable-product {
     margin: 24px 12px 24px 162px;
+    width: 400px;
+}
+
+.naguro-printable-product img {
+    display: block;
+    width: 100%;
 }
