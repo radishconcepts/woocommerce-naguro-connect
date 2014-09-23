@@ -1,0 +1,52 @@
+.naguro-design-areas {
+    padding: 10px 0;
+}
+
+.options_group .naguro-design-areas p {
+    padding: 0;
+    margin: 0;
+}
+
+.naguro-design-areas .button-primary {
+    /*margin-top: 12px;*/
+}
+
+#woocommerce_naguro_settings .button {
+    margin-right: 12px;
+}
+
+.naguro-design-areas-container {
+    margin: 12px 0;
+}
+
+.naguro-design-area {
+    border: 1px solid #DFDFDF;
+    margin: 0 0 24px 0;
+    padding: 12px 0;
+}
+
+.naguro-design-areas-container-ghost {
+    display: none;
+}
+
+.options_group .naguro-design-areas p.naguro-upload-notice {
+    margin: 12px;
+    padding: 4px 12px;
+    border: 1px solid #DFDFDF;
+    font-style: italic;
+}
+
+.naguro-printable-product {
+    margin: 24px 12px 24px 162px;
+    width: 400px;
+}
+
+.naguro-printable-product img {
+    display: block;
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.options_group .naguro-design-areas p.naguro-text-container {
+    margin: 5px 12px;
+}
