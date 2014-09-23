@@ -10,7 +10,9 @@ class NaguroStubs {
 				"output_height"     => 12.3,
 				"product_image"     => NAGURO_PLUGIN_URL . "includes/stubs/background.png",
 				"print_width"       => 30,
-				"print_height"      => 10
+				"print_height"      => 10,
+				"left"              => 20,
+				"top"               => 20
 			)
 		);
 	}
