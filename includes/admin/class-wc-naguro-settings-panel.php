@@ -152,7 +152,27 @@ class WC_Naguro_Settings_Panel {
 
 	public function add_design_area_printable_area($design_area = array()) {
 		echo '<div class="naguro-printable-product">';
+
+		$this->add_design_area_print_width($design_area);
+		$this->add_design_area_print_height($design_area);
+
 		echo '  <img src="' . $design_area["product_image"] . '" />';
 		echo '</div>';
+	}
+
+	public function add_design_area_print_width($design_area = array()) {
+		woocommerce_wp_hidden_input(array(
+			"class" => WC_Naguro::$prefix . "designarea_print_width",
+			"value" => (isset($design_area["print_width"]) ? $design_area["print_width"] : "" ),
+			"id" => WC_Naguro::$prefix . "designarea_print_width"
+		));
+	}
+
+	public function add_design_area_print_height($design_area = array()) {
+		woocommerce_wp_hidden_input(array(
+			"class" => WC_Naguro::$prefix . "designarea_print_height",
+			"value" => (isset($design_area["print_height"]) ? $design_area["print_height"] : "" ),
+			"id" => WC_Naguro::$prefix . "designarea_print_height"
+		));
 	}
 }
