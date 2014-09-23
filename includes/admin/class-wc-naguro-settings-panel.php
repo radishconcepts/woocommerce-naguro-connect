@@ -163,34 +163,38 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_area_print_width($design_area = array()) {
-		woocommerce_wp_hidden_input(array(
-			"class" => WC_Naguro::$prefix . "designarea_print_width",
-			"value" => (isset($design_area["print_width"]) ? $design_area["print_width"] : "" ),
-			"id" => WC_Naguro::$prefix . "designarea_print_width"
-		));
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea_print_width",
+			(isset($design_area["print_width"]) ? $design_area["print_width"] : "" ),
+			WC_Naguro::$prefix . "designarea_print_width"
+		);
 	}
 
 	public function add_design_area_print_height($design_area = array()) {
-		woocommerce_wp_hidden_input(array(
-			"class" => WC_Naguro::$prefix . "designarea_print_height",
-			"value" => (isset($design_area["print_height"]) ? $design_area["print_height"] : "" ),
-			"id" => WC_Naguro::$prefix . "designarea_print_height"
-		));
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea_print_height",
+			(isset($design_area["print_height"]) ? $design_area["print_height"] : "" ),
+			WC_Naguro::$prefix . "designarea_print_height"
+		);
 	}
 
 	public function add_design_area_left($design_area = array()) {
-		woocommerce_wp_hidden_input(array(
-			"class" => WC_Naguro::$prefix . "designarea_left",
-			"value" => (isset($design_area["left"]) ? $design_area["left"] : "" ),
-			"id" => WC_Naguro::$prefix . "designarea_left"
-		));
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea_left",
+			(isset($design_area["left"]) ? $design_area["left"] : "" ),
+			WC_Naguro::$prefix . "designarea_left"
+		);
 	}
 
 	public function add_design_area_top($design_area = array()) {
-		woocommerce_wp_hidden_input(array(
-			"class" => WC_Naguro::$prefix . "designarea_top",
-			"value" => (isset($design_area["top"]) ? $design_area["top"] : "" ),
-			"id" => WC_Naguro::$prefix . "designarea_top"
-		));
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea_top",
+			(isset($design_area["top"]) ? $design_area["top"] : "" ),
+			WC_Naguro::$prefix . "designarea_top"
+		);
+	}
+
+	public function hidden_input($name, $value, $class = "") {
+		echo '<input type="hidden" name="' . $name . '" value="' . $value . '" class="' . $class . '" />';
 	}
 }
