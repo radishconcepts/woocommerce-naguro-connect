@@ -65,6 +65,7 @@ class WC_Naguro_Settings_Panel {
 		}
 
 		echo '<button type="button" class="button button-primary">Add new design area</button>';
+		echo '<button type="button" class="button">Save design areas</button>';
 
 		echo '<section class="naguro-design-areas-container">';
 
