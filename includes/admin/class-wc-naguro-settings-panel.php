@@ -64,6 +64,8 @@ class WC_Naguro_Settings_Panel {
 			echo '</section>';
 		}
 
+		echo '<button type="button" class="button button-primary">Add new design area</button>';
+
 		echo '<section class="naguro-design-areas-container">';
 
 		foreach ( $design_areas as $design_area ) {
@@ -71,8 +73,6 @@ class WC_Naguro_Settings_Panel {
 		}
 
 		echo '</section>';
-
-		echo '<button type="button" class="button button-primary">Add new design area</button>';
 
 		echo "</div>";
 	}
