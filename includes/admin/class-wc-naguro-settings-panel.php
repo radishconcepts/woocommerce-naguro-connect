@@ -155,6 +155,8 @@ class WC_Naguro_Settings_Panel {
 
 		$this->add_design_area_print_width($design_area);
 		$this->add_design_area_print_height($design_area);
+		$this->add_design_area_left($design_area);
+		$this->add_design_area_top($design_area);
 
 		echo '  <img src="' . $design_area["product_image"] . '" />';
 		echo '</div>';
@@ -173,6 +175,22 @@ class WC_Naguro_Settings_Panel {
 			"class" => WC_Naguro::$prefix . "designarea_print_height",
 			"value" => (isset($design_area["print_height"]) ? $design_area["print_height"] : "" ),
 			"id" => WC_Naguro::$prefix . "designarea_print_height"
+		));
+	}
+
+	public function add_design_area_left($design_area = array()) {
+		woocommerce_wp_hidden_input(array(
+			"class" => WC_Naguro::$prefix . "designarea_left",
+			"value" => (isset($design_area["left"]) ? $design_area["left"] : "" ),
+			"id" => WC_Naguro::$prefix . "designarea_left"
+		));
+	}
+
+	public function add_design_area_top($design_area = array()) {
+		woocommerce_wp_hidden_input(array(
+			"class" => WC_Naguro::$prefix . "designarea_top",
+			"value" => (isset($design_area["top"]) ? $design_area["top"] : "" ),
+			"id" => WC_Naguro::$prefix . "designarea_top"
 		));
 	}
 }
