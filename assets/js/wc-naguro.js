@@ -102,6 +102,7 @@
 
     function placeImage(contents, designArea) {
         $(".naguro-printable-product img", designArea).attr("src", contents);
+        $(".naguro-upload-notice", designArea).remove();
         init_imgselectarea();
     }
 })(jQuery);
