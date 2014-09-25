@@ -81,6 +81,8 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area($design_area = array()) {
 		echo '<article class="naguro-design-area">';
 
+		$this->add_remove_button();
+
 		$this->add_design_area_name($design_area);
 		$this->add_design_area_size_description($design_area);
 		$this->add_design_area_output_width($design_area);
@@ -88,6 +90,10 @@ class WC_Naguro_Settings_Panel {
 		$this->add_design_area_background($design_area);
 
 		echo '</article>';
+	}
+
+	public function add_remove_button() {
+		echo '<button type="button" class="remove_row button">Remove</button>';
 	}
 
 	public function add_design_area_name($design_area = array()) {
