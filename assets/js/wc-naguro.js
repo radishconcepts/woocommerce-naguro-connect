@@ -87,18 +87,21 @@
             r.onload = function(e) {
                 var contents = e.target.result;
 
-                console.log(contents);
-
-                console.log( "Got the file.n"
-                    +"name: " + f.name + "n"
-                    +"type: " + f.type + "n"
-                    +"size: " + f.size + " bytesn"
-                );
+                if (f.type.substr(0, 5) === "image") {
+                    placeImage(contents, evt.target.parentNode.parentNode);
+                } else {
+                    alert("File type is not supported, choose an image.");
+                }
             };
 
             r.readAsDataURL(f);
         } else {
             console.log("Failed to load file");
         }
+    }
+
+    function placeImage(contents, designArea) {
+        $(".naguro-printable-product img", designArea).attr("src", contents);
+        init_imgselectarea();
     }
 })(jQuery);
