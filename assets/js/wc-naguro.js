@@ -54,6 +54,13 @@
             pos.x2 = pos.x1 + (imgWidth * (printWidth / 100));
             pos.y2 = pos.y1 + (imgHeight * (printHeight / 100));
 
+            if (isNaN(pos.x1) || isNaN(pos.y1) || isNaN(pos.x2) || isNaN(pos.y2)) {
+                pos.x1 = 0;
+                pos.x2 = imgWidth;
+                pos.y1 = 0;
+                pos.y2 = imgHeight;
+            }
+
             img.imgAreaSelect({
                 handles: true,
                 x1: pos.x1,
