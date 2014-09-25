@@ -139,11 +139,12 @@ class WC_Naguro_Settings_Panel {
 			//@todo: add width, height, top, left hidden fields
 			$this->add_design_area_background_upload();
 			echo "<p class='naguro-text-container'>Define the printable area:</p>";
-			$this->add_design_area_printable_area($design_area);
 		} else {
 			$this->add_design_area_background_upload();
-			echo "<p class='naguro-upload-notice'>Upload an image before defining the printable area.</p>";
+			echo "<p class='naguro-upload-notice'>Choose an image before defining the printable area.</p>";
 		}
+
+		$this->add_design_area_printable_area($design_area);
 	}
 
 	public function add_design_area_background_upload() {
