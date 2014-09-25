@@ -22,7 +22,11 @@
 
     function bind_remove_row(element) {
         element.click(function () {
-            console.log("CLICK");
+            var root = $(this).parent();
+            $('.naguro-printable-product img', root).imgAreaSelect({
+                remove: true
+            });
+            root.remove();
         });
     }
 
