@@ -14,11 +14,18 @@
         $("#naguro-add-new-design-area").click(function () {
             var copy = $(".naguro-design-areas-container-ghost .naguro-design-area").clone();
             copy.appendTo($(".naguro-design-areas-container"));
+
+            bind_image_chosen($("input[type=file]", copy));
             bind_remove_row($(".remove_row", copy));
         });
 
+        bind_image_chosen($(".naguro-design-area input[type=file]"));
         bind_remove_row($(".naguro-design-area .remove_row"));
     });
+
+    function bind_image_chosen(element) {
+        element.on("change", readSingleFile);
+    }
 
     function bind_remove_row(element) {
         element.click(function () {
@@ -47,6 +54,13 @@
             pos.x2 = pos.x1 + (imgWidth * (printWidth / 100));
             pos.y2 = pos.y1 + (imgHeight * (printHeight / 100));
 
+            if (isNaN(pos.x1) || isNaN(pos.y1) || isNaN(pos.x2) || isNaN(pos.y2)) {
+                pos.x1 = 0;
+                pos.x2 = imgWidth;
+                pos.y1 = 0;
+                pos.y2 = imgHeight;
+            }
+
             img.imgAreaSelect({
                 handles: true,
                 x1: pos.x1,
@@ -69,5 +83,33 @@
         obj.find(".naguro_designarea_print_height").val(printHeight);
         obj.find(".naguro_designarea_left").val(left);
         obj.find(".naguro_designarea_top").val(top);
+    }
+
+    function readSingleFile(evt) {
+        //Retrieve the first (and only!) File from the FileList object
+        var f = evt.target.files[0];
+
+        if (f) {
+            var r = new FileReader();
+            r.onload = function(e) {
+                var contents = e.target.result;
+
+                if (f.type.substr(0, 5) === "image") {
+                    placeImage(contents, evt.target.parentNode.parentNode);
+                } else {
+                    alert("File type is not supported, choose an image.");
+                }
+            };
+
+            r.readAsDataURL(f);
+        } else {
+            console.log("Failed to load file");
+        }
+    }
+
+    function placeImage(contents, designArea) {
+        $(".naguro-printable-product img", designArea).attr("src", contents);
+        $(".naguro-upload-notice", designArea).remove();
+        init_imgselectarea();
     }
 })(jQuery);
