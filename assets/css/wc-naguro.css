@@ -50,3 +50,14 @@
 .options_group .naguro-design-areas p.naguro-text-container {
     margin: 5px 12px;
 }
+
+#woocommerce-product-data ul.wc-tabs li.naguro_options a:before {
+    content: " ";
+    width: 13px;
+    height: 13px;
+    background: url(../images/naguro-icon.svg);
+    background-size: 100% 100%;
+    float: left;
+    margin-top: 3px;
+    margin-right: 6px;
+}
