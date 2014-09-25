@@ -14,11 +14,18 @@
         $("#naguro-add-new-design-area").click(function () {
             var copy = $(".naguro-design-areas-container-ghost .naguro-design-area").clone();
             copy.appendTo($(".naguro-design-areas-container"));
+
+            bind_image_chosen($("input[type=file]", copy));
             bind_remove_row($(".remove_row", copy));
         });
 
+        bind_image_chosen($(".naguro-design-area input[type=file]"));
         bind_remove_row($(".naguro-design-area .remove_row"));
     });
+
+    function bind_image_chosen(element) {
+        element.on("change", readSingleFile);
+    }
 
     function bind_remove_row(element) {
         element.click(function () {
@@ -69,5 +76,29 @@
         obj.find(".naguro_designarea_print_height").val(printHeight);
         obj.find(".naguro_designarea_left").val(left);
         obj.find(".naguro_designarea_top").val(top);
+    }
+
+    function readSingleFile(evt) {
+        //Retrieve the first (and only!) File from the FileList object
+        var f = evt.target.files[0];
+
+        if (f) {
+            var r = new FileReader();
+            r.onload = function(e) {
+                var contents = e.target.result;
+
+                console.log(contents);
+
+                console.log( "Got the file.n"
+                    +"name: " + f.name + "n"
+                    +"type: " + f.type + "n"
+                    +"size: " + f.size + " bytesn"
+                );
+            };
+
+            r.readAsDataURL(f);
+        } else {
+            console.log("Failed to load file");
+        }
     }
 })(jQuery);
