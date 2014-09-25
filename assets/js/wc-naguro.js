@@ -14,8 +14,17 @@
         $("#naguro-add-new-design-area").click(function () {
             var copy = $(".naguro-design-areas-container-ghost .naguro-design-area").clone();
             copy.appendTo($(".naguro-design-areas-container"));
+            bind_remove_row($(".remove_row", copy));
         });
+
+        bind_remove_row($(".naguro-design-area .remove_row"));
     });
+
+    function bind_remove_row(element) {
+        element.click(function () {
+            console.log("CLICK");
+        });
+    }
 
     function init_imgselectarea() {
         $('.naguro-printable-product').each(function () {
