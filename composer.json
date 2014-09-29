@@ -19,5 +19,11 @@
 		"post-autoload-dump": [
 			"xrstf\\Composer52\\Generator::onPostInstallCmd"
 		]
+	},
+	"autoload": {
+		"classmap": [
+			"includes/admin",
+			"includes/core"
+		]
 	}
 }
