@@ -1,5 +1,4 @@
 <?php
-require(NAGURO_PLUGIN_PATH . "includes/stubs/NaguroStubs.php");
 
 class WC_Naguro_Settings_Panel {
 	public function __construct() {

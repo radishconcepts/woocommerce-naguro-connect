@@ -10,8 +10,6 @@ class WC_Naguro_Product_Admin {
 
 	public function __construct() {
 		add_action( 'woocommerce_process_product_meta', array( $this, 'save' ), 10, 2 );
-
-		include( NAGURO_PLUGIN_PATH . 'includes/admin/class-wc-naguro-settings-panel.php' );
 		$this->product_panel = new WC_Naguro_Settings_Panel();
 	}
 

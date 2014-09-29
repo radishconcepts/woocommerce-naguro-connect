@@ -23,7 +23,8 @@
 	"autoload": {
 		"classmap": [
 			"includes/admin",
-			"includes/core"
+			"includes/core",
+			"includes/stubs"
 		]
 	}
 }
