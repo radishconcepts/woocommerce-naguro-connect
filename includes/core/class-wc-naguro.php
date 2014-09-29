@@ -17,7 +17,6 @@ class WC_Naguro {
 	static $prefix = "naguro_";
 
 	public function __construct() {
-		$this->always_include();
 		$this->initialize_library_objects();
 
 		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || false == DOING_AJAX ) ) {
@@ -27,13 +26,6 @@ class WC_Naguro {
 		}
 
 		$this->setup_handler();
-	}
-
-	/**
-	 * Contains includes that should be included in every single request
-	 */
-	private function always_include() {
-		include_once( NAGURO_PLUGIN_PATH . 'includes/class-wc-naguro-product.php' );
 	}
 
 	/**
@@ -49,7 +41,6 @@ class WC_Naguro {
 	 * Setup the WordPress specific API request handler
 	 */
 	private function setup_handler() {
-		include( NAGURO_PLUGIN_PATH . 'includes/class-wp-api-handler.php' );
 		$this->handler_factory->register_api_handler( new WP_API_Handler() );
 	}
 
@@ -57,7 +48,6 @@ class WC_Naguro {
 	 * Prepare the administration panel specific files and classes
 	 */
 	private function admin_init() {
-		include( NAGURO_PLUGIN_PATH . 'includes/admin/class-wc-naguro-product-admin.php' );
 		new WC_Naguro_Product_Admin();
 	}
 
@@ -66,12 +56,10 @@ class WC_Naguro {
 	 */
 	public function conditional_include() {
 		if ( is_cart() ) {
-			include( NAGURO_PLUGIN_PATH . 'includes/class-wc-naguro-cart.php' );
 			new WC_Naguro_Cart();
 		}
 
 		if ( is_checkout() || is_checkout_pay_page() ) {
-			include( NAGURO_PLUGIN_PATH . 'includes/class-wc-naguro-checkout.php' );
 			new WC_Naguro_Checkout();
 		}
 	}
