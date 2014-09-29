@@ -13,7 +13,6 @@ define( 'NAGURO_LIB_PATH', NAGURO_PLUGIN_PATH . 'vendor/radishconcepts/naguro-co
 define( 'NAGURO_PLUGIN_URL', plugins_url( "/", __FILE__ ));
 
 function wc_naguro_connect_get_instance() {
-	include( NAGURO_PLUGIN_PATH . 'includes/class-wc-naguro.php' );
 	return new WC_Naguro();
 }
 
