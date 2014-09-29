@@ -4,9 +4,6 @@ class WC_Naguro {
 	/** @var Naguro_Request_Factory */
 	public $request_factory;
 
-	/** @var \WC_Request_Handler */
-	public $request_handler;
-
 	/** @var Naguro_Handler_Factory */
 	public $handler_factory;
 
