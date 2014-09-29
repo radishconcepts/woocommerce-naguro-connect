@@ -12,10 +12,6 @@ define( 'NAGURO_PLUGIN_PATH', trailingslashit( dirname( __FILE__ ) ) );
 define( 'NAGURO_LIB_PATH', NAGURO_PLUGIN_PATH . 'vendor/radishconcepts/naguro-connector-library/application/' );
 define( 'NAGURO_PLUGIN_URL', plugins_url( "/", __FILE__ ));
 
-function wc_naguro_connect_get_instance() {
-	return new WC_Naguro();
-}
-
 add_action('init', 'wc_naguro_connect_init');
 
 function wc_naguro_connect_init() {
@@ -28,5 +24,5 @@ function wc_naguro_connect_init() {
 
 	// Setup the core class instance
 	global $wc_naguro_connect;
-	$wc_naguro_connect = wc_naguro_connect_get_instance();
+	$wc_naguro_connect = new WC_Naguro();
 }
