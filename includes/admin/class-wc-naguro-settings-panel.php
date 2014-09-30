@@ -25,6 +25,14 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function save_panel_settings( $post_id ) {
+		if ( isset( $_POST[ WC_Naguro::$prefix . "exists" ] ) && 'yes' == $_POST[ WC_Naguro::$prefix . "exists" ] ) {
+			$checkbox_value = 'yes';
+		} else {
+			$checkbox_value = 'no';
+		}
+
+		update_post_meta( $post_id, 'naguro_product_active', $checkbox_value );
+
 		$stack = $_POST['naguro_designarea'];
 		$design_areas = array();
 
