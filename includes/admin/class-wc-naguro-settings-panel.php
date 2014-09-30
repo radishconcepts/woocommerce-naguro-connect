@@ -50,10 +50,16 @@ class WC_Naguro_Settings_Panel {
 		// Remove the first item off the array, as that's the empty ghost
 		array_shift( $design_areas );
 
+		$this->remove_old_meta_fields($post_id);
+
 		// Save each design area as separate post meta objects
 		foreach ( $design_areas as $design_area ) {
-			update_post_meta( $post_id, 'naguro_design_area', $design_area );
+			add_post_meta( $post_id, 'naguro_design_area', $design_area, false );
 		}
+	}
+
+	private function remove_old_meta_fields( $post_id ) {
+		delete_post_meta($post_id, 'naguro_design_area');
 	}
 
 	public function product_data_panels() {
