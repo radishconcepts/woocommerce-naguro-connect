@@ -122,7 +122,16 @@ class WC_Naguro_Settings_Panel {
 
 	private function get_design_areas() {
 		global $post;
-		return get_post_meta($post->ID, 'naguro_design_area', false);
+		$design_areas = get_post_meta($post->ID, 'naguro_design_area', false);
+
+		foreach ( $design_areas as $key => $design_area ) {
+			if ( isset( $design_area['product_image_id'] ) ) {
+				$image_src = wp_get_attachment_image_src( $design_area['product_image_id'], 'full' );
+				$design_areas[ $key ]['product_image'] = $image_src[0];
+			}
+		}
+
+		return $design_areas;
 	}
 
 	public function add_design_areas() {
