@@ -82,8 +82,13 @@ class WC_Naguro_Settings_Panel {
 		));
 	}
 
+	private function get_design_areas() {
+		global $post;
+		return get_post_meta($post->ID, 'naguro_design_area', false);
+	}
+
 	public function add_design_areas() {
-		$design_areas = NaguroStubs::get_design_areas(); //@todo: de echte design areas ophalen
+		$design_areas = $this->get_design_areas();
 
 		echo "<div class='wc-metaboxes naguro-design-areas'>";
 
