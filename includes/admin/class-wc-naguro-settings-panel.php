@@ -25,6 +25,27 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function save_panel_settings( $post_id ) {
+		$stack = $_POST['naguro_designarea'];
+		$design_areas = array();
+
+		$keys = array(
+			'name', 'size_description', 'output_width', 'output_height', 'print_width', 'print_height', 'left', 'top'
+		);
+
+		// Loop through the posted keys and collect them per design area
+		foreach ( $keys as $key ) {
+			foreach( $stack[ $key ] as $item_key => $item ) {
+				$design_areas[ $item_key ][ $key ] = $item;
+			}
+		}
+
+		// Remove the first item off the array, as that's the empty ghost
+		array_shift( $design_areas );
+
+		// Save each design area as separate post meta objects
+		foreach ( $design_areas as $design_area ) {
+			update_post_meta( $post_id, 'naguro_design_area', $design_area );
+		}
 	}
 
 	public function product_data_panels() {
