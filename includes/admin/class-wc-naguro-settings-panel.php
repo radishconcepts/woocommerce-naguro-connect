@@ -98,7 +98,7 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_area_name($design_area = array()) {
-		$name = WC_Naguro::$prefix . "designarea[][name]";
+		$name = WC_Naguro::$prefix . "designarea[name][]";
 
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
@@ -110,7 +110,7 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_area_size_description($design_area = array()) {
-		$name = WC_Naguro::$prefix . "designarea[][output_width]";
+		$name = WC_Naguro::$prefix . "designarea[size_description][]";
 
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
@@ -123,10 +123,10 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_area_output_width($design_area = array()) {
-		$name = WC_Naguro::$prefix . "designarea[][output_width]";
+		$name = WC_Naguro::$prefix . "designarea[output_width][]";
 
 		woocommerce_wp_text_input(array(
-			"id"            => WC_Naguro::$prefix . "designarea[][output_width]",
+			"id"            => $name,
 			"label"         => "Print width",
 			"placeholder"   => "Width of the printable area",
 			"description"   => "Width of the printable area in millimeters without the unit (eg '25')",
@@ -136,7 +136,7 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_area_output_height($design_area = array()) {
-		$name = WC_Naguro::$prefix . "designarea[][output_height]";
+		$name = WC_Naguro::$prefix . "designarea[output_height][]";
 
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
@@ -162,7 +162,7 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_area_background_upload() {
-		$name = WC_Naguro::$prefix . "designarea[][output_height]";
+		$name = WC_Naguro::$prefix . "designarea[output_height][]";
 
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
@@ -188,7 +188,7 @@ class WC_Naguro_Settings_Panel {
 
 	public function add_design_area_print_width($design_area = array()) {
 		$this->hidden_input(
-			WC_Naguro::$prefix . "designarea[][print_width]",
+			WC_Naguro::$prefix . "designarea[print_width][]",
 			(isset($design_area["print_width"]) ? $design_area["print_width"] : "" ),
 			WC_Naguro::$prefix . "designarea_print_width"
 		);
@@ -196,7 +196,7 @@ class WC_Naguro_Settings_Panel {
 
 	public function add_design_area_print_height($design_area = array()) {
 		$this->hidden_input(
-			WC_Naguro::$prefix . "designarea[][print_height]",
+			WC_Naguro::$prefix . "designarea[print_height][]",
 			(isset($design_area["print_height"]) ? $design_area["print_height"] : "" ),
 			WC_Naguro::$prefix . "designarea_print_height"
 		);
@@ -204,7 +204,7 @@ class WC_Naguro_Settings_Panel {
 
 	public function add_design_area_left($design_area = array()) {
 		$this->hidden_input(
-			WC_Naguro::$prefix . "designarea[][left]",
+			WC_Naguro::$prefix . "designarea[left][]",
 			(isset($design_area["left"]) ? $design_area["left"] : "" ),
 			WC_Naguro::$prefix . "designarea_left"
 		);
@@ -212,7 +212,7 @@ class WC_Naguro_Settings_Panel {
 
 	public function add_design_area_top($design_area = array()) {
 		$this->hidden_input(
-			WC_Naguro::$prefix . "designarea[][top]",
+			WC_Naguro::$prefix . "designarea[top][]",
 			(isset($design_area["top"]) ? $design_area["top"] : "" ),
 			WC_Naguro::$prefix . "designarea_top"
 		);
