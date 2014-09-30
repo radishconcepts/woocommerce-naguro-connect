@@ -222,7 +222,10 @@ class WC_Naguro_Settings_Panel {
 		$this->add_design_area_left($design_area);
 		$this->add_design_area_top($design_area);
 
-		echo '  <img src="' . $design_area["product_image"] . '" />';
+		if ( isset( $design_area['product_image'] ) ) {
+			echo '<img src="' . $design_area['product_image'] . '" />';
+		}
+
 		echo '</div>';
 	}
 
