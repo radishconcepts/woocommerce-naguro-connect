@@ -31,7 +31,7 @@ class WC_Naguro_Cart {
 				if ( $this->is_naguro_product($product)) {
 					$designer = new WC_Naguro_Designer( $product );
 					$designer->output();
-					die();
+//					die();
 				}
 			}
 		}
