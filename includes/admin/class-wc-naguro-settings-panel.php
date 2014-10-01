@@ -239,20 +239,23 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_area_background($design_area = array()) {
+		$rand = rand(10000, 99999);
+		$this->add_design_area_upload_key($rand);
+
 		if (isset($design_area['product_image'])) {
 			//@todo: add width, height, top, left hidden fields
-			$this->add_design_area_background_upload();
+			$this->add_design_area_background_upload($rand);
 			echo "<p class='naguro-text-container'>Define the printable area:</p>";
 		} else {
-			$this->add_design_area_background_upload();
+			$this->add_design_area_background_upload($rand);
 			echo "<p class='naguro-upload-notice'>Choose an image before defining the printable area.</p>";
 		}
 
 		$this->add_design_area_printable_area($design_area);
 	}
 
-	public function add_design_area_background_upload() {
-		$name = WC_Naguro::$prefix . "designarea[image][]";
+	public function add_design_area_background_upload($rand) {
+		$name = WC_Naguro::$prefix . "designarea[image][" . $rand . "]";
 
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
@@ -262,6 +265,14 @@ class WC_Naguro_Settings_Panel {
 			"value"         => "",
 			"type"          => "file"
 		));
+	}
+
+	public function add_design_area_upload_key($rand) {
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea[upload_key][]",
+			$rand,
+			WC_Naguro::$prefix . "designarea_upload_key"
+		);
 	}
 
 	public function add_design_area_printable_area($design_area = array()) {
