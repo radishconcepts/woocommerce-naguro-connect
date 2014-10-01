@@ -7,6 +7,7 @@ class WC_Naguro_Cart {
 		add_filter( 'woocommerce_product_single_add_to_cart_text', array($this, 'add_to_cart_text'), 10, 2 );
 
 		add_action( 'init', array( $this, 'add_to_cart_action' ), 9, 0 );
+		add_action( 'woocommerce_before_main_content', array($this, 'output_designer' ) );
 	}
 
 	public function add_to_cart_action() {
@@ -18,6 +19,21 @@ class WC_Naguro_Cart {
 
 		if ( $this->is_naguro_product($product) ) {
 			wp_safe_redirect( $product->get_permalink() . '?designer');
+		}
+	}
+
+	public function output_designer() {
+		if ( isset( $_GET['designer'] ) ) {
+			global $post;
+
+			if ( isset($post->ID)) {
+				$product = wc_get_product($post->ID);
+				if ( $this->is_naguro_product($product)) {
+					$designer = new WC_Naguro_Designer();
+					$designer->output();
+					die();
+				}
+			}
 		}
 	}
 
