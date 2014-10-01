@@ -20,9 +20,8 @@ class WC_Naguro {
 			$this->admin_init();
 		} else {
 			add_action( 'init', array( $this, 'conditional_include' ) );
+			$this->frontend_init();
 		}
-
-		new WC_Naguro_Cart();
 
 		$this->setup_handler();
 	}
@@ -48,6 +47,13 @@ class WC_Naguro {
 	 */
 	private function admin_init() {
 		new WC_Naguro_Product_Admin();
+	}
+
+	/**
+	 * Prepare frontend specific classes
+	 */
+	private function frontend_init() {
+		new WC_Naguro_Cart();
 	}
 
 	/**
