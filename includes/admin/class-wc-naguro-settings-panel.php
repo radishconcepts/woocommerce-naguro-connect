@@ -58,8 +58,12 @@ class WC_Naguro_Settings_Panel {
 		$i = 0;
 		$image_ids = array();
 		foreach ( $files as $file ) {
-			$_FILES['naguro_designarea_' . $i ] = $file;
-			$image_ids[] = media_handle_upload('naguro_designarea_' . $i, $post_id );
+			if ( empty( $file['name'] ) && 4 == $file['error'] ) {
+				$image_ids[] = 0;
+			} else {
+				$_FILES[ 'naguro_designarea_' . $i ] = $file;
+				$image_ids[] = media_handle_upload( 'naguro_designarea_' . $i, $post_id );
+			}
 			$i++;
 		}
 		// END file upload handler
@@ -68,13 +72,15 @@ class WC_Naguro_Settings_Panel {
 		$design_areas = array();
 
 		$keys = array(
-			'name', 'size_description', 'output_width', 'output_height', 'print_width', 'print_height', 'left', 'top'
+			'name', 'size_description', 'output_width', 'output_height', 'print_width', 'print_height', 'left', 'top', 'product_image_id'
 		);
 
 		// Loop through the posted keys and collect them per design area
 		foreach ( $keys as $key ) {
-			foreach( $stack[ $key ] as $item_key => $item ) {
-				$design_areas[ $item_key ][ $key ] = $item;
+			if ( isset( $stack[ $key ] ) ) {
+				foreach ( $stack[ $key ] as $item_key => $item ) {
+					$design_areas[ $item_key ][ $key ] = $item;
+				}
 			}
 		}
 
@@ -85,7 +91,10 @@ class WC_Naguro_Settings_Panel {
 
 		// Save each design area as separate post meta objects
 		foreach ( $design_areas as $design_area ) {
-			$design_area['product_image_id'] = array_shift( $image_ids );
+			$image_id = array_shift( $image_ids );
+			if ( 0 != $image_id ) {
+				$design_area['product_image_id'] = $image_id;
+			}
 			add_post_meta( $post_id, 'naguro_design_area', $design_area, false );
 		}
 	}
@@ -263,6 +272,10 @@ class WC_Naguro_Settings_Panel {
 		$this->add_design_area_left($design_area);
 		$this->add_design_area_top($design_area);
 
+		if ( isset( $design_area['product_image_id'] ) ) {
+			$this->add_design_area_image_id($design_area);
+		}
+
 		if ( isset( $design_area['product_image'] ) ) {
 			echo '<img src="' . $design_area['product_image'] . '" />';
 		} else {
@@ -301,6 +314,14 @@ class WC_Naguro_Settings_Panel {
 			WC_Naguro::$prefix . "designarea[top][]",
 			(isset($design_area["top"]) ? $design_area["top"] : "" ),
 			WC_Naguro::$prefix . "designarea_top"
+		);
+	}
+
+	public function add_design_area_image_id($design_area = array()) {
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea[product_image_id][]",
+			(isset($design_area["top"]) ? $design_area["product_image_id"] : "" ),
+			WC_Naguro::$prefix . "product_image_id"
 		);
 	}
 
