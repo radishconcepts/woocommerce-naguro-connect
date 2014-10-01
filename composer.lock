@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ebc64da215957e48f48ea1310a5dbc27",
+    "hash": "0b60b7b7a1bebc3b46d419f8d5c7b860",
     "packages": [
         {
             "name": "radishconcepts/naguro-connector-library",
@@ -38,6 +38,28 @@
                 "issues": "https://github.com/radishconcepts/naguro-connector-library/issues"
             },
             "time": "2014-09-22 12:25:14"
+        },
+        {
+            "name": "radishconcepts/naguro-frontend-assets",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:radishconcepts/naguro-frontend-assets.git",
+                "reference": "5d9bb5d4dc167b874480278b462dbf34808e336f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/radishconcepts/naguro-frontend-assets/zipball/5d9bb5d4dc167b874480278b462dbf34808e336f",
+                "reference": "5d9bb5d4dc167b874480278b462dbf34808e336f",
+                "shasum": ""
+            },
+            "type": "library",
+            "description": "Frontend assets used by the API",
+            "support": {
+                "issues": "https://github.com/radishconcepts/naguro-frontend-assets/issues",
+                "source": "https://github.com/radishconcepts/naguro-frontend-assets"
+            },
+            "time": "2014-09-25 08:09:19"
         },
         {
             "name": "xrstf/composer-php52",
@@ -76,7 +98,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "radishconcepts/naguro-connector-library": 20
+        "radishconcepts/naguro-connector-library": 20,
+        "radishconcepts/naguro-frontend-assets": 20
     },
     "prefer-stable": false,
     "platform": [],

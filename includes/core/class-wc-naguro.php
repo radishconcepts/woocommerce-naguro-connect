@@ -20,6 +20,7 @@ class WC_Naguro {
 			$this->admin_init();
 		} else {
 			add_action( 'init', array( $this, 'conditional_include' ) );
+			$this->frontend_init();
 		}
 
 		$this->setup_handler();
@@ -49,13 +50,16 @@ class WC_Naguro {
 	}
 
 	/**
+	 * Prepare frontend specific classes
+	 */
+	private function frontend_init() {
+		new WC_Naguro_Cart();
+	}
+
+	/**
 	 * Prepare the specific files and classes who will be loaded based on WooCommerce conditionals
 	 */
 	public function conditional_include() {
-		if ( is_cart() ) {
-			new WC_Naguro_Cart();
-		}
-
 		if ( is_checkout() || is_checkout_pay_page() ) {
 			new WC_Naguro_Checkout();
 		}
