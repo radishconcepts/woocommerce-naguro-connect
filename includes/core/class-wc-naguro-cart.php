@@ -5,6 +5,20 @@ class WC_Naguro_Cart {
 		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'change_add_to_cart_button'), 10, 2);
 		add_filter( 'woocommerce_product_add_to_cart_text', array($this, 'add_to_cart_text' ), 10, 2 );
 		add_filter( 'woocommerce_product_single_add_to_cart_text', array($this, 'add_to_cart_text'), 10, 2 );
+
+		add_action( 'init', array( $this, 'add_to_cart_action' ), 9, 0 );
+	}
+
+	public function add_to_cart_action() {
+		if ( empty( $_REQUEST['add-to-cart'] ) || ! is_numeric( $_REQUEST['add-to-cart'] ) ) {
+			return;
+		}
+
+		$product = wc_get_product( absint( $_REQUEST['add-to-cart'] ) );
+
+		if ( $this->is_naguro_product($product) ) {
+			wp_safe_redirect( $product->get_permalink() . '?designer');
+		}
 	}
 
 	/**
