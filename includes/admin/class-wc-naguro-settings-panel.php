@@ -138,13 +138,14 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_enable_checkbox() {
+		global $post;
 		$name = WC_Naguro::$prefix . "exists";
 
 		woocommerce_wp_checkbox(array(
 			"id"            => $name,
 			"label"         => "Naguro product?",
 			"name"          => $name,
-			"value"         => "yes", //@todo: hier leuk de true / false waarde als 'yes'/'no' uitpoepen.
+			"value"         => ( 'yes' == get_post_meta( $post->ID, 'naguro_product_active', true ) ? 'yes' : 'no' ),
 			"description"   => "Enable the customer to configure this product with the Naguro designer"
 		));
 	}
@@ -263,7 +264,6 @@ class WC_Naguro_Settings_Panel {
 		$this->add_design_area_upload_key($rand);
 
 		if (isset($design_area['product_image'])) {
-			//@todo: add width, height, top, left hidden fields
 			$this->add_design_area_background_upload($rand);
 			echo "<p class='naguro-text-container'>Define the printable area:</p>";
 		} else {
