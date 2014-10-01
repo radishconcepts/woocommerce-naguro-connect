@@ -7,11 +7,17 @@ class WC_Naguro_Settings_Panel {
 		add_action( 'woocommerce_process_product_meta', array( $this, 'save_panel_settings' ), 10, 1 );
 		add_action( 'woocommerce_product_data_panels', array( $this, 'product_data_panels' ), 10, 0 );
 
+		add_action( 'post_edit_form_tag' , array( $this, 'post_edit_form_tag' ) );
+
 		wp_enqueue_script("wc-naguro", NAGURO_PLUGIN_URL . "assets/js/wc-naguro.js");
 		wp_enqueue_style("wc-naguro", NAGURO_PLUGIN_URL . "assets/css/wc-naguro.css");
 
 		wp_enqueue_script("imgareaselect", NAGURO_PLUGIN_URL . "assets/imgareaselect/jquery.imgareaselect.min.js", array("jquery"));
 		wp_enqueue_style("imgareaselect", NAGURO_PLUGIN_URL . "assets/imgareaselect/imgareaselect-default.css");
+	}
+
+	public function post_edit_form_tag() {
+		echo ' enctype="multipart/form-data"';
 	}
 
 	public function product_data_tabs( $tabs ) {
@@ -25,6 +31,96 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function save_panel_settings( $post_id ) {
+		// START checkbox save
+		if ( isset( $_POST[ WC_Naguro::$prefix . "exists" ] ) && 'yes' == $_POST[ WC_Naguro::$prefix . "exists" ] ) {
+			$checkbox_value = 'yes';
+		} else {
+			$checkbox_value = 'no';
+		}
+
+		update_post_meta( $post_id, 'naguro_product_active', $checkbox_value );
+		// END checkbox save
+
+		// START file upload handler
+		$stack = $_FILES['naguro_designarea'];
+		$files = array();
+
+		$keys = array( 'name', 'type', 'tmp_name', 'error', 'size' );
+		// Loop through the posted keys and collect them per design area
+		foreach ( $keys as $key ) {
+			foreach( $stack[ $key ]['image'] as $item_key => $item ) {
+				$files[ $item_key ][ $key ] = $item;
+			}
+		}
+
+		foreach ( $files as $key => $file ) {
+			if ( 0 == $file['size'] && 4 == $file['error'] ) {
+				unset( $files[ $key ] );
+			}
+		}
+
+		$i = 0;
+		$image_ids = array();
+		foreach ( $files as $key => $file ) {
+			if ( empty( $file['name'] ) && 4 == $file['error'] ) {
+				$image_ids[$key] = 0;
+			} else {
+				$_FILES[ 'naguro_designarea_' . $i ] = $file;
+				$image_ids[$key] = media_handle_upload( 'naguro_designarea_' . $i, $post_id );
+			}
+			$i++;
+		}
+		// END file upload handler
+
+		$stack = $_POST['naguro_designarea'];
+		$design_areas = array();
+
+		$keys = array(
+			'name',
+			'size_description',
+			'output_width',
+			'output_height',
+			'print_width',
+			'print_height',
+			'left',
+			'top',
+			'product_image_id',
+			'upload_key'
+		);
+
+		// Loop through the posted keys and collect them per design area
+		foreach ( $keys as $key ) {
+			if ( isset( $stack[ $key ] ) ) {
+				foreach ( $stack[ $key ] as $item_key => $item ) {
+					$design_areas[ $item_key ][ $key ] = $item;
+				}
+			}
+		}
+
+		// Remove the first item off the array, as that's the empty ghost
+		array_shift( $design_areas );
+
+		$this->remove_old_meta_fields($post_id);
+
+		// Save each design area as separate post meta objects
+		foreach ( $design_areas as $design_area ) {
+			if ( isset( $image_ids[ $design_area['upload_key'] ] ) ) {
+				$image_id = $image_ids[ $design_area['upload_key']];
+			} elseif ( isset( $design_area['product_image_id'] ) ) {
+				$image_id = $design_area['product_image_id'];
+			} else {
+				$image_id = 0;
+			}
+
+			if ( 0 != $image_id ) {
+				$design_area['product_image_id'] = $image_id;
+			}
+			add_post_meta( $post_id, 'naguro_design_area', $design_area, false );
+		}
+	}
+
+	private function remove_old_meta_fields( $post_id ) {
+		delete_post_meta($post_id, 'naguro_design_area');
 	}
 
 	public function product_data_panels() {
@@ -53,8 +149,22 @@ class WC_Naguro_Settings_Panel {
 		));
 	}
 
+	private function get_design_areas() {
+		global $post;
+		$design_areas = get_post_meta($post->ID, 'naguro_design_area', false);
+
+		foreach ( $design_areas as $key => $design_area ) {
+			if ( isset( $design_area['product_image_id'] ) ) {
+				$image_src = wp_get_attachment_image_src( $design_area['product_image_id'], 'full' );
+				$design_areas[ $key ]['product_image'] = $image_src[0];
+			}
+		}
+
+		return $design_areas;
+	}
+
 	public function add_design_areas() {
-		$design_areas = NaguroStubs::get_design_areas(); //@todo: de echte design areas ophalen
+		$design_areas = $this->get_design_areas();
 
 		echo "<div class='wc-metaboxes naguro-design-areas'>";
 
@@ -149,20 +259,23 @@ class WC_Naguro_Settings_Panel {
 	}
 
 	public function add_design_area_background($design_area = array()) {
+		$rand = rand(10000, 99999);
+		$this->add_design_area_upload_key($rand);
+
 		if (isset($design_area['product_image'])) {
 			//@todo: add width, height, top, left hidden fields
-			$this->add_design_area_background_upload();
+			$this->add_design_area_background_upload($rand);
 			echo "<p class='naguro-text-container'>Define the printable area:</p>";
 		} else {
-			$this->add_design_area_background_upload();
+			$this->add_design_area_background_upload($rand);
 			echo "<p class='naguro-upload-notice'>Choose an image before defining the printable area.</p>";
 		}
 
 		$this->add_design_area_printable_area($design_area);
 	}
 
-	public function add_design_area_background_upload() {
-		$name = WC_Naguro::$prefix . "designarea[output_height][]";
+	public function add_design_area_background_upload($rand) {
+		$name = WC_Naguro::$prefix . "designarea[image][" . $rand . "]";
 
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
@@ -174,6 +287,14 @@ class WC_Naguro_Settings_Panel {
 		));
 	}
 
+	public function add_design_area_upload_key($rand) {
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea[upload_key][]",
+			$rand,
+			WC_Naguro::$prefix . "designarea_upload_key"
+		);
+	}
+
 	public function add_design_area_printable_area($design_area = array()) {
 		echo '<div class="naguro-printable-product">';
 
@@ -182,7 +303,18 @@ class WC_Naguro_Settings_Panel {
 		$this->add_design_area_left($design_area);
 		$this->add_design_area_top($design_area);
 
-		echo '  <img src="' . $design_area["product_image"] . '" />';
+		if ( isset( $design_area['product_image_id'] ) ) {
+			$this->add_design_area_image_id($design_area['product_image_id']);
+		} else {
+			$this->add_design_area_image_id(0);
+		}
+
+		if ( isset( $design_area['product_image'] ) ) {
+			echo '<img src="' . $design_area['product_image'] . '" />';
+		} else {
+			echo '<img src="" />';
+		}
+
 		echo '</div>';
 	}
 
@@ -215,6 +347,14 @@ class WC_Naguro_Settings_Panel {
 			WC_Naguro::$prefix . "designarea[top][]",
 			(isset($design_area["top"]) ? $design_area["top"] : "" ),
 			WC_Naguro::$prefix . "designarea_top"
+		);
+	}
+
+	public function add_design_area_image_id($design_area_product_image_id) {
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea[product_image_id][]",
+			$design_area_product_image_id,
+			WC_Naguro::$prefix . "product_image_id"
 		);
 	}
 

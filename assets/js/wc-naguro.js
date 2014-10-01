@@ -13,6 +13,7 @@
 
         $("#naguro-add-new-design-area").click(function () {
             var copy = $(".naguro-design-areas-container-ghost .naguro-design-area").clone();
+            randomizeId(copy);
             copy.appendTo($(".naguro-design-areas-container"));
 
             bind_image_chosen($("input[type=file]", copy));
@@ -34,6 +35,16 @@
                 remove: true
             });
             root.remove();
+        });
+    }
+
+    function randomizeId(element) {
+        var rand = Math.floor((Math.random() * 89999) + 1);
+
+        element.find(".naguro_designarea_upload_key").val(rand);
+        element.find("input[type=file]").attr({
+            name: "naguro_designarea[image][" + rand + "]",
+            id: "naguro_designarea[image][" + rand + "]"
         });
     }
 
