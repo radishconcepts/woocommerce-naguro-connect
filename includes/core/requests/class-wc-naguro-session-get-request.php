@@ -3,7 +3,7 @@
 class WC_Naguro_Session_Get_Request extends WC_Naguro_Request {
 	public function output() {
 		$object = new StdClass();
-		$object->session_id = $this->params['session_id'];
+		$object->session_id = $this->session->get_id();
 		$object->locale = 'nl_NL';
 		$object->start_product_subtype_id = 1;
 		$object->product = array(
