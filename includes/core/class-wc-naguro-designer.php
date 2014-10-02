@@ -6,6 +6,9 @@ class WC_Naguro_Designer {
 	 */
 	private $product;
 
+	/** @var WC_Naguro_Session */
+	private $session;
+
 	/**
 	 * @param $product WC_Product
 	 */
@@ -18,9 +21,12 @@ class WC_Naguro_Designer {
 	}
 
 	private function get_html() {
+		$this->session = new WC_Naguro_Session();
+		$this->session->set( 'product_id', $this->product->id);
+
 		$html = file_get_contents( NAGURO_PLUGIN_PATH . 'vendor/radishconcepts/naguro-frontend-assets/build.html');
 		$html = str_replace('{{endpoint}}', get_home_url() . '/wp-admin/admin-ajax.php', $html );
-		$html = str_replace('{{session-id}}', 23, $html );
+		$html = str_replace('{{session-id}}', $this->session->get_id(), $html );
 		return $html;
 	}
 

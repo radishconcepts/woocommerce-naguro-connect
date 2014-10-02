@@ -27,6 +27,7 @@
 	},
 	"autoload": {
 		"classmap": [
+			"includes/abstracts",
 			"includes/admin",
 			"includes/core"
 		]
