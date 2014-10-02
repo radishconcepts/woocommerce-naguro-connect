@@ -52,6 +52,7 @@ class WC_Naguro {
 	 * Prepare the administration panel specific files and classes
 	 */
 	private function admin_init() {
+		new WC_Naguro_Settings_Page();
 		new WC_Naguro_Product_Admin();
 	}
 
