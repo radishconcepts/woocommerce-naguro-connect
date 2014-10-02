@@ -10,6 +10,9 @@ class WC_Naguro {
 	/** @var Naguro_Model_Repository */
 	public $model_repository;
 
+	/** @var WC_Naguro_Ajax */
+	private $ajax_handler;
+
 	/** @var string */
 	static $prefix = "naguro_";
 
@@ -22,6 +25,9 @@ class WC_Naguro {
 			add_action( 'init', array( $this, 'conditional_include' ) );
 			$this->frontend_init();
 		}
+
+		// Setup the Ajax dispatcher
+		$this->ajax_handler = new WC_Naguro_Ajax();
 
 		$this->setup_handler();
 	}
