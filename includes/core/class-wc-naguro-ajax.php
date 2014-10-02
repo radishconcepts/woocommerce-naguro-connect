@@ -12,7 +12,8 @@ class WC_Naguro_Ajax {
 		$method = $_POST['method'];
 
 		if ( 'session' == $model && 'get' == $method ) {
-			new WC_Naguro_Session_Get_Request( array('session_id' => $session ) );
+			$request = new WC_Naguro_Session_Get_Request( array('session_id' => $session ) );
+			$request->output();
 		}
 	}
 }
