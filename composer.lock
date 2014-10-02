@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0b60b7b7a1bebc3b46d419f8d5c7b860",
+    "hash": "a63d907a6ff330b334afacbef2fd9d95",
     "packages": [
         {
             "name": "radishconcepts/naguro-connector-library",
