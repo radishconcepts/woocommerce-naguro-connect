@@ -1,6 +1,6 @@
 <?php
 
-class WP_API_Handler implements I_Naguro_API_Handler {
+class WP_API_Handler {
 	private $api_key;
 
 	public function __construct() {
