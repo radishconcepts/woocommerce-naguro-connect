@@ -45,12 +45,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:radishconcepts/naguro-frontend-assets.git",
-                "reference": "d9195d19fba058b0293407cff6f3da467cc206e0"
+                "reference": "cff61a25d338e25343f22cdc5970af40d42eb114"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/radishconcepts/naguro-frontend-assets/zipball/d9195d19fba058b0293407cff6f3da467cc206e0",
-                "reference": "d9195d19fba058b0293407cff6f3da467cc206e0",
+                "url": "https://api.github.com/repos/radishconcepts/naguro-frontend-assets/zipball/cff61a25d338e25343f22cdc5970af40d42eb114",
+                "reference": "cff61a25d338e25343f22cdc5970af40d42eb114",
                 "shasum": ""
             },
             "type": "library",
@@ -59,7 +59,7 @@
                 "issues": "https://github.com/radishconcepts/naguro-frontend-assets/issues",
                 "source": "https://github.com/radishconcepts/naguro-frontend-assets"
             },
-            "time": "2014-10-01 13:56:38"
+            "time": "2014-10-02 14:06:46"
         },
         {
             "name": "xrstf/composer-php52",
