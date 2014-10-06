@@ -9,7 +9,6 @@
  */
 
 define( 'NAGURO_PLUGIN_PATH', trailingslashit( dirname( __FILE__ ) ) );
-define( 'NAGURO_LIB_PATH', NAGURO_PLUGIN_PATH . 'vendor/radishconcepts/naguro-connector-library/application/' );
 define( 'NAGURO_PLUGIN_URL', plugins_url( "/", __FILE__ ));
 
 add_action('init', 'wc_naguro_connect_init');
