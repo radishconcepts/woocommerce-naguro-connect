@@ -19,6 +19,7 @@ class WC_Naguro_Cart {
 
 		if ( $this->is_naguro_product($product) ) {
 			wp_safe_redirect( $product->get_permalink() . '?designer');
+			exit();
 		}
 	}
 
