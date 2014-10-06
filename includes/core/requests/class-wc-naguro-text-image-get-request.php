@@ -2,9 +2,13 @@
 
 class WC_Naguro_Text_Image_Get_Request extends WC_Naguro_Request {
 	public function output() {
-		$object = new StdClass();
-		$object->session_id = $this->session->get_id();
+		$data = $this->handler->handle_request('text-image', $this->params, 'post' );
+		$output_data = json_decode( $data['body'] );
 
-		echo json_encode( $object ); die();
+		$output_array = array(
+			'image' => $output_data->image,
+		);
+
+		echo json_encode($output_array); die();
 	}
 }
