@@ -17,7 +17,7 @@ class WP_API_Handler {
 	}
 
 	public function handle_request( $endpoint, $params = array(), $type = 'post' ) {
-		$params = $this->add_auth_token_to_header( $params );
+		$params = $this->setup_parameters( $params );
 		$url = $this->generate_api_endpoint_url( $endpoint );
 
 		if ( 'get' == $type ) {
@@ -33,9 +33,18 @@ class WP_API_Handler {
 		return trailingslashit( trailingslashit( $this->api_url ) . $endpoint );
 	}
 
+	private function setup_parameters( $params ) {
+		$params = $this->transform_params_to_body_param( $params );
+		return $this->add_auth_token_to_header( $params );
+	}
+
 	private function add_auth_token_to_header( $params ) {
 		$params['headers']['X-Auth-Token'] = $this->api_key;
 		return $params;
+	}
+
+	private function transform_params_to_body_param( $params ) {
+		return array( 'body' => $params );
 	}
 
 	private function get_request( $url, $params ) {
