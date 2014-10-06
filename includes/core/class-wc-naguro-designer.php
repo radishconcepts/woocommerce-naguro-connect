@@ -10,7 +10,10 @@ class WC_Naguro_Designer {
 	private $session;
 
 	/** @var array */
-	private $designer_data;
+	private $designer_data = array();
+
+	/** @var WC_Naguro_HTML_Get_Request */
+	private $request;
 
 	/**
 	 * @param $product WC_Product
@@ -22,23 +25,58 @@ class WC_Naguro_Designer {
 
 		// @todo CSS and JS local loading to cache
 		// @todo Remove assets dependency in composer.json
-		wp_enqueue_script('naguro-designer', NAGURO_PLUGIN_URL . 'vendor/radishconcepts/naguro-frontend-assets/js/naguro-designer-nl_NL.js');
-		wp_enqueue_style('naguro-designer', NAGURO_PLUGIN_URL . 'vendor/radishconcepts/naguro-frontend-assets/css/style.css');
+		wp_enqueue_script('naguro-designer', $this->get_js_url());
+		wp_enqueue_style('naguro-designer', $this->get_css_url());
 	}
 
 	private function prepare_request() {
 		$this->session = new WC_Naguro_Session();
 		$this->session->set( 'product_id', $this->product->id);
 
-		$request = new WC_Naguro_HTML_Get_Request(array( 'session_id' => $this->session->get_id() ) );
-		$this->designer_data = $request->get();
+		$this->request = new WC_Naguro_HTML_Get_Request(array( 'session_id' => $this->session->get_id() ) );
 	}
 
 	private function get_html() {
-		$html = $this->designer_data['html'];
+		if ( false === ( $file = get_transient('naguro-html' ) ) ) {
+			if ( empty( $this->designer_data ) ) {
+				$this->designer_data = $this->request->get();
+			}
+
+			$file = $this->save_file_to_disk( 'naguro-html', 'html', $this->designer_data['html'] );
+		}
+
+		$html = file_get_contents($file['file']);
 		$html = str_replace('{{endpoint}}', get_home_url() . '/wp-admin/admin-ajax.php', $html );
 		$html = str_replace('{{session-id}}', $this->session->get_id(), $html );
 		return $html;
+	}
+
+	private function save_file_to_disk( $handle, $type, $contents ) {
+		$file = wp_upload_bits( $handle . '.' . $type, null, $contents, date( 'Y/m' ) );
+		set_transient( $handle, $file, 24 * HOUR_IN_SECONDS );
+		return $file;
+	}
+
+	private function get_css_url() {
+		if ( false === ( $file = get_transient('naguro-stylesheet' ) ) ) {
+			if ( empty( $this->designer_data ) ) {
+				$this->designer_data = $this->request->get();
+			}
+
+			$file = $this->save_file_to_disk( 'naguro-stylesheet', 'css', $this->designer_data['css'] );
+		}
+		return $file['url'];
+	}
+
+	private function get_js_url() {
+		if ( false === ( $file = get_transient('naguro-javascript' ) ) ) {
+			if ( empty( $this->designer_data ) ) {
+				$this->designer_data = $this->request->get();
+			}
+
+			$file = $this->save_file_to_disk( 'naguro-javascript', 'js', $this->designer_data['js'] );
+		}
+		return $file;
 	}
 
 	public function output() {
