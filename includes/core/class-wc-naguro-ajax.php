@@ -18,7 +18,7 @@ class WC_Naguro_Ajax {
 			$request = new WC_Naguro_Fonts_Get_Request( array('session_id' => $session ) );
 			$request->output();
 		} elseif ( 'text' == $model && 'getimage' == $method ) {
-			$request = new WC_Naguro_Text_Image_Get_Request( array('session_id' => $session ) );
+			$request = new WC_Naguro_Text_Image_Get_Request( $_POST );
 			$request->output();
 		}
 	}
