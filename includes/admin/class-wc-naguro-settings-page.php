@@ -22,7 +22,16 @@ class WC_Naguro_Settings_Page {
 			'naguro_api_section'
 		);
 
+		add_settings_field(
+			'naguro_api_url',
+			'API Endpoint',
+			array( $this, 'api_url_field_callback' ),
+			'naguro',
+			'naguro_api_section'
+		);
+
 		register_setting( 'naguro', 'naguro_api_key' );
+		register_setting( 'naguro', 'naguro_api_url' );
 	}
 
 	public function api_section_callback() {
@@ -32,6 +41,11 @@ class WC_Naguro_Settings_Page {
 	public function api_key_field_callback() {
 		$value = esc_attr( get_option( 'naguro_api_key' ) );
 		echo '<input type="text" name="naguro_api_key" value="' . $value . '" />';
+	}
+
+	public function api_url_field_callback() {
+		$value = esc_attr( get_option( 'naguro_api_url' ) );
+		echo '<input type="text" name="naguro_api_url" value="' . $value . '" />';
 	}
 
 	public function settings_menu() {
