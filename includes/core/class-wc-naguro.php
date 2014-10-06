@@ -17,8 +17,6 @@ class WC_Naguro {
 	static $prefix = "naguro_";
 
 	public function __construct() {
-		$this->initialize_library_objects();
-
 		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || false == DOING_AJAX ) ) {
 			$this->admin_init();
 		} else {
@@ -28,24 +26,6 @@ class WC_Naguro {
 
 		// Setup the Ajax dispatcher
 		$this->ajax_handler = new WC_Naguro_Ajax();
-
-		$this->setup_handler();
-	}
-
-	/**
-	 * Initializes the main objects from the library to be used in the plugin
-	 */
-	private function initialize_library_objects() {
-		$this->request_factory  = new Naguro_Request_Factory();
-		$this->handler_factory  = new Naguro_Handler_Factory();
-		$this->model_repository = new Naguro_Model_Repository( $this->request_factory );
-	}
-
-	/**
-	 * Setup the WordPress specific API request handler
-	 */
-	private function setup_handler() {
-		$this->handler_factory->register_api_handler( new WP_API_Handler() );
 	}
 
 	/**

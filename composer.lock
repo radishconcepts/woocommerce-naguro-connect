@@ -4,41 +4,8 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a63d907a6ff330b334afacbef2fd9d95",
+    "hash": "485446d792307458153a0d6691955333",
     "packages": [
-        {
-            "name": "radishconcepts/naguro-connector-library",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:radishconcepts/naguro-connector-library.git",
-                "reference": "0cd00e15f6d5062dc660f313147eb664ad551168"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/radishconcepts/naguro-connector-library/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.1.*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "application/abstracts",
-                    "application/core",
-                    "application/interfaces",
-                    "application/models",
-                    "application/requests"
-                ]
-            },
-            "support": {
-                "source": "https://github.com/radishconcepts/naguro-connector-library/tree/master",
-                "issues": "https://github.com/radishconcepts/naguro-connector-library/issues"
-            },
-            "time": "2014-09-22 12:25:14"
-        },
         {
             "name": "radishconcepts/naguro-frontend-assets",
             "version": "dev-master",
@@ -98,7 +65,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "radishconcepts/naguro-connector-library": 20,
         "radishconcepts/naguro-frontend-assets": 20
     },
     "prefer-stable": false,

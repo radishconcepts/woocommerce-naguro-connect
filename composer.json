@@ -1,14 +1,9 @@
 {
 	"require": {
-		"radishconcepts/naguro-connector-library": "dev-master",
 		"radishconcepts/naguro-frontend-assets": "dev-master",
 		"xrstf/composer-php52": "1.*"
 	},
 	"repositories": [
-		{
-			"type": "vcs",
-			"url":  "git@github.com:radishconcepts/naguro-connector-library.git"
-		},
 		{
 			"type": "vcs",
 			"url":  "git@github.com:radishconcepts/naguro-frontend-assets.git"
