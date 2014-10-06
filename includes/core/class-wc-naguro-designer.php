@@ -74,7 +74,7 @@ class WC_Naguro_Designer {
 
 			$file = $this->save_file_to_disk( 'naguro-javascript', 'js', $this->designer_data['js'] );
 		}
-		return $file;
+		return $file['url'];
 	}
 
 	public function output() {
