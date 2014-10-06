@@ -1,14 +1,7 @@
 {
 	"require": {
-		"radishconcepts/naguro-frontend-assets": "dev-master",
 		"xrstf/composer-php52": "1.*"
 	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url":  "git@github.com:radishconcepts/naguro-frontend-assets.git"
-		}
-	],
 	"scripts": {
 		"post-install-cmd": [
 			"xrstf\\Composer52\\Generator::onPostInstallCmd"
