@@ -13,6 +13,7 @@ class WC_Naguro_Fonts_Get_Request extends WC_Naguro_Request {
 				'name'   => $font->name,
 				'bold'   => $font->bold,
 				'italic' => $font->italic,
+				'src' => $font->src,
 			) );
 		}
 
