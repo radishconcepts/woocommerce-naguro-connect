@@ -34,8 +34,8 @@ class WC_Naguro_Session_Get_Request extends WC_Naguro_Request {
 				'product_subtype_id' => $i,
 				'product_design_area_id' => $i,
 				'is_circle' => false, // @todo implementation plz
-				'src_width' => $design_area['output_width'],
-				'src_height' => $design_area['output_height'],
+				'output_width' => $design_area['output_width'],
+				'output_height' => $design_area['output_height'],
 				'print_width' => $design_area['print_width'],
 				'print_height' => $design_area['print_height'],
 				'left' => $design_area['left'],
