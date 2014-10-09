@@ -20,6 +20,9 @@ class WC_Naguro_Ajax {
 		} elseif ( 'text' == $model && 'getimage' == $method ) {
 			$request = new WC_Naguro_Text_Image_Get_Request( $_POST );
 			$request->output();
+		} elseif( 'order' == $model && 'preview' == $method ) {
+			$request = new WC_Naguro_Order_Preview_Get_Request( $_POST );
+			$request->output();
 		}
 	}
 }

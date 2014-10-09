@@ -11,6 +11,8 @@ class WC_Naguro_Text_Image_Get_Request extends WC_Naguro_Request {
 
 		$output_array = array(
 			'src' => $output_data->image,
+			'width' => $output_data->width,
+			'height' => $output_data->height,
 		);
 
 		echo json_encode($output_array); die();
