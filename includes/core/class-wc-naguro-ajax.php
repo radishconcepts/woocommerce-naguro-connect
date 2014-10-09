@@ -26,6 +26,9 @@ class WC_Naguro_Ajax {
 		} elseif( 'image' == $model && 'upload' == $method ) {
 			$request = new WC_Naguro_Image_Upload_Request( $_POST );
 			$request->output();
+		} elseif( 'image' == $model && 'getsrc' == $method ) {
+			$request = new WC_Naguro_Image_Get_Request( $_POST );
+			$request->output();
 		}
 	}
 }
