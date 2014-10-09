@@ -2,7 +2,7 @@
 
 class WC_Naguro_Image_Get_Request extends WC_Naguro_Request {
 	public function output() {
-		if ( ! isset( $this->params['image_id'] ) ) {
+		if ( isset( $this->params['image_id'] ) ) {
 			$id = absint( $this->params['image_id'] );
 			$image_src = wp_get_attachment_image_src( $id, 'full' );
 
