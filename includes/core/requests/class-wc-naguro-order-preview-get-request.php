@@ -13,7 +13,9 @@ class WC_Naguro_Order_Preview_Get_Request extends WC_Naguro_Request {
 
 			$this->params['design_area_array'][ $key ] = array(
 				'width' => $width,
+				'original_width' => $image_src[1],
 				'height' => $height,
+				'original_height' => $image_src[2],
 			);
 		}
 
