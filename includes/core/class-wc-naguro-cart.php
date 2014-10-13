@@ -5,9 +5,10 @@ class WC_Naguro_Cart {
 		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'change_add_to_cart_button'), 10, 2);
 		add_filter( 'woocommerce_product_add_to_cart_text', array($this, 'add_to_cart_text' ), 10, 2 );
 		add_filter( 'woocommerce_product_single_add_to_cart_text', array($this, 'add_to_cart_text'), 10, 2 );
+		add_filter( 'template_include', array($this, 'designer_template_filter' ), 10, 1 );
 
 		add_action( 'init', array( $this, 'add_to_cart_action' ), 9, 0 );
-		add_action( 'woocommerce_before_main_content', array($this, 'output_designer' ) );
+		add_action( 'the_content', array($this, 'output_designer' ) );
 	}
 
 	public function add_to_cart_action() {
@@ -27,7 +28,7 @@ class WC_Naguro_Cart {
 		}
 	}
 
-	public function output_designer() {
+	public function output_designer( $content ) {
 		if ( isset( $_GET['designer'] ) ) {
 			global $post;
 
@@ -38,6 +39,8 @@ class WC_Naguro_Cart {
 					$designer->output();
 				}
 			}
+		} else {
+			return $content;
 		}
 	}
 
@@ -76,5 +79,17 @@ class WC_Naguro_Cart {
 		}
 
 		return $text;
+	}
+
+	public function designer_template_filter( $template_file) {
+		if ( ! isset( $_GET['designer'] ) ) {
+			return $template_file;
+		}
+
+		if ( strstr( $template_file, 'single-product.php' ) ) {
+			return trailingslashit( get_template_directory() ) . 'page.php';
+		}
+
+		return $template_file;
 	}
 }
