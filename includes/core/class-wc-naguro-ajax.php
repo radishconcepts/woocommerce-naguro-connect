@@ -23,6 +23,9 @@ class WC_Naguro_Ajax {
 		} elseif( 'order' == $model && 'preview' == $method ) {
 			$request = new WC_Naguro_Order_Preview_Get_Request( $_POST );
 			$request->output();
+		} elseif( 'order' == $model && 'placeorder' == $method ) {
+			$request = new WC_Naguro_Order_Place_Request( $_POST );
+			$request->output();
 		} elseif( 'image' == $model && 'upload' == $method ) {
 			$request = new WC_Naguro_Image_Upload_Request( $_POST );
 			$request->output();

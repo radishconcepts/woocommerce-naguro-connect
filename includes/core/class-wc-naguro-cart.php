@@ -5,9 +5,40 @@ class WC_Naguro_Cart {
 		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'change_add_to_cart_button'), 10, 2);
 		add_filter( 'woocommerce_product_add_to_cart_text', array($this, 'add_to_cart_text' ), 10, 2 );
 		add_filter( 'woocommerce_product_single_add_to_cart_text', array($this, 'add_to_cart_text'), 10, 2 );
+		add_filter( 'template_include', array($this, 'designer_template_filter' ), 10, 1 );
 
 		add_action( 'init', array( $this, 'add_to_cart_action' ), 9, 0 );
-		add_action( 'woocommerce_before_main_content', array($this, 'output_designer' ) );
+		add_action( 'the_content', array($this, 'output_designer' ) );
+
+		// Meta information handlers
+		add_action( 'woocommerce_add_order_item_meta', array( $this, 'order_item_meta' ), 10, 2 );
+		add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session'), 10, 2 );
+		add_filter( 'woocommerce_get_item_data', array( $this, 'get_item_data' ), 10, 2 );
+	}
+
+	public function order_item_meta( $item_id, $values ) {
+		if ( isset( $values['naguro'] ) ) {
+			wc_add_order_item_meta( $item_id, 'naguro_product_design', $values['naguro'] );
+		}
+	}
+
+	public function get_cart_item_from_session( $cart_item, $values ) {
+		if ( isset( $values['naguro'] ) ) {
+			$cart_item['naguro'] = $values['naguro'];
+		}
+
+		return $cart_item;
+	}
+
+	public function get_item_data( $other_data, $cart_item ) {
+		$product_id = $cart_item['product_id'];
+
+		if ( isset( $cart_item['naguro'] ) ) {
+			var_dump( $cart_item['naguro'] );
+			die();
+		}
+
+		return $other_data;
 	}
 
 	public function add_to_cart_action() {
@@ -18,12 +49,16 @@ class WC_Naguro_Cart {
 		$product = wc_get_product( absint( $_REQUEST['add-to-cart'] ) );
 
 		if ( $this->is_naguro_product($product) ) {
+			// Remove the temporary product that has now been added to the cart
+			$cart_id = WC()->cart->generate_cart_id( $product->id );
+			WC()->cart->set_quantity( $cart_id, 0 );
+
 			wp_safe_redirect( $product->get_permalink() . '?designer');
 			exit();
 		}
 	}
 
-	public function output_designer() {
+	public function output_designer( $content ) {
 		if ( isset( $_GET['designer'] ) ) {
 			global $post;
 
@@ -32,9 +67,10 @@ class WC_Naguro_Cart {
 				if ( $this->is_naguro_product($product)) {
 					$designer = new WC_Naguro_Designer( $product );
 					$designer->output();
-//					die();
 				}
 			}
+		} else {
+			return $content;
 		}
 	}
 
@@ -73,5 +109,17 @@ class WC_Naguro_Cart {
 		}
 
 		return $text;
+	}
+
+	public function designer_template_filter( $template_file) {
+		if ( ! isset( $_GET['designer'] ) ) {
+			return $template_file;
+		}
+
+		if ( strstr( $template_file, 'single-product.php' ) ) {
+			return trailingslashit( get_template_directory() ) . 'page.php';
+		}
+
+		return $template_file;
 	}
 }
