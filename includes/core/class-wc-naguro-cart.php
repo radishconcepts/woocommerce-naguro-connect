@@ -18,6 +18,10 @@ class WC_Naguro_Cart {
 		$product = wc_get_product( absint( $_REQUEST['add-to-cart'] ) );
 
 		if ( $this->is_naguro_product($product) ) {
+			// Remove the temporary product that has now been added to the cart
+			$cart_id = WC()->cart->generate_cart_id( $product->id );
+			WC()->cart->set_quantity( $cart_id, 0 );
+
 			wp_safe_redirect( $product->get_permalink() . '?designer');
 			exit();
 		}
@@ -32,7 +36,6 @@ class WC_Naguro_Cart {
 				if ( $this->is_naguro_product($product)) {
 					$designer = new WC_Naguro_Designer( $product );
 					$designer->output();
-//					die();
 				}
 			}
 		}
