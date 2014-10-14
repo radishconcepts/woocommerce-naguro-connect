@@ -35,6 +35,7 @@ class WC_Naguro_Session {
 	}
 
 	private function get_session() {
+		$this->update_expires_record();
 		return (array) get_option( 'naguro_session_' . $this->id, array() );
 	}
 
@@ -55,7 +56,13 @@ class WC_Naguro_Session {
 	public function save_data() {
 		if ( ! $this->saved ) {
 			update_option( 'naguro_session_' . $this->id, $this->data );
+			$this->update_expires_record();
 			$this->saved = true;
 		}
+	}
+
+	private function update_expires_record() {
+		$new_time = time() + DAY_IN_SECONDS;
+		update_option( 'naguro_session_expires_' . $this->id, $new_time );
 	}
 }
