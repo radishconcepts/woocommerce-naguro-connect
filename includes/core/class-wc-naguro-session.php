@@ -55,7 +55,12 @@ class WC_Naguro_Session {
 
 	public function save_data() {
 		if ( ! $this->saved ) {
-			update_option( 'naguro_session_' . $this->id, $this->data );
+			if ( false === get_option( 'naguro_session_' . $this->id ) ) {
+				add_option( 'naguro_session_' . $this->id, $this->data, '', 'no' );
+			} else {
+				update_option( 'naguro_session_' . $this->id, $this->data );
+			}
+
 			$this->update_expires_record();
 			$this->saved = true;
 		}
@@ -63,6 +68,10 @@ class WC_Naguro_Session {
 
 	private function update_expires_record() {
 		$new_time = time() + DAY_IN_SECONDS;
-		update_option( 'naguro_session_expires_' . $this->id, $new_time );
+		if ( false === get_option( 'naguro_session_expires_' . $this->id ) ) {
+			add_option( 'naguro_session_expires_' . $this->id, $new_time, '', 'no' );
+		} else {
+			update_option( 'naguro_session_expires_' . $this->id, $new_time );
+		}
 	}
 }
