@@ -11,14 +11,14 @@ class WC_Naguro_Cart {
 		add_action( 'the_content', array($this, 'output_designer' ) );
 
 		// Meta information handlers
-		add_action( 'woocommerce_add_order_item_meta', array( $this, 'order_item_meta' ), 10, 2 );
+		add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_order_item_meta' ), 10 );
 		add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session'), 10, 2 );
 		add_filter( 'woocommerce_get_item_data', array( $this, 'get_item_data' ), 10, 2 );
 	}
 
-	public function order_item_meta( $item_id, $values ) {
+	public function add_order_item_meta( $item_id, $values ) {
 		if ( isset( $values['naguro'] ) ) {
-			wc_add_order_item_meta( $item_id, 'naguro_product_design', $values['naguro'] );
+			wc_add_order_item_meta( $item_id, 'naguro', $values['naguro'] );
 		}
 	}
 
@@ -31,11 +31,8 @@ class WC_Naguro_Cart {
 	}
 
 	public function get_item_data( $other_data, $cart_item ) {
-		$product_id = $cart_item['product_id'];
-
 		if ( isset( $cart_item['naguro'] ) ) {
-			var_dump( $cart_item['naguro'] );
-			die();
+			$other_data['naguro'] = $cart_item['naguro'];
 		}
 
 		return $other_data;
