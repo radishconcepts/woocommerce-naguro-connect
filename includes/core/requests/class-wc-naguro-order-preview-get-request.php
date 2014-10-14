@@ -44,6 +44,8 @@ class WC_Naguro_Order_Preview_Get_Request extends WC_Naguro_Request {
 			);
 		}
 
+		$session->set('order_preview', $output_array );
+
 		echo json_encode($output_array); die();
 	}
 }
