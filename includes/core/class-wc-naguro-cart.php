@@ -11,6 +11,7 @@ class WC_Naguro_Cart {
 		add_action( 'the_content', array($this, 'output_designer' ) );
 
 		// Meta information handlers
+		add_action( 'woocommerce_add_to_cart', array( $this, 'add_to_cart' ), 10, 6 );
 		add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_order_item_meta' ), 10 );
 		add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session'), 10, 2 );
 		add_filter( 'woocommerce_get_item_data', array( $this, 'get_item_data' ), 10, 2 );
@@ -38,6 +39,15 @@ class WC_Naguro_Cart {
 		return $other_data;
 	}
 
+	public function add_to_cart( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+		$product = wc_get_product( $product_id );
+
+		if ( $this->is_naguro_product( $product ) && ! isset( $cart_item_data['naguro'] ) ) {
+			// Remove the temporary product that has now been added to the cart
+			WC()->cart->set_quantity($cart_item_key, 0 );
+		}
+	}
+
 	public function add_to_cart_action() {
 		if ( empty( $_REQUEST['add-to-cart'] ) || ! is_numeric( $_REQUEST['add-to-cart'] ) ) {
 			return;
@@ -46,10 +56,6 @@ class WC_Naguro_Cart {
 		$product = wc_get_product( absint( $_REQUEST['add-to-cart'] ) );
 
 		if ( $this->is_naguro_product($product) ) {
-			// Remove the temporary product that has now been added to the cart
-			$cart_id = WC()->cart->generate_cart_id( $product->id );
-			WC()->cart->set_quantity( $cart_id, 0 );
-
 			wp_safe_redirect( $product->get_permalink() . '?designer');
 			exit();
 		}
