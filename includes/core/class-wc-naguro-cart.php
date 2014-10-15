@@ -2,19 +2,39 @@
 
 class WC_Naguro_Cart {
 	public function __construct() {
+		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'change_add_to_cart_url'), 10, 2);
 		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'change_add_to_cart_button'), 10, 2);
 		add_filter( 'woocommerce_product_add_to_cart_text', array($this, 'add_to_cart_text' ), 10, 2 );
 		add_filter( 'woocommerce_product_single_add_to_cart_text', array($this, 'add_to_cart_text'), 10, 2 );
 		add_filter( 'template_include', array($this, 'designer_template_filter' ), 10, 1 );
+		add_filter( 'woocommerce_is_purchasable', array( $this, 'is_purchasable' ), 10, 2 );
+		add_action( 'woocommerce_simple_add_to_cart', array( $this, 'simple_add_to_cart' ) );
 
 		add_action( 'init', array( $this, 'add_to_cart_action' ), 9, 0 );
 		add_action( 'the_content', array($this, 'output_designer' ) );
 
 		// Meta information handlers
-		add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_order_item_meta' ), 10 );
 		add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session'), 10, 2 );
 		add_filter( 'woocommerce_get_item_data', array( $this, 'get_item_data' ), 10, 2 );
-		add_action( 'woocommerce_add_to_cart', array( $this, 'remove_temporary_product_from_cart' ), 10, 6 );
+		add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_order_item_meta' ), 10, 2 );
+	}
+
+	public function is_purchasable( $purchasable, $product ) {
+		if ( is_single() ) {
+			if ( $this->is_naguro_product( $product ) ) {
+				$purchasable = false;
+			}
+		}
+
+		return $purchasable;
+	}
+
+	public function simple_add_to_cart() {
+		global $product;
+
+		if ( $this->is_naguro_product( $product ) ) {
+			echo '<a href="'. $product->get_permalink() . '?designer" rel="nofollow" class="button product_type_simple">Design product</a>';
+		}
 	}
 
 	public function add_order_item_meta( $item_id, $values ) {
@@ -37,20 +57,6 @@ class WC_Naguro_Cart {
 		}
 
 		return $other_data;
-	}
-
-	/**
-	 * Removes the product from cart that has been temporarily added before the editor kicks in
-	 */
-	public function remove_temporary_product_from_cart( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
-		$product = wc_get_product( $product_id );
-
-		if ( $this->is_naguro_product( $product ) && ! isset( $cart_item_data['naguro'] ) ) {
-			// Remove the temporary product that has now been added to the cart
-			// So effectively we take the old quantity and subtract one
-			$quantity = WC()->cart->cart_contents[ $cart_item_key ]['quantity'];
-			WC()->cart->set_quantity($cart_item_key, $quantity - 1 );
-		}
 	}
 
 	public function add_to_cart_action() {
@@ -89,6 +95,15 @@ class WC_Naguro_Cart {
 	 */
 	private function is_naguro_product( $product ) {
 		return ( 'yes' == get_post_meta( $product->id, 'naguro_product_active', true ) );
+	}
+
+	public function change_add_to_cart_url( $button, $product ) {
+		if ( $this->is_naguro_product( $product ) ) {
+			preg_match( '/<a[^>]*href="([^"]*)"[^>]*>.*<\/a>/', $button, $matches );
+			$button = str_replace( $matches[1], $product->get_permalink() . '?designer', $button );
+		}
+
+		return $button;
 	}
 
 	/**
