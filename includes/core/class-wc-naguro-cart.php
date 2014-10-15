@@ -10,7 +10,6 @@ class WC_Naguro_Cart {
 		add_filter( 'woocommerce_is_purchasable', array( $this, 'is_purchasable' ), 10, 2 );
 		add_action( 'woocommerce_simple_add_to_cart', array( $this, 'simple_add_to_cart' ) );
 
-		add_action( 'init', array( $this, 'add_to_cart_action' ), 9, 0 );
 		add_action( 'the_content', array($this, 'output_designer' ) );
 
 		// Meta information handlers
@@ -54,22 +53,14 @@ class WC_Naguro_Cart {
 	public function get_item_data( $other_data, $cart_item ) {
 		if ( isset( $cart_item['naguro'] ) ) {
 			$other_data['naguro'] = $cart_item['naguro'];
+			$other_data['naguro'] = array(
+				'display' => $cart_item['naguro'],
+				'value' => $cart_item['naguro'],
+				'name' => 'Naguro',
+			);
 		}
 
 		return $other_data;
-	}
-
-	public function add_to_cart_action() {
-		if ( empty( $_REQUEST['add-to-cart'] ) || ! is_numeric( $_REQUEST['add-to-cart'] ) ) {
-			return;
-		}
-
-		$product = wc_get_product( absint( $_REQUEST['add-to-cart'] ) );
-
-		if ( $this->is_naguro_product($product) ) {
-			wp_safe_redirect( $product->get_permalink() . '?designer');
-			exit();
-		}
 	}
 
 	public function output_designer( $content ) {
