@@ -11,10 +11,10 @@ class WC_Naguro_Cart {
 		add_action( 'the_content', array($this, 'output_designer' ) );
 
 		// Meta information handlers
-		add_action( 'woocommerce_add_to_cart', array( $this, 'add_to_cart' ), 10, 6 );
 		add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_order_item_meta' ), 10 );
 		add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session'), 10, 2 );
 		add_filter( 'woocommerce_get_item_data', array( $this, 'get_item_data' ), 10, 2 );
+		add_action( 'woocommerce_add_to_cart', array( $this, 'remove_temporary_product_from_cart' ), 10, 6 );
 	}
 
 	public function add_order_item_meta( $item_id, $values ) {
@@ -39,12 +39,17 @@ class WC_Naguro_Cart {
 		return $other_data;
 	}
 
-	public function add_to_cart( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+	/**
+	 * Removes the product from cart that has been temporarily added before the editor kicks in
+	 */
+	public function remove_temporary_product_from_cart( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
 		$product = wc_get_product( $product_id );
 
 		if ( $this->is_naguro_product( $product ) && ! isset( $cart_item_data['naguro'] ) ) {
 			// Remove the temporary product that has now been added to the cart
-			WC()->cart->set_quantity($cart_item_key, 0 );
+			// So effectively we take the old quantity and subtract one
+			$quantity = WC()->cart->cart_contents[ $cart_item_key ]['quantity'];
+			WC()->cart->set_quantity($cart_item_key, $quantity - 1 );
 		}
 	}
 
