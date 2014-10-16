@@ -38,7 +38,8 @@ class WC_Naguro_Cart {
 
 	public function add_order_item_meta( $item_id, $values ) {
 		if ( isset( $values['naguro_session'] ) ) {
-			wc_add_order_item_meta( $item_id, 'naguro_session', $values['naguro_session'] );
+			wc_add_order_item_meta( $item_id, 'naguro_session', $values['naguro_session']['id'] );
+			wc_add_order_item_meta( $item_id, 'naguro_session_object', $values['naguro_session'] );
 		}
 	}
 
