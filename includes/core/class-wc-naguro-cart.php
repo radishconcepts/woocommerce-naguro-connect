@@ -38,7 +38,8 @@ class WC_Naguro_Cart {
 
 	public function add_order_item_meta( $item_id, $values ) {
 		if ( isset( $values['naguro_session'] ) ) {
-			wc_add_order_item_meta( $item_id, 'naguro_session', $values['naguro_session'] );
+			wc_add_order_item_meta( $item_id, 'naguro_session', $values['naguro_session']['id'] );
+			wc_add_order_item_meta( $item_id, 'naguro_session_object', $values['naguro_session'] );
 		}
 	}
 
@@ -53,8 +54,8 @@ class WC_Naguro_Cart {
 	public function get_item_data( $other_data, $cart_item ) {
 		if ( isset( $cart_item['naguro_session'] ) ) {
 			$other_data['naguro_session'] = array(
-				'display' => $cart_item['naguro_session'],
-				'value' => $cart_item['naguro_session'],
+				'display' => $cart_item['naguro_session']['id'],
+				'value' => $cart_item['naguro_session']['id'],
 				'name' => 'Naguro session',
 			);
 		}
