@@ -53,8 +53,8 @@ class WC_Naguro_Cart {
 	public function get_item_data( $other_data, $cart_item ) {
 		if ( isset( $cart_item['naguro_session'] ) ) {
 			$other_data['naguro_session'] = array(
-				'display' => $cart_item['naguro_session'],
-				'value' => $cart_item['naguro_session'],
+				'display' => $cart_item['naguro_session']['id'],
+				'value' => $cart_item['naguro_session']['id'],
 				'name' => 'Naguro session',
 			);
 		}
