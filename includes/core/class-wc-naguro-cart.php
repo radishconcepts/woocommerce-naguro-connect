@@ -37,26 +37,25 @@ class WC_Naguro_Cart {
 	}
 
 	public function add_order_item_meta( $item_id, $values ) {
-		if ( isset( $values['naguro'] ) ) {
-			wc_add_order_item_meta( $item_id, 'naguro', $values['naguro'] );
+		if ( isset( $values['naguro_session'] ) ) {
+			wc_add_order_item_meta( $item_id, 'naguro_session', $values['naguro_session'] );
 		}
 	}
 
 	public function get_cart_item_from_session( $cart_item, $values ) {
-		if ( isset( $values['naguro'] ) ) {
-			$cart_item['naguro'] = $values['naguro'];
+		if ( isset( $values['naguro_session'] ) ) {
+			$cart_item['naguro_session'] = $values['naguro_session'];
 		}
 
 		return $cart_item;
 	}
 
 	public function get_item_data( $other_data, $cart_item ) {
-		if ( isset( $cart_item['naguro'] ) ) {
-			$other_data['naguro'] = $cart_item['naguro'];
-			$other_data['naguro'] = array(
-				'display' => $cart_item['naguro'],
-				'value' => $cart_item['naguro'],
-				'name' => 'Naguro',
+		if ( isset( $cart_item['naguro_session'] ) ) {
+			$other_data['naguro_session'] = array(
+				'display' => $cart_item['naguro_session'],
+				'value' => $cart_item['naguro_session'],
+				'name' => 'Naguro session',
 			);
 		}
 
