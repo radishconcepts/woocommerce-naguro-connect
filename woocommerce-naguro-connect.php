@@ -11,7 +11,7 @@
 define( 'NAGURO_PLUGIN_PATH', trailingslashit( dirname( __FILE__ ) ) );
 define( 'NAGURO_PLUGIN_URL', plugins_url( "/", __FILE__ ));
 
-add_action('init', 'wc_naguro_connect_init');
+add_action('init', 'wc_naguro_connect_init', 4);
 
 function wc_naguro_connect_init() {
 	// Load PHP 5.2 compatible autoloader if required
