@@ -34,6 +34,7 @@ class WC_Naguro {
 	private function admin_init() {
 		new WC_Naguro_Settings_Page();
 		new WC_Naguro_Product_Admin();
+		new WC_Naguro_Order_Admin();
 	}
 
 	/**
