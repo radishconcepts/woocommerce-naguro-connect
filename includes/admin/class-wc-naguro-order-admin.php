@@ -6,7 +6,7 @@ class WC_Naguro_Order_Admin {
 	}
 
 	public function output_line_item( $item_id, $item, $product ) {
-		if ( isset( $item['naguro_session_object'] ) ) {
+		if ( isset( $item['naguro_session_object'] ) && isset( $session_object['preview'] ) && is_array( $session_object['preview'] ) ) {
 			$session_object = unserialize( $item['naguro_session_object'] );
 			$design_areas = get_post_meta( $product->id, 'naguro_design_area' );
 
