@@ -21,8 +21,12 @@ class WC_Naguro_Image_Get_Request extends WC_Naguro_Request {
 					$dimensions = $image->get_size();
 					$width = $dimensions['width'];
 					$height = $dimensions['height'];
+				} else {
+					$this->params['src'] = $src;
+					$data = $this->handler->handle_request('resize-image', $this->params, 'post' );
+					$body = json_decode( $data['body'] );
+					$src = $body->filename;
 				}
-
 
 				echo json_encode( array(
 					'id' => $id,
