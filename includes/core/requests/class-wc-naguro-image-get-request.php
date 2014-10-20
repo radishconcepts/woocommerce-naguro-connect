@@ -42,9 +42,9 @@ class WC_Naguro_Image_Get_Request extends WC_Naguro_Request {
 					$file_array['name'] = basename($matches[0]);
 					$file_array['tmp_name'] = $tmp;
 
-					$id = media_handle_sideload( $file_array, 0 );
-					update_post_meta( $id, '_naguro_image_session_id', $this->params['session']);
-					$image_src = wp_get_attachment_image_src( $id, 'full' );
+					$new_id = media_handle_sideload( $file_array, 0 );
+					update_post_meta( $new_id, '_naguro_image_session_id', $this->params['session']);
+					$image_src = wp_get_attachment_image_src( $new_id, 'full' );
 					$src = $image_src[0];
 				}
 
