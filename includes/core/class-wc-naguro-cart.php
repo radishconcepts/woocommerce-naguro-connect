@@ -131,7 +131,11 @@ class WC_Naguro_Cart {
 		}
 
 		if ( strstr( $template_file, 'single-product.php' ) ) {
-			return trailingslashit( get_template_directory() ) . 'page.php';
+			if ( file_exists( trailingslashit( get_stylesheet_directory() ) . 'naguro-editor.php' ) ) {
+				return trailingslashit( get_stylesheet_directory() ) . 'naguro-editor.php';
+			} else {
+				return apply_filters( 'naguro_editor_template_file', trailingslashit( get_stylesheet_directory() ) . 'page.php' );
+			}
 		}
 
 		return $template_file;
