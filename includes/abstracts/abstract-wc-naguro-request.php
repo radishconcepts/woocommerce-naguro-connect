@@ -1,12 +1,19 @@
 <?php
 
 abstract class WC_Naguro_Request {
+	/** @var array */
 	protected $params;
 
+	/** @var WC_Naguro_Session */
 	protected $session;
 
+	/** @var WP_API_Handler */
 	protected $handler;
 
+	/**
+	 * Fire up the required session and handler
+	 * @param $params array
+	 */
 	public function __construct( $params ) {
 		$this->params = $params;
 
