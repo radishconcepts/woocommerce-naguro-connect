@@ -22,6 +22,7 @@
 
         bind_image_chosen($(".naguro-design-area input[type=file]"));
         bind_remove_row($(".naguro-design-area .remove_row"));
+        bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
     });
 
     function bind_image_chosen(element) {
@@ -122,5 +123,11 @@
         $(".naguro-printable-product img", designArea).attr("src", contents);
         $(".naguro-upload-notice", designArea).remove();
         init_imgselectarea();
+    }
+
+    function bind_edit_area(element) {
+        element.on("click", function () {
+            tb_show("", "#TB_inline&inlineId=nothing");
+        });
     }
 })(jQuery);
