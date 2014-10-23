@@ -22,7 +22,9 @@
 
         bind_image_chosen($(".naguro-design-area input[type=file]"));
         bind_remove_row($(".naguro-design-area .remove_row"));
+
         bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
+        bind_close_area($(".naguro-printable-area-save-button"));
     });
 
     function bind_image_chosen(element) {
@@ -165,6 +167,23 @@
             $("#TB_closeAjaxWindow").remove();
 
             init_imgselectarea(x, y);
+        });
+    }
+
+    function bind_close_area(element) {
+        element.on("click", function (e) {
+            e.preventDefault();
+
+            $(this).parent().find('img').imgAreaSelect({
+                remove: true
+            });
+
+            var parent = $(this).parent();
+            var target = $("input[value=" + parent.attr("id") + "]");
+
+            $(this).parent().appendTo(target.parent());
+
+            tb_remove();
         });
     }
 })(jQuery);
