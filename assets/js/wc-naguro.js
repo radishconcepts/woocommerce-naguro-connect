@@ -127,7 +127,7 @@
 
     function bind_edit_area(element) {
         element.on("click", function () {
-            tb_show("Define the printable area", "#TB_inline&inlineId=nothing");
+            tb_show("Define the printable area", "#TB_inline&modal=true");
 
             var id = this.getAttribute("data-id");
             var contentBox = $("#TB_ajaxContent");
@@ -159,6 +159,10 @@
                     width: "100%"
                 });
             }
+
+            //remove close...
+            $("#TB_overlay").off("click");
+            $("#TB_closeAjaxWindow");
 
             init_imgselectarea(x, y);
         });
