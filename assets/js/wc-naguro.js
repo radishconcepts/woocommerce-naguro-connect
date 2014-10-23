@@ -52,6 +52,7 @@
             name: "naguro_designarea[image][" + rand + "]",
             id: "naguro_designarea[image][" + rand + "]"
         });
+        element.find(".naguro-define-image-area").attr("data-id", rand);
     }
 
     function init_imgselectarea(x, y) {
@@ -126,8 +127,8 @@
     }
 
     function placeImage(contents, designArea) {
+        console.log(designArea, contents);
         $(".naguro-printable-product img", designArea).attr("src", contents);
-        $(".naguro-upload-notice", designArea).remove();
     }
 
     function bind_edit_area(element) {
