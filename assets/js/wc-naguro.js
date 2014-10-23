@@ -18,6 +18,9 @@
 
             bind_image_chosen($("input[type=file]", copy));
             bind_remove_row($(".remove_row", copy));
+
+            bind_edit_area($(".naguro-define-image-area", copy));
+            bind_close_area($(".naguro-printable-area-save-button", copy));
         });
 
         bind_image_chosen($(".naguro-design-area input[type=file]"));
