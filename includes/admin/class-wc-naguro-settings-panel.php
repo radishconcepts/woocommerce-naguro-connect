@@ -242,7 +242,7 @@ class WC_Naguro_Settings_Panel {
 			"description"   => "Width of the printable area in " . $this->units . " without the unit (eg '25')",
 			"name"          => $name,
 			"class"         => "",
-			"value"         => (isset($design_area["output_width"]) ? $design_area["output_width"] : "" )
+			"value"         => (isset($design_area["output_width"]) ? $design_area["output_width"] : "10" )
 		));
 	}
 
@@ -256,7 +256,7 @@ class WC_Naguro_Settings_Panel {
 			"description"   => "Height of the printable area in " . $this->units . " without the unit (eg '12.5')",
 			"name"          => $name,
 			"class"         => "",
-			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "" )
+			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "10" )
 		));
 	}
 
@@ -321,7 +321,7 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area_print_width($design_area = array()) {
 		$this->hidden_input(
 			WC_Naguro::$prefix . "designarea[print_width][]",
-			(isset($design_area["print_width"]) ? $design_area["print_width"] : "" ),
+			(isset($design_area["print_width"]) ? $design_area["print_width"] : "0" ),
 			WC_Naguro::$prefix . "designarea_print_width"
 		);
 	}
@@ -329,7 +329,7 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area_print_height($design_area = array()) {
 		$this->hidden_input(
 			WC_Naguro::$prefix . "designarea[print_height][]",
-			(isset($design_area["print_height"]) ? $design_area["print_height"] : "" ),
+			(isset($design_area["print_height"]) ? $design_area["print_height"] : "0" ),
 			WC_Naguro::$prefix . "designarea_print_height"
 		);
 	}
@@ -337,7 +337,7 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area_left($design_area = array()) {
 		$this->hidden_input(
 			WC_Naguro::$prefix . "designarea[left][]",
-			(isset($design_area["left"]) ? $design_area["left"] : "" ),
+			(isset($design_area["left"]) ? $design_area["left"] : "0" ),
 			WC_Naguro::$prefix . "designarea_left"
 		);
 	}
@@ -345,7 +345,7 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area_top($design_area = array()) {
 		$this->hidden_input(
 			WC_Naguro::$prefix . "designarea[top][]",
-			(isset($design_area["top"]) ? $design_area["top"] : "" ),
+			(isset($design_area["top"]) ? $design_area["top"] : "0" ),
 			WC_Naguro::$prefix . "designarea_top"
 		);
 	}
