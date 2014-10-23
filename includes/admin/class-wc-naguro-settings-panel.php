@@ -14,6 +14,9 @@ class WC_Naguro_Settings_Panel {
 
 		wp_enqueue_script("imgareaselect", NAGURO_PLUGIN_URL . "assets/imgareaselect/jquery.imgareaselect.min.js", array("jquery"));
 		wp_enqueue_style("imgareaselect", NAGURO_PLUGIN_URL . "assets/imgareaselect/imgareaselect-default.css");
+
+		wp_enqueue_style('thickbox');
+		wp_enqueue_script('thickbox');
 	}
 
 	public function post_edit_form_tag() {
@@ -267,13 +270,9 @@ class WC_Naguro_Settings_Panel {
 		$rand = rand(10000, 99999);
 		$this->add_design_area_upload_key($rand);
 
-		if (isset($design_area['product_image'])) {
-			$this->add_design_area_background_upload($rand);
-			echo "<p class='naguro-text-container'>Define the printable area:</p>";
-		} else {
-			$this->add_design_area_background_upload($rand);
-			echo "<p class='naguro-upload-notice'>Choose an image before defining the printable area.</p>";
-		}
+		$this->add_design_area_background_upload($rand);
+
+		echo "<p class='form-field'><button class='button'>Edit printable area</button></p>";
 
 		$this->add_design_area_printable_area($design_area);
 	}
