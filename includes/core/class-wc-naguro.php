@@ -18,6 +18,7 @@ class WC_Naguro {
 
 	public function __construct() {
 		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || false == DOING_AJAX ) ) {
+			add_filter( 'woocommerce_integrations', array( $this, 'add_integration' ), 10 );
 			$this->admin_init();
 		} else {
 			add_action( 'init', array( $this, 'conditional_include' ) );
@@ -32,7 +33,6 @@ class WC_Naguro {
 	 * Prepare the administration panel specific files and classes
 	 */
 	private function admin_init() {
-		new WC_Naguro_Settings_Page();
 		new WC_Naguro_Product_Admin();
 		new WC_Naguro_Order_Admin();
 	}
@@ -42,6 +42,11 @@ class WC_Naguro {
 	 */
 	private function frontend_init() {
 		new WC_Naguro_Cart();
+	}
+
+	public function add_integration() {
+		$integrations[] = 'WC_Naguro_Integration';
+		return $integrations;
 	}
 
 	/**
