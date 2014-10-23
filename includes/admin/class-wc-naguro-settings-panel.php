@@ -1,6 +1,8 @@
 <?php
 
 class WC_Naguro_Settings_Panel {
+	private $units = "mm";
+
 	public function __construct() {
 		add_filter( 'woocommerce_product_data_tabs', array( $this, 'product_data_tabs' ), 10, 1 );
 
@@ -10,6 +12,9 @@ class WC_Naguro_Settings_Panel {
 		add_action( 'post_edit_form_tag' , array( $this, 'post_edit_form_tag' ) );
 
 		add_action( 'admin_enqueue_scripts' , array( $this, 'add_assets' ) );
+
+		$options = get_option('woocommerce_wc_naguro_integration_settings');
+		$this->units = ( $options['naguro_dimension_unit'] ? $options['naguro_dimension_unit'] : get_option('woocommerce_dimension_unit', $this->units) );
 	}
 
 	public function add_assets() {
@@ -203,7 +208,6 @@ class WC_Naguro_Settings_Panel {
 		$this->add_remove_button();
 
 		$this->add_design_area_name($design_area);
-		$this->add_design_area_size_description($design_area);
 		$this->add_design_area_output_width($design_area);
 		$this->add_design_area_output_height($design_area);
 		$this->add_design_area_background($design_area);
@@ -228,20 +232,6 @@ class WC_Naguro_Settings_Panel {
 		));
 	}
 
-	public function add_design_area_size_description($design_area = array()) {
-		$name = WC_Naguro::$prefix . "designarea[size_description][]";
-
-		woocommerce_wp_text_input(array(
-			"id"            => $name,
-			"label"         => "Size description",
-			"placeholder"   => "Size description",
-			"description"   => "Textual description that will be shown in the Naguro designer (eg '25mm x 12.3mm')",
-			"name"          => $name,
-			"class"         => "",
-			"value"         => (isset($design_area["size_description"]) ? $design_area["size_description"] : "" )
-		));
-	}
-
 	public function add_design_area_output_width($design_area = array()) {
 		$name = WC_Naguro::$prefix . "designarea[output_width][]";
 
@@ -249,7 +239,7 @@ class WC_Naguro_Settings_Panel {
 			"id"            => $name,
 			"label"         => "Print width",
 			"placeholder"   => "Width of the printable area",
-			"description"   => "Width of the printable area in millimeters without the unit (eg '25')",
+			"description"   => "Width of the printable area in " . $this->units . " without the unit (eg '25')",
 			"name"          => $name,
 			"class"         => "",
 			"value"         => (isset($design_area["output_width"]) ? $design_area["output_width"] : "" )
@@ -263,7 +253,7 @@ class WC_Naguro_Settings_Panel {
 			"id"            => $name,
 			"label"         => "Print height",
 			"placeholder"   => "Height of the printable area",
-			"description"   => "Height of the printable area in millimeters without the unit (eg '12.5')",
+			"description"   => "Height of the printable area in " . $this->units . " without the unit (eg '12.5')",
 			"name"          => $name,
 			"class"         => "",
 			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "" )
