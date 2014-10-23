@@ -241,7 +241,7 @@ class WC_Naguro_Settings_Panel {
 			"placeholder"   => "Width of the printable area",
 			"description"   => "Width of the printable area in " . $this->units . " without the unit (eg '25')",
 			"name"          => $name,
-			"class"         => "",
+			"class"         => "naguro-float-val",
 			"value"         => (isset($design_area["output_width"]) ? $design_area["output_width"] : "10" )
 		));
 	}
@@ -255,7 +255,7 @@ class WC_Naguro_Settings_Panel {
 			"placeholder"   => "Height of the printable area",
 			"description"   => "Height of the printable area in " . $this->units . " without the unit (eg '12.5')",
 			"name"          => $name,
-			"class"         => "",
+			"class"         => "naguro-float-val",
 			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "10" )
 		));
 	}
