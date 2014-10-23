@@ -162,7 +162,7 @@
 
             //remove close...
             $("#TB_overlay").off("click");
-            $("#TB_closeAjaxWindow");
+            $("#TB_closeAjaxWindow").remove();
 
             init_imgselectarea(x, y);
         });

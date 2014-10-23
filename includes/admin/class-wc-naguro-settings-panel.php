@@ -313,6 +313,8 @@ class WC_Naguro_Settings_Panel {
 			echo '<img src="" />';
 		}
 
+		echo '<a href="#" class="button naguro-printable-area-save-button">Save printable area</a>';
+
 		echo '</div>';
 	}
 
