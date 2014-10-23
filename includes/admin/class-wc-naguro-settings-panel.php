@@ -216,6 +216,7 @@ class WC_Naguro_Settings_Panel {
 			"label"         => "Name",
 			"placeholder"   => "Name of the design area",
 			"name"          => $name,
+			"class"         => "",
 			"value"         => (isset($design_area["name"]) ? $design_area["name"] : "" )
 		));
 	}
@@ -229,6 +230,7 @@ class WC_Naguro_Settings_Panel {
 			"placeholder"   => "Size description",
 			"description"   => "Textual description that will be shown in the Naguro designer (eg '25mm x 12.3mm')",
 			"name"          => $name,
+			"class"         => "",
 			"value"         => (isset($design_area["size_description"]) ? $design_area["size_description"] : "" )
 		));
 	}
@@ -242,6 +244,7 @@ class WC_Naguro_Settings_Panel {
 			"placeholder"   => "Width of the printable area",
 			"description"   => "Width of the printable area in millimeters without the unit (eg '25')",
 			"name"          => $name,
+			"class"         => "",
 			"value"         => (isset($design_area["output_width"]) ? $design_area["output_width"] : "" )
 		));
 	}
@@ -255,6 +258,7 @@ class WC_Naguro_Settings_Panel {
 			"placeholder"   => "Height of the printable area",
 			"description"   => "Height of the printable area in millimeters without the unit (eg '12.5')",
 			"name"          => $name,
+			"class"         => "",
 			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "" )
 		));
 	}
@@ -283,6 +287,7 @@ class WC_Naguro_Settings_Panel {
 			"description"   => "Upload an image that will serve as the image that will be designed on",
 			"name"          => $name,
 			"value"         => "",
+			"class"         => "",
 			"type"          => "file"
 		));
 	}

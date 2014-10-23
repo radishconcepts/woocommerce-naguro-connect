@@ -66,3 +66,9 @@
     margin-top: 3px;
     margin-right: 6px;
 }
+
+.woocommerce_options_panel .naguro-design-area .description {
+    display: block;
+    clear: left;
+    margin: 0;
+}
