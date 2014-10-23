@@ -9,6 +9,10 @@ class WC_Naguro_Settings_Panel {
 
 		add_action( 'post_edit_form_tag' , array( $this, 'post_edit_form_tag' ) );
 
+		add_action( 'admin_enqueue_scripts' , array( $this, 'add_assets' ) );
+	}
+
+	public function add_assets() {
 		wp_enqueue_script("wc-naguro", NAGURO_PLUGIN_URL . "assets/js/wc-naguro.js");
 		wp_enqueue_style("wc-naguro", NAGURO_PLUGIN_URL . "assets/css/wc-naguro.css");
 

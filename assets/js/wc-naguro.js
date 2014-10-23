@@ -128,6 +128,15 @@
     function bind_edit_area(element) {
         element.on("click", function () {
             tb_show("", "#TB_inline&inlineId=nothing");
+
+            var id = this.getAttribute("data-id");
+            var contentBox = $("#TB_ajaxContent");
+
+            contentBox.css({
+                width: "100%",
+                height: "100%",
+                padding: "0"
+            }).append($("#" + id));
         });
     }
 })(jQuery);
