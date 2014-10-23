@@ -131,51 +131,56 @@
     }
 
     function placeImage(contents, designArea) {
-        console.log(designArea, contents);
         $(".naguro-printable-product img", designArea).attr("src", contents);
+
+        open_design_area($(".naguro-define-image-area", designArea)[0]);
     }
 
     function bind_edit_area(element) {
         element.on("click", function () {
-            tb_show("Define the printable area", "#TB_inline&modal=true");
-
-            var id = this.getAttribute("data-id");
-            var contentBox = $("#TB_ajaxContent");
-            var obj = $("#" + id);
-
-            var x = obj.parent().find("input[name='naguro_designarea[output_width][]']").val();
-            var y = obj.parent().find("input[name='naguro_designarea[output_height][]']").val();
-
-            contentBox.css({
-                width: "100%",
-                height: "100%",
-                padding: "0"
-            }).append(obj);
-
-            contentBox.css({
-                height: (contentBox.height() - 30) + "px"
-            });
-
-            var img = obj.find("img");
-
-            if (img.height() > img.width()) {
-                img.css({
-                    height: "100%",
-                    width: "auto"
-                });
-            } else {
-                img.css({
-                    height: "auto",
-                    width: "100%"
-                });
-            }
-
-            //remove close...
-            $("#TB_overlay").off("click");
-            $("#TB_closeAjaxWindow").remove();
-
-            init_imgselectarea(x, y);
+            open_design_area(this);
         });
+    }
+
+    function open_design_area(element) {
+        tb_show("Define the printable area", "#TB_inline&modal=true");
+
+        var id = element.getAttribute("data-id");
+        var contentBox = $("#TB_ajaxContent");
+        var obj = $("#" + id);
+
+        var x = obj.parent().find("input[name='naguro_designarea[output_width][]']").val();
+        var y = obj.parent().find("input[name='naguro_designarea[output_height][]']").val();
+
+        contentBox.css({
+            width: "100%",
+            height: "100%",
+            padding: "0"
+        }).append(obj);
+
+        contentBox.css({
+            height: (contentBox.height() - 30) + "px"
+        });
+
+        var img = obj.find("img");
+
+        if (img.height() > img.width()) {
+            img.css({
+                height: "100%",
+                width: "auto"
+            });
+        } else {
+            img.css({
+                height: "auto",
+                width: "100%"
+            });
+        }
+
+        //remove close...
+        $("#TB_overlay").off("click");
+        $("#TB_closeAjaxWindow").remove();
+
+        init_imgselectarea(x, y);
     }
 
     function bind_close_area(element) {
