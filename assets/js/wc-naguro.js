@@ -53,6 +53,7 @@
             id: "naguro_designarea[image][" + rand + "]"
         });
         element.find(".naguro-define-image-area").attr("data-id", rand);
+        element.find(".naguro-printable-product").attr("id", rand);
     }
 
     function init_imgselectarea(x, y) {
