@@ -3,7 +3,7 @@
         $('ul.wc-tabs a').click(function(){
            if (this.href.indexOf("woocommerce_naguro_settings") !== -1) {
                 //THANKS WC!
-                setTimeout(init_imgselectarea, 50);
+                //setTimeout(init_imgselectarea, 50);
            } else {
                $('.naguro-printable-product img').imgAreaSelect({
                    remove: true
@@ -122,21 +122,41 @@
     function placeImage(contents, designArea) {
         $(".naguro-printable-product img", designArea).attr("src", contents);
         $(".naguro-upload-notice", designArea).remove();
-        init_imgselectarea();
     }
 
     function bind_edit_area(element) {
         element.on("click", function () {
-            tb_show("", "#TB_inline&inlineId=nothing");
+            tb_show("Define the printable area", "#TB_inline&inlineId=nothing");
 
             var id = this.getAttribute("data-id");
             var contentBox = $("#TB_ajaxContent");
+            var obj = $("#" + id);
 
             contentBox.css({
                 width: "100%",
                 height: "100%",
                 padding: "0"
-            }).append($("#" + id));
+            }).append(obj);
+
+            contentBox.css({
+                height: (contentBox.height() - 30) + "px"
+            });
+
+            var img = obj.find("img");
+
+            if (img.height() > img.width()) {
+                img.css({
+                    height: "100%",
+                    width: "auto"
+                });
+            } else {
+                img.css({
+                    height: "auto",
+                    width: "100%"
+                });
+            }
+
+            init_imgselectarea();
         });
     }
 })(jQuery);
