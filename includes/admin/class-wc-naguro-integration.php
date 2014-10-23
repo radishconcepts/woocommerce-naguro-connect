@@ -32,6 +32,18 @@ class WC_Naguro_Integration extends WC_Integration {
 				'type' 				=> 'text',
 				'default' 			=> get_option('naguro_api_url') // Backwards compat
 			),
+			'naguro_dimension_unit' => array(
+				'title' 			=> 'Dimension unit',
+				'description' 		=> '',
+				'type' 				=> 'select',
+				'options' => array(
+					'mm' => 'mm',
+					'cm' => 'cm',
+					'inch' => 'inch',
+					'yard' => 'yard',
+				),
+				'default' 			=> get_option('woocommerce_dimension_unit') // Backwards compat
+			),
 		);
 	}
 }
