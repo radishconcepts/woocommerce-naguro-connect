@@ -32,9 +32,10 @@ class WC_Naguro {
 	 * Prepare the administration panel specific files and classes
 	 */
 	private function admin_init() {
-		new WC_Naguro_Settings_Page();
 		new WC_Naguro_Product_Admin();
 		new WC_Naguro_Order_Admin();
+
+		add_filter( 'woocommerce_integrations', array( $this, 'add_integration' ), 10, 1 );
 	}
 
 	/**
@@ -42,6 +43,15 @@ class WC_Naguro {
 	 */
 	private function frontend_init() {
 		new WC_Naguro_Cart();
+	}
+
+	/**
+	 * @param $integrations array
+	 * @return array
+	 */
+	public function add_integration( $integrations ) {
+		$integrations[] = 'WC_Naguro_Integration';
+		return $integrations;
 	}
 
 	/**
