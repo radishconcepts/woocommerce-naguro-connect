@@ -272,9 +272,9 @@ class WC_Naguro_Settings_Panel {
 
 		$this->add_design_area_background_upload($rand);
 
-		echo "<p class='form-field'><button class='button'>Edit printable area</button></p>";
+		echo "<p class='form-field'><a class='button naguro-define-image-area'>Edit printable area</a></p>";
 
-		$this->add_design_area_printable_area($design_area);
+		$this->add_design_area_printable_area($design_area, $rand);
 	}
 
 	public function add_design_area_background_upload($rand) {
@@ -299,8 +299,8 @@ class WC_Naguro_Settings_Panel {
 		);
 	}
 
-	public function add_design_area_printable_area($design_area = array()) {
-		echo '<div class="naguro-printable-product">';
+	public function add_design_area_printable_area($design_area = array(), $rand) {
+		echo '<div class="naguro-printable-product" id="' . $rand . '">';
 
 		$this->add_design_area_print_width($design_area);
 		$this->add_design_area_print_height($design_area);
