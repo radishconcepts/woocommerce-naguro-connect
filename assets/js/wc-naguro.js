@@ -133,8 +133,8 @@
             var contentBox = $("#TB_ajaxContent");
             var obj = $("#" + id);
 
-            var x = obj.parent().find("input[name=naguro_designarea[output_width][]]");
-            var y = obj.parent().find("input[name=naguro_designarea[output_height][]]");
+            var x = obj.parent().find("input[name='naguro_designarea[output_width][]']").val();
+            var y = obj.parent().find("input[name='naguro_designarea[output_height][]']").val();
 
             contentBox.css({
                 width: "100%",
