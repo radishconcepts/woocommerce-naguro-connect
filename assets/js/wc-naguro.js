@@ -18,8 +18,20 @@
         bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
         bind_close_area($(".naguro-printable-area-save-button"));
 
-        bind_float_check();
+        bind_float_check($(".naguro-float-val"));
     });
+
+    function bind_float_check(element) {
+        element.on("keyup", function (e) {
+            if (this.value.match(/[^\d.]/g)) {
+                this.value = this.value.replace(/[^\d.]/g, '');
+            }
+        }).on("blur", function () {
+            if (this.value <= 0) {
+                this.value = 1;
+            }
+        });
+    }
 
     function bind_image_chosen(element) {
         element.on("change", readSingleFile);
