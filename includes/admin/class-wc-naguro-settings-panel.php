@@ -272,7 +272,7 @@ class WC_Naguro_Settings_Panel {
 
 		$this->add_design_area_background_upload($rand);
 
-		echo "<p class='form-field'><a class='button naguro-define-image-area'>Edit printable area</a></p>";
+		echo "<p class='form-field'><a class='button naguro-define-image-area' data-id='" . $rand . "'>Edit printable area</a></p>";
 
 		$this->add_design_area_printable_area($design_area, $rand);
 	}
