@@ -1,16 +1,5 @@
 (function ($) {
     $(window).load(function () {
-        $('ul.wc-tabs a').click(function(){
-           if (this.href.indexOf("woocommerce_naguro_settings") !== -1) {
-                //THANKS WC!
-                //setTimeout(init_imgselectarea, 50);
-           } else {
-               $('.naguro-printable-product img').imgAreaSelect({
-                   remove: true
-               });
-           }
-        });
-
         $("#naguro-add-new-design-area").click(function () {
             var copy = $(".naguro-design-areas-container-ghost .naguro-design-area").clone();
             randomizeId(copy);
@@ -28,6 +17,8 @@
 
         bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
         bind_close_area($(".naguro-printable-area-save-button"));
+
+        bind_float_check();
     });
 
     function bind_image_chosen(element) {
