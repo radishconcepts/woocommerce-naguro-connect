@@ -49,7 +49,7 @@
         });
     }
 
-    function init_imgselectarea() {
+    function init_imgselectarea(x, y) {
         $('.naguro-printable-product').each(function () {
             var obj = $(this);
             var img = obj.find("img");
@@ -79,6 +79,7 @@
                 y1: pos.y1,
                 x2: pos.x2,
                 y2: pos.y2,
+                aspectRatio: x + ":" + y,
                 onSelectEnd: handleSelection
             });
         });
@@ -132,6 +133,9 @@
             var contentBox = $("#TB_ajaxContent");
             var obj = $("#" + id);
 
+            var x = obj.parent().find("input[name=naguro_designarea[output_width][]]");
+            var y = obj.parent().find("input[name=naguro_designarea[output_height][]]");
+
             contentBox.css({
                 width: "100%",
                 height: "100%",
@@ -156,7 +160,7 @@
                 });
             }
 
-            init_imgselectarea();
+            init_imgselectarea(x, y);
         });
     }
 })(jQuery);
