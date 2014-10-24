@@ -89,7 +89,6 @@ class WC_Naguro_Settings_Panel {
 
 		$keys = array(
 			'name',
-			'size_description',
 			'output_width',
 			'output_height',
 			'print_width',
@@ -114,6 +113,9 @@ class WC_Naguro_Settings_Panel {
 
 		$this->remove_old_meta_fields($post_id);
 
+		$options = get_option('woocommerce_wc_naguro_integration_settings');
+		$unit = $options['naguro_dimension_unit'];
+
 		// Save each design area as separate post meta objects
 		foreach ( $design_areas as $design_area ) {
 			if ( isset( $image_ids[ $design_area['upload_key'] ] ) ) {
@@ -123,6 +125,8 @@ class WC_Naguro_Settings_Panel {
 			} else {
 				$image_id = 0;
 			}
+
+			$design_area['size_description'] = $design_area['output_width'] . $unit . ' x ' . $design_area['output_height'] . $unit;
 
 			if ( 0 != $image_id ) {
 				$design_area['product_image_id'] = $image_id;
