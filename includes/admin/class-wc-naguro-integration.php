@@ -12,6 +12,7 @@ class WC_Naguro_Integration extends WC_Integration {
 
 		// Define user set variables
 		$this->naguro_api_key = $this->get_option( 'naguro_api_key' );
+		$this->naguro_dimension_unit = $this->get_option( 'naguro_dimension_unit' );
 
 		// Actions
 		add_action( 'woocommerce_update_options_integration_wc_naguro_integration', array( $this, 'process_admin_options') );
