@@ -32,7 +32,7 @@ class WC_Naguro_Cart {
 		global $product;
 
 		if ( $this->is_naguro_product( $product ) ) {
-			echo '<a href="'. $product->get_permalink() . '?designer" rel="nofollow" class="button product_type_simple">Design product</a>';
+			echo '<a href="'. $this->append_designer_arg_to_url( $product->get_permalink() ) .'" rel="nofollow" class="button product_type_simple">Design product</a>';
 		}
 	}
 
@@ -91,10 +91,14 @@ class WC_Naguro_Cart {
 	public function change_add_to_cart_url( $button, $product ) {
 		if ( $this->is_naguro_product( $product ) ) {
 			preg_match( '/<a[^>]*href="([^"]*)"[^>]*>.*<\/a>/', $button, $matches );
-			$button = str_replace( $matches[1], $product->get_permalink() . '?designer', $button );
+			$button = str_replace( $matches[1], $this->append_designer_arg_to_url( $product->get_permalink() ), $button );
 		}
 
 		return $button;
+	}
+
+	private function append_designer_arg_to_url( $url ) {
+		return add_query_arg( 'designer', '', $url );
 	}
 
 	/**
