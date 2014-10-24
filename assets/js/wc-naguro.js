@@ -1,16 +1,5 @@
 (function ($) {
     $(window).load(function () {
-        $('ul.wc-tabs a').click(function(){
-           if (this.href.indexOf("woocommerce_naguro_settings") !== -1) {
-                //THANKS WC!
-                setTimeout(init_imgselectarea, 50);
-           } else {
-               $('.naguro-printable-product img').imgAreaSelect({
-                   remove: true
-               });
-           }
-        });
-
         $("#naguro-add-new-design-area").click(function () {
             var copy = $(".naguro-design-areas-container-ghost .naguro-design-area").clone();
             randomizeId(copy);
@@ -18,11 +7,31 @@
 
             bind_image_chosen($("input[type=file]", copy));
             bind_remove_row($(".remove_row", copy));
+
+            bind_edit_area($(".naguro-define-image-area", copy));
+            bind_close_area($(".naguro-printable-area-save-button", copy));
         });
 
         bind_image_chosen($(".naguro-design-area input[type=file]"));
         bind_remove_row($(".naguro-design-area .remove_row"));
+
+        bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
+        bind_close_area($(".naguro-printable-area-save-button"));
+
+        bind_float_check($(".naguro-float-val"));
     });
+
+    function bind_float_check(element) {
+        element.on("keyup", function (e) {
+            if (this.value.match(/[^\d.]/g)) {
+                this.value = this.value.replace(/[^\d.]/g, '');
+            }
+        }).on("blur", function () {
+            if (this.value <= 0) {
+                this.value = 1;
+            }
+        });
+    }
 
     function bind_image_chosen(element) {
         element.on("change", readSingleFile);
@@ -46,9 +55,11 @@
             name: "naguro_designarea[image][" + rand + "]",
             id: "naguro_designarea[image][" + rand + "]"
         });
+        element.find(".naguro-define-image-area").attr("data-id", rand);
+        element.find(".naguro-printable-product").attr("id", rand);
     }
 
-    function init_imgselectarea() {
+    function init_imgselectarea(x, y) {
         $('.naguro-printable-product').each(function () {
             var obj = $(this);
             var img = obj.find("img");
@@ -78,6 +89,7 @@
                 y1: pos.y1,
                 x2: pos.x2,
                 y2: pos.y2,
+                aspectRatio: x + ":" + y,
                 onSelectEnd: handleSelection
             });
         });
@@ -120,7 +132,71 @@
 
     function placeImage(contents, designArea) {
         $(".naguro-printable-product img", designArea).attr("src", contents);
-        $(".naguro-upload-notice", designArea).remove();
-        init_imgselectarea();
+
+        open_design_area($(".naguro-define-image-area", designArea)[0]);
+    }
+
+    function bind_edit_area(element) {
+        element.on("click", function () {
+            open_design_area(this);
+        });
+    }
+
+    function open_design_area(element) {
+        tb_show("Define the printable area", "#TB_inline&modal=true");
+
+        var id = element.getAttribute("data-id");
+        var contentBox = $("#TB_ajaxContent");
+        var obj = $("#" + id);
+
+        var x = obj.parent().find("input[name='naguro_designarea[output_width][]']").val();
+        var y = obj.parent().find("input[name='naguro_designarea[output_height][]']").val();
+
+        contentBox.css({
+            width: "100%",
+            height: "100%",
+            padding: "0"
+        }).append(obj);
+
+        contentBox.css({
+            height: (contentBox.height() - 30) + "px"
+        });
+
+        var img = obj.find("img");
+
+        if (img.height() > img.width()) {
+            img.css({
+                height: "100%",
+                width: "auto"
+            });
+        } else {
+            img.css({
+                height: "auto",
+                width: "100%"
+            });
+        }
+
+        //remove close...
+        $("#TB_overlay").off("click");
+        $("#TB_closeAjaxWindow").remove();
+
+        init_imgselectarea(x, y);
+    }
+
+    function bind_close_area(element) {
+        element.on("click", function (e) {
+            e.preventDefault();
+
+            $(this).parent().find('img').imgAreaSelect({
+                remove: true
+            });
+
+            var parent = $(this).parent();
+            var target = $("input[value=" + parent.attr("id") + "]");
+
+            $(this).parent().appendTo(target.parent());
+
+            tb_remove();
+        });
     }
 })(jQuery);

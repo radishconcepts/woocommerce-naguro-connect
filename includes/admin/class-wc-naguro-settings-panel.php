@@ -1,6 +1,8 @@
 <?php
 
 class WC_Naguro_Settings_Panel {
+	private $units = "mm";
+
 	public function __construct() {
 		add_filter( 'woocommerce_product_data_tabs', array( $this, 'product_data_tabs' ), 10, 1 );
 
@@ -9,11 +11,21 @@ class WC_Naguro_Settings_Panel {
 
 		add_action( 'post_edit_form_tag' , array( $this, 'post_edit_form_tag' ) );
 
-		wp_enqueue_script("wc-naguro", NAGURO_PLUGIN_URL . "assets/js/wc-naguro.js");
+		add_action( 'admin_enqueue_scripts' , array( $this, 'add_assets' ) );
+
+		$options = get_option('woocommerce_wc_naguro_integration_settings');
+		$this->units = ( $options['naguro_dimension_unit'] ? $options['naguro_dimension_unit'] : get_option('woocommerce_dimension_unit', $this->units) );
+	}
+
+	public function add_assets() {
+		wp_enqueue_script("wc-naguro", NAGURO_PLUGIN_URL . "assets/js/wc-naguro.js", array("jquery"));
 		wp_enqueue_style("wc-naguro", NAGURO_PLUGIN_URL . "assets/css/wc-naguro.css");
 
 		wp_enqueue_script("imgareaselect", NAGURO_PLUGIN_URL . "assets/imgareaselect/jquery.imgareaselect.min.js", array("jquery"));
 		wp_enqueue_style("imgareaselect", NAGURO_PLUGIN_URL . "assets/imgareaselect/imgareaselect-default.css");
+
+		wp_enqueue_style('thickbox');
+		wp_enqueue_script('thickbox');
 	}
 
 	public function post_edit_form_tag() {
@@ -77,7 +89,6 @@ class WC_Naguro_Settings_Panel {
 
 		$keys = array(
 			'name',
-			'size_description',
 			'output_width',
 			'output_height',
 			'print_width',
@@ -102,6 +113,9 @@ class WC_Naguro_Settings_Panel {
 
 		$this->remove_old_meta_fields($post_id);
 
+		$options = get_option('woocommerce_wc_naguro_integration_settings');
+		$unit = $options['naguro_dimension_unit'];
+
 		// Save each design area as separate post meta objects
 		foreach ( $design_areas as $design_area ) {
 			if ( isset( $image_ids[ $design_area['upload_key'] ] ) ) {
@@ -111,6 +125,8 @@ class WC_Naguro_Settings_Panel {
 			} else {
 				$image_id = 0;
 			}
+
+			$design_area['size_description'] = $design_area['output_width'] . $unit . ' x ' . $design_area['output_height'] . $unit;
 
 			if ( 0 != $image_id ) {
 				$design_area['product_image_id'] = $image_id;
@@ -196,7 +212,6 @@ class WC_Naguro_Settings_Panel {
 		$this->add_remove_button();
 
 		$this->add_design_area_name($design_area);
-		$this->add_design_area_size_description($design_area);
 		$this->add_design_area_output_width($design_area);
 		$this->add_design_area_output_height($design_area);
 		$this->add_design_area_background($design_area);
@@ -216,20 +231,8 @@ class WC_Naguro_Settings_Panel {
 			"label"         => "Name",
 			"placeholder"   => "Name of the design area",
 			"name"          => $name,
+			"class"         => "",
 			"value"         => (isset($design_area["name"]) ? $design_area["name"] : "" )
-		));
-	}
-
-	public function add_design_area_size_description($design_area = array()) {
-		$name = WC_Naguro::$prefix . "designarea[size_description][]";
-
-		woocommerce_wp_text_input(array(
-			"id"            => $name,
-			"label"         => "Size description",
-			"placeholder"   => "Size description",
-			"description"   => "Textual description that will be shown in the Naguro designer (eg '25mm x 12.3mm')",
-			"name"          => $name,
-			"value"         => (isset($design_area["size_description"]) ? $design_area["size_description"] : "" )
 		));
 	}
 
@@ -240,9 +243,10 @@ class WC_Naguro_Settings_Panel {
 			"id"            => $name,
 			"label"         => "Print width",
 			"placeholder"   => "Width of the printable area",
-			"description"   => "Width of the printable area in millimeters without the unit (eg '25')",
+			"description"   => "Width of the printable area in " . $this->units . " without the unit (eg '25')",
 			"name"          => $name,
-			"value"         => (isset($design_area["output_width"]) ? $design_area["output_width"] : "" )
+			"class"         => "naguro-float-val",
+			"value"         => (isset($design_area["output_width"]) ? $design_area["output_width"] : "10" )
 		));
 	}
 
@@ -253,9 +257,10 @@ class WC_Naguro_Settings_Panel {
 			"id"            => $name,
 			"label"         => "Print height",
 			"placeholder"   => "Height of the printable area",
-			"description"   => "Height of the printable area in millimeters without the unit (eg '12.5')",
+			"description"   => "Height of the printable area in " . $this->units . " without the unit (eg '12.5')",
 			"name"          => $name,
-			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "" )
+			"class"         => "naguro-float-val",
+			"value"         => (isset($design_area["output_height"]) ? $design_area["output_height"] : "10" )
 		));
 	}
 
@@ -263,15 +268,11 @@ class WC_Naguro_Settings_Panel {
 		$rand = rand(10000, 99999);
 		$this->add_design_area_upload_key($rand);
 
-		if (isset($design_area['product_image'])) {
-			$this->add_design_area_background_upload($rand);
-			echo "<p class='naguro-text-container'>Define the printable area:</p>";
-		} else {
-			$this->add_design_area_background_upload($rand);
-			echo "<p class='naguro-upload-notice'>Choose an image before defining the printable area.</p>";
-		}
+		$this->add_design_area_background_upload($rand);
 
-		$this->add_design_area_printable_area($design_area);
+		echo "<p class='form-field'><a class='button naguro-define-image-area' data-id='" . $rand . "'>Edit printable area</a></p>";
+
+		$this->add_design_area_printable_area($design_area, $rand);
 	}
 
 	public function add_design_area_background_upload($rand) {
@@ -283,6 +284,7 @@ class WC_Naguro_Settings_Panel {
 			"description"   => "Upload an image that will serve as the image that will be designed on",
 			"name"          => $name,
 			"value"         => "",
+			"class"         => "",
 			"type"          => "file"
 		));
 	}
@@ -295,8 +297,8 @@ class WC_Naguro_Settings_Panel {
 		);
 	}
 
-	public function add_design_area_printable_area($design_area = array()) {
-		echo '<div class="naguro-printable-product">';
+	public function add_design_area_printable_area($design_area = array(), $rand) {
+		echo '<div class="naguro-printable-product" id="' . $rand . '">';
 
 		$this->add_design_area_print_width($design_area);
 		$this->add_design_area_print_height($design_area);
@@ -315,13 +317,15 @@ class WC_Naguro_Settings_Panel {
 			echo '<img src="" />';
 		}
 
+		echo '<a href="#" class="button naguro-printable-area-save-button">Save printable area</a>';
+
 		echo '</div>';
 	}
 
 	public function add_design_area_print_width($design_area = array()) {
 		$this->hidden_input(
 			WC_Naguro::$prefix . "designarea[print_width][]",
-			(isset($design_area["print_width"]) ? $design_area["print_width"] : "" ),
+			(isset($design_area["print_width"]) ? $design_area["print_width"] : "0" ),
 			WC_Naguro::$prefix . "designarea_print_width"
 		);
 	}
@@ -329,7 +333,7 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area_print_height($design_area = array()) {
 		$this->hidden_input(
 			WC_Naguro::$prefix . "designarea[print_height][]",
-			(isset($design_area["print_height"]) ? $design_area["print_height"] : "" ),
+			(isset($design_area["print_height"]) ? $design_area["print_height"] : "0" ),
 			WC_Naguro::$prefix . "designarea_print_height"
 		);
 	}
@@ -337,7 +341,7 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area_left($design_area = array()) {
 		$this->hidden_input(
 			WC_Naguro::$prefix . "designarea[left][]",
-			(isset($design_area["left"]) ? $design_area["left"] : "" ),
+			(isset($design_area["left"]) ? $design_area["left"] : "0" ),
 			WC_Naguro::$prefix . "designarea_left"
 		);
 	}
@@ -345,7 +349,7 @@ class WC_Naguro_Settings_Panel {
 	public function add_design_area_top($design_area = array()) {
 		$this->hidden_input(
 			WC_Naguro::$prefix . "designarea[top][]",
-			(isset($design_area["top"]) ? $design_area["top"] : "" ),
+			(isset($design_area["top"]) ? $design_area["top"] : "0" ),
 			WC_Naguro::$prefix . "designarea_top"
 		);
 	}
