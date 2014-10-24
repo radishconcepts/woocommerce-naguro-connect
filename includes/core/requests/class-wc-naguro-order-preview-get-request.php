@@ -16,6 +16,9 @@ class WC_Naguro_Order_Preview_Get_Request extends WC_Naguro_Request {
 			}
 		}
 
+		$options = get_option('woocommerce_wc_naguro_integration_settings');
+		$dimension_unit = isset( $options['naguro_dimension_unit'] ) ? $options['naguro_dimension_unit'] : get_option('woocommerce_dimension_unit');
+
 		$this->params['design_area_array'] = array();
 		foreach ( $design_areas as $key => $design_area ) {
 			$image_src = wp_get_attachment_image_src( $design_area['product_image_id'], 'full' );
@@ -26,9 +29,12 @@ class WC_Naguro_Order_Preview_Get_Request extends WC_Naguro_Request {
 				'width' => $width,
 				'perc_width' => $design_area['print_width'],
 				'original_width' => $image_src[1],
+				'output_width' => $design_area['output_width'],
 				'height' => $height,
 				'perc_height' => $design_area['print_height'],
 				'original_height' => $image_src[2],
+				'output_height' => $design_area['output_height'],
+				'dimension_unit' => $dimension_unit,
 			);
 		}
 
