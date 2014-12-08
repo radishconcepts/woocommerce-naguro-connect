@@ -14,7 +14,7 @@ class WC_Naguro_Order_Admin {
 				$output_array[] = '<b>Download designs:</b> ';
 
 				foreach ( $session_object['preview'] as $key => $objects ) {
-					$output_array[] = '<a href="' . $objects['src'] . '">' . $design_areas[ $key ]['name'] . '</a>';
+					$output_array[] = '<a href="' . $objects['full_size_src'] . '">' . $design_areas[ $key ]['name'] . '</a>';
 				}
 
 				echo array_shift( $output_array );
