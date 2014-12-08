@@ -46,6 +46,7 @@ class WC_Naguro_Order_Preview_Get_Request extends WC_Naguro_Request {
 		foreach ( $output_data as $part ) {
 			$output_array[] = array(
 				'src'            => $part->src,
+				'full_size_src'  => $part->full_size_src,
 				'design_area_id' => $part->design_area_id,
 			);
 		}
