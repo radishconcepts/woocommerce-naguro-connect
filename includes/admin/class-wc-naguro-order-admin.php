@@ -14,7 +14,9 @@ class WC_Naguro_Order_Admin {
 				$output_array[] = '<b>Download designs:</b> ';
 
 				foreach ( $session_object['preview'] as $key => $objects ) {
-					$output_array[] = '<a href="' . $objects['full_size_src'] . '">' . $design_areas[ $key ]['name'] . '</a>';
+					// Check if 'full_size_src' is set, or else return just 'src' for backwards compatibility
+					$download_link = ( isset( $objects['full_size_src'] ) ) ? $objects['full_size_src'] : $objects['src'];
+					$output_array[] = '<a href="' . $download_link . '">' . $design_areas[ $key ]['name'] . '</a>';
 				}
 
 				echo array_shift( $output_array );
