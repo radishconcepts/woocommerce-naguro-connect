@@ -21,7 +21,7 @@ class Naguro_WordPress_Dashboard extends Naguro_WordPress_Settings_Page {
 
 	private function display_api_settings() {
 		echo '<form action="" method="POST">';
-		echo '<h3>API key</h3>';
+		echo '<h3>Authentication</h3>';
 		echo '<p>Please enter your Naguro API key in the field below to authenticate with the API and activate your purchased modules.</p>';
 		echo '<label for="naguro_api_key">API key: </label>';
 		echo '<input type="text" value="' . esc_attr( get_option( 'naguro_api_key' ) ) . '" id="naguro_api_key" name="naguro_api_key">';
