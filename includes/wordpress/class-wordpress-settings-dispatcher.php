@@ -12,7 +12,7 @@ class Naguro_WordPress_Settings_Dispatcher {
 				new Naguro_WordPress_Modules();
 				break;
 			case 'settings':
-				new Naguro_WordPress_Settings();
+				new Naguro_WordPress_Settings_Page();
 				break;
 		}
 	}

@@ -1,6 +1,6 @@
 <?php
 
-class Naguro_WordPress_Dashboard extends Naguro_WordPress_Settings_Page {
+class Naguro_WordPress_Dashboard extends Abstract_Naguro_WordPress_Settings_Page {
 	public function __construct() {
 		$this->maybe_save_settings();
 		$this->output_tabs( 'dashboard' );
