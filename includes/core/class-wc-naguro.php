@@ -26,6 +26,14 @@ class WC_Naguro {
 
 		// Setup the Ajax dispatcher
 		$this->ajax_handler = new WC_Naguro_Ajax();
+
+		add_action( 'naguro_api_handler_class', array( $this, 'api_handler_class' ), 10, 0 );
+
+		new Naguro_WordPress_Menu();
+	}
+
+	public function api_handler_class() {
+		return 'WordPress_API_Handler';
 	}
 
 	/**
