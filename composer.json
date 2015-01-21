@@ -17,7 +17,9 @@
 		"classmap": [
 			"includes/abstracts",
 			"includes/admin",
-			"includes/core"
+			"includes/core",
+			"includes/naguro",
+			"includes/wordpress"
 		]
 	}
 }
