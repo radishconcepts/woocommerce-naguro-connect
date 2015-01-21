@@ -23,6 +23,11 @@ abstract class Naguro_WordPress_Settings_Page {
 					'label' => 'Modules',
 					'classes' => $base_classes,
 				),
+				'settings' => array(
+					'url' => $admin_url . '&tab=settings',
+					'label' => 'Settings',
+					'classes' => $base_classes,
+				),
 			);
 
 			foreach ( $tabs as $key => $tab ) {

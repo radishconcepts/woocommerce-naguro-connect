@@ -11,6 +11,9 @@ class Naguro_WordPress_Settings_Dispatcher {
 			case 'modules':
 				new Naguro_WordPress_Modules();
 				break;
+			case 'settings':
+				new Naguro_WordPress_Settings();
+				break;
 		}
 	}
 }
