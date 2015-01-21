@@ -9,8 +9,8 @@ class WP_API_Handler {
 
 	public function __construct() {
 		// Load API credentials from WC integration and fall back on older options (or false default)
-		$options = get_option('woocommerce_wc_naguro_integration_settings');
-		$this->api_key = ( isset( $options['naguro_api_key'] ) ) ? $options['naguro_api_key'] : get_option('naguro_api_key');
+		$options = get_option( 'naguro_settings' );
+		$this->api_key = $options['api_key'];
 		$this->api_url = apply_filters( 'wc_naguro_api_endpoint_url', 'http://api.naguro.com/api/v1/' );
 
 		if ( ! $this->api_key || ! $this->api_url ) {
