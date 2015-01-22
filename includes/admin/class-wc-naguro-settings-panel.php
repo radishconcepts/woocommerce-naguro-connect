@@ -13,8 +13,8 @@ class WC_Naguro_Settings_Panel {
 
 		add_action( 'admin_enqueue_scripts' , array( $this, 'add_assets' ) );
 
-		$options = get_option('woocommerce_wc_naguro_integration_settings');
-		$this->units = ( $options['naguro_dimension_unit'] ? $options['naguro_dimension_unit'] : get_option('woocommerce_dimension_unit', $this->units) );
+		$options = get_option('naguro_settings');
+		$this->units = ( $options['dimension_unit'] ? $options['dimension_unit'] : get_option('woocommerce_dimension_unit', $this->units) );
 	}
 
 	public function add_assets() {
@@ -113,8 +113,8 @@ class WC_Naguro_Settings_Panel {
 
 		$this->remove_old_meta_fields($post_id);
 
-		$options = get_option('woocommerce_wc_naguro_integration_settings');
-		$unit = $options['naguro_dimension_unit'];
+		$options = get_option('naguro_settings');
+		$unit = $options['dimension_unit'];
 
 		// Save each design area as separate post meta objects
 		foreach ( $design_areas as $design_area ) {

@@ -16,8 +16,8 @@ class WC_Naguro_Order_Preview_Get_Request extends WC_Naguro_Request {
 			}
 		}
 
-		$options = get_option('woocommerce_wc_naguro_integration_settings');
-		$dimension_unit = isset( $options['naguro_dimension_unit'] ) ? $options['naguro_dimension_unit'] : get_option('woocommerce_dimension_unit');
+		$options = get_option('naguro_settings');
+		$dimension_unit = isset( $options['dimension_unit'] ) ? $options['dimension_unit'] : get_option('woocommerce_dimension_unit');
 
 		$this->params['design_area_array'] = array();
 		foreach ( $design_areas as $key => $design_area ) {

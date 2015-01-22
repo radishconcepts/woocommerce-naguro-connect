@@ -1,6 +1,6 @@
 <?php
 
-abstract class Naguro_WordPress_Settings_Page {
+abstract class Abstract_Naguro_WordPress_Settings_Page {
 	protected function output_tabs( $active_tab = 'dashboard' ) {
 		do_action( 'naguro_before_output_tabs' );
 
@@ -21,6 +21,11 @@ abstract class Naguro_WordPress_Settings_Page {
 				'modules' => array(
 					'url' => $admin_url . '&tab=modules',
 					'label' => 'Modules',
+					'classes' => $base_classes,
+				),
+				'settings' => array(
+					'url' => $admin_url . '&tab=settings',
+					'label' => 'Settings',
 					'classes' => $base_classes,
 				),
 			);

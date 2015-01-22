@@ -30,6 +30,7 @@ class WC_Naguro {
 		add_action( 'naguro_api_handler_class', array( $this, 'api_handler_class' ), 10, 0 );
 
 		new Naguro_WordPress_Menu();
+		new Naguro_WordPress_Settings_Init();
 	}
 
 	public function api_handler_class() {
@@ -42,8 +43,6 @@ class WC_Naguro {
 	private function admin_init() {
 		new WC_Naguro_Product_Admin();
 		new WC_Naguro_Order_Admin();
-
-		add_filter( 'woocommerce_integrations', array( $this, 'add_integration' ), 10, 1 );
 	}
 
 	/**
@@ -51,15 +50,6 @@ class WC_Naguro {
 	 */
 	private function frontend_init() {
 		new WC_Naguro_Cart();
-	}
-
-	/**
-	 * @param $integrations array
-	 * @return array
-	 */
-	public function add_integration( $integrations ) {
-		$integrations[] = 'WC_Naguro_Integration';
-		return $integrations;
 	}
 
 	/**

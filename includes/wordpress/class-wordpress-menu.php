@@ -6,7 +6,7 @@ class Naguro_WordPress_Menu {
 	}
 
 	public function add_menu() {
-		add_menu_page( 'Naguro', 'Naguro', 'manage_options', 'woocommerce-naguro', array( $this, 'menu_callback' ), null, 26 );
+		add_menu_page( 'Naguro', 'Naguro', 'manage_options', 'woocommerce-naguro', array( $this, 'menu_callback' ), null, 27 );
 	}
 
 	public function menu_callback() {
