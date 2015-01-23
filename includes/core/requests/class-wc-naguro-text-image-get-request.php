@@ -1,12 +1,13 @@
 <?php
 
-class WC_Naguro_Text_Image_Get_Request extends WC_Naguro_Request {
+class WC_Naguro_Text_Image_Get_Request extends Naguro_Request {
 	public function output() {
 		if ( strstr( $this->params['colour'], '#' ) ) {
 			$this->params['colour'] = str_replace('#', '', $this->params['colour']);
 		}
 
-		$data = $this->handler->handle_request('text-image', $this->params, 'post' );
+		$this->handler->handle_request('text-image', $this->params, 'post' );
+		$data = $this->handler->get_data();
 		$output_data = json_decode( $data['body'] );
 
 		$output_array = array(

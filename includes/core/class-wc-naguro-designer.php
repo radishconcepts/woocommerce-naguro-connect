@@ -6,7 +6,7 @@ class WC_Naguro_Designer {
 	 */
 	private $product;
 
-	/** @var WC_Naguro_Session */
+	/** @var Naguro_Session_Model */
 	private $session;
 
 	/** @var array */
@@ -28,7 +28,7 @@ class WC_Naguro_Designer {
 	}
 
 	private function prepare_request() {
-		$this->session = new WC_Naguro_Session();
+		$this->session = new Naguro_Session_Model();
 		$this->session->set( 'product_id', $this->product->id);
 		WC()->session->set('naguro_session_id', $this->session->get_id());
 

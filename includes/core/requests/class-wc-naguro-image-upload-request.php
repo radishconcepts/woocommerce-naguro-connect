@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Image_Upload_Request extends WC_Naguro_Request {
+class WC_Naguro_Image_Upload_Request extends Naguro_Request {
 	public function output() {
 		foreach ( $_FILES as $key => $file ) {
 			if ( ! empty( $file['name'] ) && 4 != $file['error'] ) {

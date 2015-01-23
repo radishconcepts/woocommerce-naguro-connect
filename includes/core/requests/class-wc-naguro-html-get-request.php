@@ -1,8 +1,9 @@
 <?php
 
-class WC_Naguro_HTML_Get_Request extends WC_Naguro_Request {
+class WC_Naguro_HTML_Get_Request extends Naguro_Request {
 	public function get() {
-		$data = $this->handler->handle_request('get-html', $this->params, 'get' );
+		$this->handler->handle_request('get-html', $this->params, 'get' );
+		$data = $this->handler->get_data();
 		$body = json_decode( $data['body'] );
 
 		return array(
