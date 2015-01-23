@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Session {
+class Naguro_Session_Model extends Naguro_Model {
 	/** @var int */
 	private $id;
 

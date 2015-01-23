@@ -1,21 +1,18 @@
 <?php
 
-class WP_API_Handler {
+class WordPress_API_Handler implements Naguro_API_Handler {
 	/** @var string */
 	private $activation_key;
 
 	/** @var string */
 	private $api_url;
 
+	/** @var mixed */
+	private $data;
+
 	public function __construct() {
-		// Load API credentials from WC integration and fall back on older options (or false default)
-		$options = get_option( 'naguro_settings' );
 		$this->activation_key = get_option( 'naguro_activation_key' );
 		$this->api_url = apply_filters( 'wc_naguro_api_endpoint_url', 'http://api.naguro.com/api/v1/' );
-
-		if ( ! $this->activation_key || ! $this->api_url ) {
-			wp_die('No valid API credentials provided...');
-		}
 	}
 
 	public function handle_request( $endpoint, $params = array(), $type = 'post' ) {
@@ -28,7 +25,15 @@ class WP_API_Handler {
 			$data = $this->post_request( $url, $params );
 		}
 
-		return $data;
+		$this->data = $data;
+	}
+
+	public function is_error() {
+		return is_wp_error( $this->data );
+	}
+
+	public function get_data() {
+		return $this->data;
 	}
 
 	private function generate_api_endpoint_url( $endpoint ) {

@@ -1,13 +1,13 @@
 <?php
 
-abstract class WC_Naguro_Request {
+abstract class Naguro_Request {
 	/** @var array */
 	protected $params;
 
-	/** @var WC_Naguro_Session */
+	/** @var Naguro_Session_Model */
 	protected $session;
 
-	/** @var WP_API_Handler */
+	/** @var Naguro_API_Handler */
 	protected $handler;
 
 	/**
@@ -22,7 +22,7 @@ abstract class WC_Naguro_Request {
 			$this->params['session_id'] = $this->params['session'];
 		}
 
-		$this->session = new WC_Naguro_Session( $this->params['session_id'] );
-		$this->handler = new WP_API_Handler();
+		$this->session = new Naguro_Session_Model( $this->params['session_id'] );
+		$this->handler = Naguro_API_Handlers_Repository::get_handler();
 	}
 }
