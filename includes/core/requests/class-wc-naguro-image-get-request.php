@@ -14,7 +14,8 @@ class WC_Naguro_Image_Get_Request extends Naguro_Request {
 				$height = $image_src[2];
 
 				$this->params['src'] = base64_encode(file_get_contents($src));
-				$data = $this->handler->handle_request('resize-image', $this->params, 'post' );
+				$this->handler->handle_request('resize-image', $this->params, 'post' );
+				$data = $this->handler->get_data();
 				$body = json_decode( $data['body'] );
 				$src = $body->filename;
 

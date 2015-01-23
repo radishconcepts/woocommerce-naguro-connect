@@ -38,7 +38,8 @@ class WC_Naguro_Order_Preview_Get_Request extends Naguro_Request {
 			);
 		}
 
-		$data = $this->handler->handle_request('order-preview', $this->params, 'post' );
+		$this->handler->handle_request('order-preview', $this->params, 'post' );
+		$data = $this->handler->get_data();
 		$output_array = array();
 
 		$output_data = json_decode( $data['body'] );
