@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Fonts_Get_Request extends WC_Naguro_Request {
+class WC_Naguro_Fonts_Get_Request extends Naguro_Request {
 	public function output() {
 		$data = $this->handler->handle_request('fonts', $this->params, 'get' );
 		$fonts = json_decode( $data['body'] );

@@ -1,8 +1,8 @@
 <?php
 
-class WC_Naguro_Order_Preview_Get_Request extends WC_Naguro_Request {
+class WC_Naguro_Order_Preview_Get_Request extends Naguro_Request {
 	public function output() {
-		$session = new WC_Naguro_Session( $this->params['session'] );
+		$session = new Naguro_Session_Model( $this->params['session'] );
 		$design_areas = get_post_meta( $session->get('product_id'), 'naguro_design_area' );
 
 		foreach ( $_POST['data'] as $key => $subtype ) {
