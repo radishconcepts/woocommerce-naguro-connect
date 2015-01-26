@@ -15,7 +15,6 @@
 	},
 	"autoload": {
 		"classmap": [
-			"includes/abstracts",
 			"includes/admin",
 			"includes/core",
 			"includes/naguro",
