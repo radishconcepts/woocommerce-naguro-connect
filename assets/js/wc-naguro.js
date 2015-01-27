@@ -159,12 +159,12 @@
         }).append(obj);
 
         contentBox.css({
-            height: (contentBox.height() - 30) + "px"
+            height: (contentBox.height() - 90) + "px"
         });
 
         var img = obj.find("img");
 
-        if (img.height() > img.width()) {
+        if (img.height() >= img.width()) {
             img.css({
                 height: "100%",
                 width: "auto"
