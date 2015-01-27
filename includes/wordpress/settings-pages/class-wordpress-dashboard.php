@@ -1,6 +1,8 @@
 <?php
 
 class Naguro_WordPress_Dashboard extends Abstract_Naguro_WordPress_Settings_Page {
+	private $errors = array();
+
 	public function __construct() {
 		$this->maybe_save_settings();
 		$this->output_tabs( 'dashboard' );
@@ -28,14 +30,38 @@ class Naguro_WordPress_Dashboard extends Abstract_Naguro_WordPress_Settings_Page
 
 			$data = $request->do_request();
 			$data = json_decode( $data['body'] );
-			$key = $data->key->api_key;
-			$this->request_activation_key( $key );
+			if ( isset( $data->error ) ) {
+				$this->add_error_message( $data->error->message );
+			} else {
+				$key = $data->key->api_key;
+				$this->request_activation_key( $key );
+			}
 		} elseif ( isset( $_POST['naguro_api_key'] ) ) {
 			$this->request_activation_key( $_POST['naguro_api_key'] );
 		}
 	}
 
+	private function add_error_message($message) {
+		if ( is_object( $message ) ) {
+			foreach ( $message as $error ) {
+				foreach ( $error as $ding ) {
+					$this->errors[] = $ding;
+				}
+			}
+
+			return;
+		}
+
+		$this->errors[] = $message;
+	}
+
 	private function display_api_settings() {
+		if ( ! empty( $this->errors ) ) {
+			echo '<div id="message" class="error">';
+			echo '<p>' . implode( ', ', $this->errors ) . '</p>';
+			echo '</div>';
+		}
+
 		echo '<form action="" method="POST">';
 		echo '<h3>Request trial API key</h3>';
 		echo '<p>You can request a 30 day trial key here, so you can try Naguro for free.</p>';
@@ -55,7 +81,6 @@ class Naguro_WordPress_Dashboard extends Abstract_Naguro_WordPress_Settings_Page
 
 	private function request_activation_key( $key ) {
 		$key = sanitize_text_field( $key );
-		update_option( 'naguro_api_key', $key );
 
 		$request = new Naguro_Activate_Key_Request( array(
 			'api_key'  => $key,
@@ -64,7 +89,13 @@ class Naguro_WordPress_Dashboard extends Abstract_Naguro_WordPress_Settings_Page
 
 		$data = $request->do_request();
 		$data = json_decode( $data['body'] );
-		$key = $data->activation->activation_key;
-		update_option( 'naguro_activation_key', $key );
+
+		if ( isset( $data->error ) ) {
+			$this->add_error_message( $data->error->message );
+		} else {
+			update_option( 'naguro_api_key', $key );
+			$key = $data->activation->activation_key;
+			update_option( 'naguro_activation_key', $key );
+		}
 	}
 }
