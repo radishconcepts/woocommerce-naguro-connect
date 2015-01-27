@@ -17,8 +17,9 @@ class Naguro_WordPress_Dashboard extends Abstract_Naguro_WordPress_Settings_Page
 	}
 
 	private function display_authenticated_message() {
-		echo '<h3>Welcome to Naguro</h3>';
-		echo '<p>Your Naguro account is linked to this website and is ready to be used.</p>';
+		echo '<h3>Congratulations, Naguro is ready to use</h3>';
+		echo '<p>It\'s pretty easy to configure Naguro for your products and review ordered items.</p>';
+		echo '<p>If you need any help on how to do this, please visit our <a href="https://www.naguro.com/installation">Installation page</a>.</p>';
 	}
 
 	private function maybe_save_settings() {
