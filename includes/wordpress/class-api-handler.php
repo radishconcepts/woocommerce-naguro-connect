@@ -12,7 +12,7 @@ class WordPress_API_Handler implements Naguro_API_Handler {
 
 	public function __construct() {
 		$this->activation_key = get_option( 'naguro_activation_key' );
-		$this->api_url = apply_filters( 'wc_naguro_api_endpoint_url', 'http://api.naguro.com/api/v1/' );
+		$this->api_url = apply_filters( 'wc_naguro_api_endpoint_url', 'https://api.naguro.com/api/v1/' );
 	}
 
 	public function handle_request( $endpoint, $params = array(), $type = 'post' ) {
