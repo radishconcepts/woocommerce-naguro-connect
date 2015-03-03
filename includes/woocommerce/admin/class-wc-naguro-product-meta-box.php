@@ -1,17 +1,12 @@
 <?php
 
-class WC_Naguro_Settings_Panel {
+class WC_Naguro_Product_Meta_Box {
+	/** @var string */
 	private $units = "mm";
 
 	public function __construct() {
-		add_filter( 'woocommerce_product_data_tabs', array( $this, 'product_data_tabs' ), 10, 1 );
-
-		add_action( 'woocommerce_process_product_meta', array( $this, 'save_panel_settings' ), 10, 1 );
-		add_action( 'woocommerce_product_data_panels', array( $this, 'product_data_panels' ), 10, 0 );
-
-		add_action( 'post_edit_form_tag' , array( $this, 'post_edit_form_tag' ) );
-
 		add_action( 'admin_enqueue_scripts' , array( $this, 'add_assets' ) );
+		add_action( 'post_edit_form_tag' , array( $this, 'post_edit_form_tag' ) );
 
 		$options = get_option('naguro_settings');
 		$this->units = ( $options['dimension_unit'] ? $options['dimension_unit'] : get_option('woocommerce_dimension_unit', $this->units) );
@@ -32,122 +27,15 @@ class WC_Naguro_Settings_Panel {
 		echo ' enctype="multipart/form-data"';
 	}
 
-	public function product_data_tabs( $tabs ) {
-		$tabs['naguro'] = array(
-			'label'  => __( 'Naguro', 'woocommerce-naguro-connect' ),
-			'target' => 'woocommerce_naguro_settings',
-			'class'  => array( 'show_if_naguro' ),
-		);
-
-		return $tabs;
-	}
-
-	public function save_panel_settings( $post_id ) {
-		// START checkbox save
-		if ( isset( $_POST[ WC_Naguro::$prefix . "exists" ] ) && 'yes' == $_POST[ WC_Naguro::$prefix . "exists" ] ) {
-			$checkbox_value = 'yes';
-		} else {
-			$checkbox_value = 'no';
-		}
-
-		update_post_meta( $post_id, 'naguro_product_active', $checkbox_value );
-		// END checkbox save
-
-		// START file upload handler
-		$stack = $_FILES['naguro_designarea'];
-		$files = array();
-
-		$keys = array( 'name', 'type', 'tmp_name', 'error', 'size' );
-		// Loop through the posted keys and collect them per design area
-		foreach ( $keys as $key ) {
-			foreach( $stack[ $key ]['image'] as $item_key => $item ) {
-				$files[ $item_key ][ $key ] = $item;
-			}
-		}
-
-		foreach ( $files as $key => $file ) {
-			if ( 0 == $file['size'] && 4 == $file['error'] ) {
-				unset( $files[ $key ] );
-			}
-		}
-
-		$i = 0;
-		$image_ids = array();
-		foreach ( $files as $key => $file ) {
-			if ( empty( $file['name'] ) && 4 == $file['error'] ) {
-				$image_ids[$key] = 0;
-			} else {
-				$_FILES[ 'naguro_designarea_' . $i ] = $file;
-				$image_ids[$key] = media_handle_upload( 'naguro_designarea_' . $i, $post_id );
-			}
-			$i++;
-		}
-		// END file upload handler
-
-		$stack = $_POST['naguro_designarea'];
-		$design_areas = array();
-
-		$keys = array(
-			'name',
-			'output_width',
-			'output_height',
-			'print_width',
-			'print_height',
-			'left',
-			'top',
-			'product_image_id',
-			'upload_key'
-		);
-
-		// Loop through the posted keys and collect them per design area
-		foreach ( $keys as $key ) {
-			if ( isset( $stack[ $key ] ) ) {
-				foreach ( $stack[ $key ] as $item_key => $item ) {
-					$design_areas[ $item_key ][ $key ] = $item;
-				}
-			}
-		}
-
-		// Remove the first item off the array, as that's the empty ghost
-		array_shift( $design_areas );
-
-		$this->remove_old_meta_fields($post_id);
-
-		$options = get_option('naguro_settings');
-		$unit = $options['dimension_unit'];
-
-		// Save each design area as separate post meta objects
-		foreach ( $design_areas as $design_area ) {
-			if ( isset( $image_ids[ $design_area['upload_key'] ] ) ) {
-				$image_id = $image_ids[ $design_area['upload_key']];
-			} elseif ( isset( $design_area['product_image_id'] ) ) {
-				$image_id = $design_area['product_image_id'];
-			} else {
-				$image_id = 0;
-			}
-
-			$design_area['size_description'] = $design_area['output_width'] . $unit . ' x ' . $design_area['output_height'] . $unit;
-
-			if ( 0 != $image_id ) {
-				$design_area['product_image_id'] = $image_id;
-			}
-			add_post_meta( $post_id, 'naguro_design_area', $design_area, false );
-		}
-	}
-
-	private function remove_old_meta_fields( $post_id ) {
-		delete_post_meta($post_id, 'naguro_design_area');
-	}
-
-	public function product_data_panels() {
+	public function output( $post ) {
 		echo '<div id="woocommerce_naguro_settings" class="panel woocommerce_options_panel show_if_naguro">';
 
 		echo '<div class="options_group">';
-			$this->add_enable_checkbox();
+		$this->add_enable_checkbox();
 		echo '</div>';
 
 		echo '<div class="options_group">';
-			$this->add_design_areas();
+		$this->add_design_areas();
 		echo '</div>';
 
 		echo '</div>';
@@ -364,5 +252,102 @@ class WC_Naguro_Settings_Panel {
 
 	public function hidden_input($name, $value, $class = "") {
 		echo '<input type="hidden" name="' . $name . '" value="' . $value . '" class="' . $class . '" />';
+	}
+
+	public function save( $post_id ) {
+		// START checkbox save
+		if ( isset( $_POST[ WC_Naguro::$prefix . "exists" ] ) && 'yes' == $_POST[ WC_Naguro::$prefix . "exists" ] ) {
+			$checkbox_value = 'yes';
+		} else {
+			$checkbox_value = 'no';
+		}
+
+		update_post_meta( $post_id, 'naguro_product_active', $checkbox_value );
+		// END checkbox save
+
+		// START file upload handler
+		$stack = $_FILES['naguro_designarea'];
+		$files = array();
+
+		$keys = array( 'name', 'type', 'tmp_name', 'error', 'size' );
+		// Loop through the posted keys and collect them per design area
+		foreach ( $keys as $key ) {
+			foreach( $stack[ $key ]['image'] as $item_key => $item ) {
+				$files[ $item_key ][ $key ] = $item;
+			}
+		}
+
+		foreach ( $files as $key => $file ) {
+			if ( 0 == $file['size'] && 4 == $file['error'] ) {
+				unset( $files[ $key ] );
+			}
+		}
+
+		$i = 0;
+		$image_ids = array();
+		foreach ( $files as $key => $file ) {
+			if ( empty( $file['name'] ) && 4 == $file['error'] ) {
+				$image_ids[$key] = 0;
+			} else {
+				$_FILES[ 'naguro_designarea_' . $i ] = $file;
+				$image_ids[$key] = media_handle_upload( 'naguro_designarea_' . $i, $post_id );
+			}
+			$i++;
+		}
+		// END file upload handler
+
+		$stack = $_POST['naguro_designarea'];
+		$design_areas = array();
+
+		$keys = array(
+			'name',
+			'output_width',
+			'output_height',
+			'print_width',
+			'print_height',
+			'left',
+			'top',
+			'product_image_id',
+			'upload_key'
+		);
+
+		// Loop through the posted keys and collect them per design area
+		foreach ( $keys as $key ) {
+			if ( isset( $stack[ $key ] ) ) {
+				foreach ( $stack[ $key ] as $item_key => $item ) {
+					$design_areas[ $item_key ][ $key ] = $item;
+				}
+			}
+		}
+
+		// Remove the first item off the array, as that's the empty ghost
+		array_shift( $design_areas );
+
+		$this->remove_old_meta_fields($post_id);
+
+		$options = get_option('naguro_settings');
+		$unit = $options['dimension_unit'];
+
+		// Save each design area as separate post meta objects
+		foreach ( $design_areas as $design_area ) {
+			if ( isset( $image_ids[ $design_area['upload_key'] ] ) ) {
+				$image_id = $image_ids[ $design_area['upload_key']];
+			} elseif ( isset( $design_area['product_image_id'] ) ) {
+				$image_id = $design_area['product_image_id'];
+			} else {
+				$image_id = 0;
+			}
+
+			$design_area['size_description'] = $design_area['output_width'] . $unit . ' x ' . $design_area['output_height'] . $unit;
+
+			if ( 0 != $image_id ) {
+				$design_area['product_image_id'] = $image_id;
+			}
+			add_post_meta( $post_id, 'naguro_design_area', $design_area, false );
+		}
+	}
+
+	private function remove_old_meta_fields( $post_id ) {
+		delete_post_meta($post_id, 'naguro_design_area');
 	}
 }

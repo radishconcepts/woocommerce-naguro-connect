@@ -16,6 +16,9 @@ class WC_Naguro {
 	/** @var string */
 	static $prefix = "naguro_";
 
+	/** @var WC_Naguro_Product_Meta_Box */
+	private $product_data_meta_box;
+
 	public function __construct() {
 		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || false == DOING_AJAX ) ) {
 			$this->admin_init();
@@ -41,8 +44,17 @@ class WC_Naguro {
 	 * Prepare the administration panel specific files and classes
 	 */
 	private function admin_init() {
-		new WC_Naguro_Product_Admin();
 		new WC_Naguro_Order_Admin();
+
+		$this->product_data_meta_box = new WC_Naguro_Product_Meta_Box();
+		add_action( 'save_post', array( $this->product_data_meta_box, 'save' ), 10, 1 );
+
+		// Meta boxes loaded at priority 31 so the WooCommerce "Product Data" meta box is right above it
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 31 );
+	}
+
+	public function add_meta_boxes() {
+		add_meta_box( 'woocommerce-naguro-product-data', __( 'Naguro', 'woocommerce_naguro_connect' ), array( $this->product_data_meta_box, 'output' ), 'product', 'normal', 'high' );
 	}
 
 	/**
