@@ -1,6 +1,30 @@
 <?php
 
 class Naguro_Modules_Repository extends Naguro_Repository {
+	public static function get_locked_modules() {
+		$modules = self::get_modules();
+
+		foreach ( $modules as $key => $module ) {
+			if ( $module->unlocked ) {
+				unset( $modules[ $key ] );
+			}
+		}
+
+		return $modules;
+	}
+
+	public static function get_unlocked_modules() {
+		$modules = self::get_modules();
+
+		foreach ( $modules as $key => $module ) {
+			if ( ! $module->unlocked ) {
+				unset( $modules[ $key ] );
+			}
+		}
+
+		return $modules;
+	}
+
 	public static function get_modules() {
 		$core = new Naguro_Module_Model();
 		$core->name = 'Naguro core';
