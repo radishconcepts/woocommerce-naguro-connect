@@ -30,6 +30,8 @@ class WC_Naguro_Product_Meta_Box {
 	public function output( $post ) {
 		echo '<div id="woocommerce_naguro_settings" class="panel woocommerce_options_panel show_if_naguro">';
 
+		wp_nonce_field( 'woocommerce_naguro_product_meta_box', 'woocommerce_naguro_product_meta_box_nonce' );
+
 		echo '<div class="options_group">';
 		$this->add_enable_checkbox();
 		echo '</div>';
@@ -255,6 +257,20 @@ class WC_Naguro_Product_Meta_Box {
 	}
 
 	public function save( $post_id ) {
+		// Check if our nonce is set.
+		if ( ! isset( $_POST['woocommerce_naguro_product_meta_box_nonce'] ) ) {
+			return;
+		}
+
+		// Verify that the nonce is valid.
+		if ( ! wp_verify_nonce( $_POST['woocommerce_naguro_product_meta_box_nonce'], 'woocommerce_naguro_product_meta_box' ) ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
 		// START checkbox save
 		if ( isset( $_POST[ WC_Naguro::$prefix . "exists" ] ) && 'yes' == $_POST[ WC_Naguro::$prefix . "exists" ] ) {
 			$checkbox_value = 'yes';
