@@ -5,7 +5,7 @@ class Naguro_Modules_List extends WP_List_Table {
 		$columns = array(
 			'name' => 'Name',
 			'description' => 'Description',
-			'active' => 'Active',
+			'actions' => 'Actions',
 		);
 
 		return $columns;
@@ -24,11 +24,36 @@ class Naguro_Modules_List extends WP_List_Table {
 				return $item->name;
 			case 'description':
 				return $item->description;
-			case 'active':
-				return $item->active ? 'Yes' : 'No';
+			case 'actions':
+				return $this->get_actions( $item );
 			default:
 				return '';
 		}
+	}
+
+	/**
+	 * @return string
+	 */
+	private function get_actions( $item ) {
+		if ( $item->always_on ) {
+			return '';
+		}
+
+		if ( ! $item->unlocked ) {
+			$text = 'Get this module';
+
+			if ( ! empty( $item->purchase_url ) ) {
+				return '<a href="'.esc_url( $item->purchase_url ) . '">'. $text .'</a>';
+			}
+
+			return $text;
+		}
+
+		if ( ! $item->active ) {
+			return 'Activate this module';
+		}
+
+		return 'Active';
 	}
 
 	public function single_row( $item ) {

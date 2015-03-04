@@ -1,7 +1,10 @@
 <?php
 
 class Naguro_Module_Model extends Naguro_Model {
-	public $name;
+	public $name = '';
 	public $active = false;
-	public $description;
+	public $unlocked = false;
+	public $always_on = false;
+	public $description = '';
+	public $purchase_url = '';
 }

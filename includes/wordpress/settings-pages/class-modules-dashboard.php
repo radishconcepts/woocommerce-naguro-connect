@@ -11,7 +11,7 @@ class Naguro_WordPress_Modules extends Abstract_Naguro_WordPress_Settings_Page {
 		echo '<h3>Modules</h3>';
 		$list = new Naguro_Modules_List();
 		$list->prepare_items();
-		$list->items = Naguro_Modules_Repository::get_available_modules();
+		$list->items = Naguro_Modules_Repository::get_modules();
 		$list->display();
 	}
 }
