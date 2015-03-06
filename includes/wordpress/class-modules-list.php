@@ -53,9 +53,11 @@ class Naguro_Modules_List extends WP_List_Table {
 			$tab_link = '?page=woocommerce-naguro&tab=modules';
 			$activate_link = $tab_link . '&naguro-action=activate-module&naguro-module=' . $item->slug;
 			return '<a href="'.$activate_link.'">Activate this module</a>';
+		} else {
+			$tab_link = '?page=woocommerce-naguro&tab=modules';
+			$deactivate_link = $tab_link . '&naguro-action=deactivate-module&naguro-module=' . $item->slug;
+			return '<a href="'.$deactivate_link.'">Deactivate this module</a>';
 		}
-
-		return 'Active';
 	}
 
 	public function single_row( $item ) {
