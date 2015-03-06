@@ -63,11 +63,15 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 		$core->unlocked = true;
 		$core->always_on = true;
 
+		$modules[] = $core;
+
 		$overlay = new Naguro_Module_Model();
 		$overlay->slug = 'overlay';
 		$overlay->name = 'Overlay module';
 		$overlay->description = 'Allows you to add an overlay to your design areas.';
 		$overlay->unlocked = true;
+
+		$modules[] = $overlay;
 
 		$shirts = new Naguro_Module_Model();
 		$shirts->slug = 'shirt';
@@ -75,10 +79,16 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 		$shirts->description = 'Allow your customers to design t-shirts with ease.';
 		$shirts->purchase_url = 'https://www.naguro.com/';
 
-		return array(
-			$core,
-			$overlay,
-			$shirts,
-		);
+		$modules[] = $shirts;
+
+		$active_modules_array = get_option('naguro_active_modules', array() );
+
+		foreach ( $modules as $module ) {
+			if ( in_array( $module->slug, $active_modules_array ) ) {
+				$module->active = true;
+			}
+		}
+
+		return $modules;
 	}
 }
