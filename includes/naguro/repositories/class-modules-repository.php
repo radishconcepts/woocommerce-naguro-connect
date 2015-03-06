@@ -27,6 +27,7 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 
 	public static function get_modules() {
 		$core = new Naguro_Module_Model();
+		$core->slug = 'core';
 		$core->name = 'Naguro core';
 		$core->description = 'The core of Naguro, always active.';
 		$core->active = true;
@@ -34,11 +35,13 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 		$core->always_on = true;
 
 		$overlay = new Naguro_Module_Model();
+		$overlay->slug = 'overlay';
 		$overlay->name = 'Overlay module';
 		$overlay->description = 'Allows you to add an overlay to your design areas.';
 		$overlay->unlocked = true;
 
 		$shirts = new Naguro_Module_Model();
+		$shirts->slug = 'shirt';
 		$shirts->name = 'Shirt module';
 		$shirts->description = 'Allow your customers to design t-shirts with ease.';
 		$shirts->purchase_url = 'https://www.naguro.com/';
