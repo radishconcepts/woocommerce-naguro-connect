@@ -8,6 +8,12 @@ class Naguro_Modules_Page extends Abstract_Naguro_WordPress_Settings_Page {
 	}
 
 	private function display_module_list() {
+		if ( isset( $_GET['naguro-module-deactivated'] ) ) {
+			$this->display_module_deactivated_message();
+		} elseif ( isset( $_GET['naguro-module-activated'] ) ) {
+			$this->display_module_activated_message();
+		}
+
 		echo '<h3>Unlocked modules</h3>';
 		$list = new Naguro_Modules_List();
 		$list->prepare_items();
@@ -20,5 +26,17 @@ class Naguro_Modules_Page extends Abstract_Naguro_WordPress_Settings_Page {
 		$list->prepare_items();
 		$list->items = Naguro_Modules_Repository::get_locked_modules();
 		$list->display();
+	}
+
+	private function display_module_deactivated_message() {
+		echo '<div id="message" class="updated">';
+		echo '<p>Module has been deactivated</p>';
+		echo '</div>';
+	}
+
+	private function display_module_activated_message() {
+		echo '<div id="message" class="updated">';
+		echo '<p>Module has been deactivated</p>';
+		echo '</div>';
 	}
 }

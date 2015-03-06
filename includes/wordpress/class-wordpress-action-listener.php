@@ -27,6 +27,8 @@ class Naguro_WordPress_Action_Listener {
 		}
 
 		$module->activate();
+		wp_redirect( admin_url('?page=woocommerce-naguro&tab=modules&naguro-module-activated='.$module->slug) );
+		exit;
 	}
 
 	private function deactivate_module() {
@@ -41,5 +43,7 @@ class Naguro_WordPress_Action_Listener {
 		}
 
 		$module->deactivate();
+		wp_redirect( admin_url('?page=woocommerce-naguro&tab=modules&naguro-module-deactivated='.$module->slug) );
+		exit;
 	}
 }
