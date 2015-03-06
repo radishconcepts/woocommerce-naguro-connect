@@ -36,7 +36,7 @@ class Naguro_Modules_Page extends Abstract_Naguro_WordPress_Settings_Page {
 
 	private function display_module_activated_message() {
 		echo '<div id="message" class="updated">';
-		echo '<p>Module has been deactivated</p>';
+		echo '<p>Module has been activated</p>';
 		echo '</div>';
 	}
 }
