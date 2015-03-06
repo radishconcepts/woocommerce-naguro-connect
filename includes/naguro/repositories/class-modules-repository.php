@@ -1,6 +1,35 @@
 <?php
 
 class Naguro_Modules_Repository extends Naguro_Repository {
+
+	/**
+	 * @param $slug
+	 * @return Naguro_Module_Model
+	 */
+	public static function get_module_by_slug( $slug ) {
+		$modules = self::get_modules();
+
+		foreach ( $modules as $key => $module ) {
+			if ( $module->slug === $slug ) {
+				return $module;
+			}
+		}
+
+		return false;
+	}
+
+	public static function get_active_modules() {
+		$modules = self::get_modules();
+
+		foreach ( $modules as $key => $module ) {
+			if ( ! $module->active ) {
+				unset( $modules[ $key ] );
+			}
+		}
+
+		return $modules;
+	}
+
 	public static function get_locked_modules() {
 		$modules = self::get_modules();
 

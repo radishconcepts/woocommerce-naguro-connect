@@ -50,7 +50,9 @@ class Naguro_Modules_List extends WP_List_Table {
 		}
 
 		if ( ! $item->active ) {
-			return 'Activate this module';
+			$tab_link = '?page=woocommerce-naguro&tab=modules';
+			$activate_link = $tab_link . '&naguro-action=activate-module&naguro-module=' . $item->slug;
+			return '<a href="'.$activate_link.'">Activate this module</a>';
 		}
 
 		return 'Active';
