@@ -1,6 +1,6 @@
 <?php
 
-class Naguro_WordPress_Settings_Page extends Abstract_Naguro_WordPress_Settings_Page {
+class Naguro_Settings_Page extends Abstract_Naguro_WordPress_Settings_Page {
 	public function __construct() {
 		$this->output_tabs( 'settings' );
 		$this->output_settings();
