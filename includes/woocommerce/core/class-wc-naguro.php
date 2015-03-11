@@ -34,6 +34,7 @@ class WC_Naguro {
 
 		new Naguro_WordPress_Menu();
 		new Naguro_WordPress_Settings_Init();
+		new Naguro_WordPress_Action_Listener();
 	}
 
 	public function api_handler_class() {
