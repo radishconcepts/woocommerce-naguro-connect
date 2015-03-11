@@ -11,15 +11,14 @@ class WC_Naguro_Ajax {
 	 * Fires up the correct request handler based on the posted model and method
 	 */
 	public function dispatch() {
-		$session = absint( $_POST['session'] );
 		$model = $_POST['model'];
 		$method = $_POST['method'];
 
 		if ( 'session' === $model && 'get' === $method ) {
-			$request = new Naguro_Session_Get_Request( array('session_id' => $session ) );
+			$request = new Naguro_Session_Get_Request( $_POST );
 			$request->output();
 		} elseif ( 'font' === $model && 'getavailablefonts' === $method ) {
-			$request = new Naguro_Fonts_Get_Request( array('session_id' => $session ) );
+			$request = new Naguro_Fonts_Get_Request( $_POST );
 			$request->output();
 		} elseif ( 'text' === $model && 'getimage' === $method ) {
 			$request = new Naguro_Text_Image_Get_Request( $_POST );
