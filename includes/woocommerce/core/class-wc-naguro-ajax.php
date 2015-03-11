@@ -14,27 +14,38 @@ class WC_Naguro_Ajax {
 		$model = $_POST['model'];
 		$method = $_POST['method'];
 
-		if ( 'session' === $model && 'get' === $method ) {
-			$request = new Naguro_Session_Get_Request( $_POST );
+		try {
+			$request = $this->get_request_by_model_method( $model, $method );
 			$request->output();
-		} elseif ( 'font' === $model && 'getavailablefonts' === $method ) {
-			$request = new Naguro_Fonts_Get_Request( $_POST );
-			$request->output();
-		} elseif ( 'text' === $model && 'getimage' === $method ) {
-			$request = new Naguro_Text_Image_Get_Request( $_POST );
-			$request->output();
-		} elseif( 'order' === $model && 'preview' === $method ) {
-			$request = new Naguro_Order_Preview_Get_Request( $_POST );
-			$request->output();
-		} elseif( 'order' === $model && 'placeorder' === $method ) {
-			$request = new Naguro_Order_Place_Request( $_POST );
-			$request->output();
-		} elseif( 'image' === $model && 'upload' === $method ) {
-			$request = new Naguro_Image_Upload_Request( $_POST );
-			$request->output();
-		} elseif( 'image' === $model && 'getsrc' === $method ) {
-			$request = new Naguro_Image_Get_Request( $_POST );
-			$request->output();
+		} catch ( Exception $e ) {
+			return;
 		}
+	}
+
+	/**
+	 * @param $model
+	 * @param $method
+	 *
+	 * @return Naguro_Request
+	 * @throws Exception
+	 */
+	private function get_request_by_model_method( $model, $method ) {
+		if ( 'session' === $model && 'get' === $method ) {
+			return new Naguro_Session_Get_Request( $_POST );
+		} elseif ( 'font' === $model && 'getavailablefonts' === $method ) {
+			return new Naguro_Fonts_Get_Request( $_POST );
+		} elseif ( 'text' === $model && 'getimage' === $method ) {
+			return new Naguro_Text_Image_Get_Request( $_POST );
+		} elseif( 'order' === $model && 'preview' === $method ) {
+			return new Naguro_Order_Preview_Get_Request( $_POST );
+		} elseif( 'order' === $model && 'placeorder' === $method ) {
+			return new Naguro_Order_Place_Request( $_POST );
+		} elseif( 'image' === $model && 'upload' === $method ) {
+			return new Naguro_Image_Upload_Request( $_POST );
+		} elseif( 'image' === $model && 'getsrc' === $method ) {
+			return new Naguro_Image_Get_Request( $_POST );
+		}
+
+		throw new Exception('Invalid model and method combination.');
 	}
 }
