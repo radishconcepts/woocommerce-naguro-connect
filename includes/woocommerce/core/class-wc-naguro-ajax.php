@@ -30,22 +30,28 @@ class WC_Naguro_Ajax {
 	 * @throws Exception
 	 */
 	private function get_request_by_model_method( $model, $method ) {
-		if ( 'session' === $model && 'get' === $method ) {
-			return new Naguro_Session_Get_Request( $_POST );
-		} elseif ( 'font' === $model && 'getavailablefonts' === $method ) {
-			return new Naguro_Fonts_Get_Request( $_POST );
-		} elseif ( 'text' === $model && 'getimage' === $method ) {
-			return new Naguro_Text_Image_Get_Request( $_POST );
-		} elseif( 'order' === $model && 'preview' === $method ) {
-			return new Naguro_Order_Preview_Get_Request( $_POST );
-		} elseif( 'order' === $model && 'placeorder' === $method ) {
-			return new Naguro_Order_Place_Request( $_POST );
-		} elseif( 'image' === $model && 'upload' === $method ) {
-			return new Naguro_Image_Upload_Request( $_POST );
-		} elseif( 'image' === $model && 'getsrc' === $method ) {
-			return new Naguro_Image_Get_Request( $_POST );
+		$available_model_factories = array( 'session', 'font', 'text', 'order', 'image' );
+
+		if ( ! in_array( $model, $available_model_factories ) ) {
+			throw new Exception('Invalid model.');
 		}
 
-		throw new Exception('Invalid model and method combination.');
+		$factory = $this->get_factory_by_model( $model );
+
+		try {
+			$request = $factory->get_request_by_method( $method );
+			return $request;
+		} catch( Exception $e ) {
+			throw $e;
+		}
+	}
+
+	/**
+	 * @param string $model
+	 * @return Naguro_Request_Factory
+	 */
+	private function get_factory_by_model( $model ) {
+		$factory_class_name = 'Naguro_' . ucwords( $model ) . '_Request_Factory';
+		return new $factory_class_name();
 	}
 }
