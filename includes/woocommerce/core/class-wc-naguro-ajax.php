@@ -16,25 +16,25 @@ class WC_Naguro_Ajax {
 		$method = $_POST['method'];
 
 		if ( 'session' === $model && 'get' === $method ) {
-			$request = new WC_Naguro_Session_Get_Request( array('session_id' => $session ) );
+			$request = new Naguro_Session_Get_Request( array('session_id' => $session ) );
 			$request->output();
 		} elseif ( 'font' === $model && 'getavailablefonts' === $method ) {
-			$request = new WC_Naguro_Fonts_Get_Request( array('session_id' => $session ) );
+			$request = new Naguro_Fonts_Get_Request( array('session_id' => $session ) );
 			$request->output();
 		} elseif ( 'text' === $model && 'getimage' === $method ) {
-			$request = new WC_Naguro_Text_Image_Get_Request( $_POST );
+			$request = new Naguro_Text_Image_Get_Request( $_POST );
 			$request->output();
 		} elseif( 'order' === $model && 'preview' === $method ) {
-			$request = new WC_Naguro_Order_Preview_Get_Request( $_POST );
+			$request = new Naguro_Order_Preview_Get_Request( $_POST );
 			$request->output();
 		} elseif( 'order' === $model && 'placeorder' === $method ) {
-			$request = new WC_Naguro_Order_Place_Request( $_POST );
+			$request = new Naguro_Order_Place_Request( $_POST );
 			$request->output();
 		} elseif( 'image' === $model && 'upload' === $method ) {
-			$request = new WC_Naguro_Image_Upload_Request( $_POST );
+			$request = new Naguro_Image_Upload_Request( $_POST );
 			$request->output();
 		} elseif( 'image' === $model && 'getsrc' === $method ) {
-			$request = new WC_Naguro_Image_Get_Request( $_POST );
+			$request = new Naguro_Image_Get_Request( $_POST );
 			$request->output();
 		}
 	}

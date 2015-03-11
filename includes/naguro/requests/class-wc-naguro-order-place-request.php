@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Order_Place_Request extends Naguro_Request {
+class Naguro_Order_Place_Request extends Naguro_Request {
 	public function output() {
 		$session = new Naguro_Session_Model( $this->params['session'] );
 		$product = wc_get_product($session->get('product_id'));

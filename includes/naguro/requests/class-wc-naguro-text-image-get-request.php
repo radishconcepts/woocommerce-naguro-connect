@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Text_Image_Get_Request extends Naguro_Request {
+class Naguro_Text_Image_Get_Request extends Naguro_Request {
 	public function output() {
 		if ( strstr( $this->params['colour'], '#' ) ) {
 			$this->params['colour'] = str_replace('#', '', $this->params['colour']);
