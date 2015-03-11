@@ -1,15 +1,6 @@
 <?php
 
 class WC_Naguro {
-	/** @var Naguro_Request_Factory */
-	public $request_factory;
-
-	/** @var Naguro_Handler_Factory */
-	public $handler_factory;
-
-	/** @var Naguro_Model_Repository */
-	public $model_repository;
-
 	/** @var WC_Naguro_Ajax */
 	private $ajax_handler;
 
