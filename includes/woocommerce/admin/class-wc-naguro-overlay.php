@@ -81,4 +81,8 @@ class WC_Naguro_Overlay {
 
 		return $design_area;
 	}
+
+	public function hidden_input($name, $value, $class = "") {
+		echo '<input type="hidden" name="' . $name . '" value="' . $value . '" class="' . $class . '" />';
+	}
 }
