@@ -6,6 +6,7 @@ class WC_Naguro_Overlay {
 		add_action("naguro_woocommerce_after_printable_area_image", array($this, "add_overlay_image"));
 
 		add_filter("naguro_woocommerce_design_area_data", array($this, "handle_design_area_data"));
+		add_filter("naguro_woocommerce_save_keys", array($this, "add_overlays_to_keys"));
 	}
 
 	function add_design_area_overlay_upload($rand) {
@@ -51,5 +52,10 @@ class WC_Naguro_Overlay {
 		}
 
 		return $design_area_data;
+	}
+
+	function add_overlays_to_keys($keys) {
+		array_push($keys, "product_overlay_id");
+		return $keys;
 	}
 }
