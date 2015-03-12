@@ -7,6 +7,8 @@ class WC_Naguro_Overlay {
 
 		add_filter("naguro_woocommerce_design_area_data", array($this, "handle_design_area_data"));
 		add_filter("naguro_woocommerce_save_keys", array($this, "add_overlays_to_keys"));
+		add_filter("naguro_woocommerce_file_keys", array($this, "add_overlay_to_keys"));
+		add_filter("naguro_woocommerce_filter_save_image", array($this, "save_image"));
 	}
 
 	function add_design_area_overlay_upload($rand) {
@@ -54,8 +56,29 @@ class WC_Naguro_Overlay {
 		return $design_area_data;
 	}
 
+	function add_overlays_to_key($keys) {
+		array_push($keys, "overlay");
+		return $keys;
+	}
+
 	function add_overlays_to_keys($keys) {
 		array_push($keys, "product_overlay_id");
 		return $keys;
+	}
+
+	function save_image($design_area, $image_ids) {
+		if ( isset( $image_ids['overlay'][ $design_area['upload_key'] ] ) ) {
+			$image_id = $image_ids['overlay'][ $design_area['upload_key']];
+		} elseif ( isset( $design_area['product_overlay_id'] ) ) {
+			$image_id = $design_area['product_overlay_id'];
+		} else {
+			$image_id = 0;
+		}
+
+		if ( 0 != $image_id ) {
+			$design_area['product_overlay_id'] = $image_id;
+		}
+
+		return $design_area;
 	}
 }
