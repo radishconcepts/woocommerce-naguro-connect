@@ -160,6 +160,8 @@ class WC_Naguro_Product_Meta_Box {
 
 		$this->add_design_area_background_upload($rand);
 
+		do_action("naguro_woocommerce_before_printable_area_button", $rand);
+
 		echo "<p class='form-field'><a class='button naguro-define-image-area' data-id='" . $rand . "'>Edit printable area</a></p>";
 
 		$this->add_design_area_printable_area($design_area, $rand);
