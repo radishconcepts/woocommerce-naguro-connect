@@ -66,7 +66,10 @@ class WC_Naguro_Overlay {
 		return $keys;
 	}
 
-	function save_image($design_area, $image_ids) {
+	function save_image($args) {
+		$design_area = $args[0];
+		$image_ids = $args[1];
+
 		if ( isset( $image_ids['overlay'][ $design_area['upload_key'] ] ) ) {
 			$image_id = $image_ids['overlay'][ $design_area['upload_key']];
 		} elseif ( isset( $design_area['product_overlay_id'] ) ) {
