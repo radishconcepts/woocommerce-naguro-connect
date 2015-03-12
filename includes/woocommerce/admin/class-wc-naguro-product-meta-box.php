@@ -204,9 +204,9 @@ class WC_Naguro_Product_Meta_Box {
 		}
 
 		if ( isset( $design_area['product_image'] ) ) {
-			echo '<img src="' . $design_area['product_image'] . '" />';
+			echo '<img class="background-image" src="' . $design_area['product_image'] . '" />';
 		} else {
-			echo '<img src="" />';
+			echo '<img class="background-image" src="" />';
 		}
 
 		echo '<a href="#" class="button naguro-printable-area-save-button">OK</a>';
