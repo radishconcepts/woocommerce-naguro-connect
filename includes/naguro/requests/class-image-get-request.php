@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Image_Get_Request extends Naguro_Request {
+class Naguro_Image_Get_Request extends Naguro_Request {
 	public function output() {
 		if ( isset( $this->params['image_id'] ) ) {
 			$id = absint( $this->params['image_id'] );

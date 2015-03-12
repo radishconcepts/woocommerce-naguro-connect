@@ -12,7 +12,7 @@ class WC_Naguro_Designer {
 	/** @var array */
 	private $designer_data = array();
 
-	/** @var WC_Naguro_HTML_Get_Request */
+	/** @var Naguro_HTML_Get_Request */
 	private $request;
 
 	/**
@@ -32,7 +32,7 @@ class WC_Naguro_Designer {
 		$this->session->set( 'product_id', $this->product->id);
 		WC()->session->set('naguro_session_id', $this->session->get_id());
 
-		$this->request = new WC_Naguro_HTML_Get_Request(array( 'session_id' => $this->session->get_id() ) );
+		$this->request = new Naguro_HTML_Get_Request(array( 'session_id' => $this->session->get_id() ) );
 	}
 
 	private function get_html() {

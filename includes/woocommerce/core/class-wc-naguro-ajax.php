@@ -11,31 +11,47 @@ class WC_Naguro_Ajax {
 	 * Fires up the correct request handler based on the posted model and method
 	 */
 	public function dispatch() {
-		$session = absint( $_POST['session'] );
 		$model = $_POST['model'];
 		$method = $_POST['method'];
 
-		if ( 'session' === $model && 'get' === $method ) {
-			$request = new WC_Naguro_Session_Get_Request( array('session_id' => $session ) );
+		try {
+			$request = $this->get_request_by_model_method( $model, $method );
 			$request->output();
-		} elseif ( 'font' === $model && 'getavailablefonts' === $method ) {
-			$request = new WC_Naguro_Fonts_Get_Request( array('session_id' => $session ) );
-			$request->output();
-		} elseif ( 'text' === $model && 'getimage' === $method ) {
-			$request = new WC_Naguro_Text_Image_Get_Request( $_POST );
-			$request->output();
-		} elseif( 'order' === $model && 'preview' === $method ) {
-			$request = new WC_Naguro_Order_Preview_Get_Request( $_POST );
-			$request->output();
-		} elseif( 'order' === $model && 'placeorder' === $method ) {
-			$request = new WC_Naguro_Order_Place_Request( $_POST );
-			$request->output();
-		} elseif( 'image' === $model && 'upload' === $method ) {
-			$request = new WC_Naguro_Image_Upload_Request( $_POST );
-			$request->output();
-		} elseif( 'image' === $model && 'getsrc' === $method ) {
-			$request = new WC_Naguro_Image_Get_Request( $_POST );
-			$request->output();
+		} catch ( Exception $e ) {
+			return;
 		}
+	}
+
+	/**
+	 * @param $model
+	 * @param $method
+	 *
+	 * @return Naguro_Request
+	 * @throws Exception
+	 */
+	private function get_request_by_model_method( $model, $method ) {
+		$available_model_factories = array( 'session', 'font', 'text', 'order', 'image' );
+
+		if ( ! in_array( $model, $available_model_factories ) ) {
+			throw new Exception('Invalid model.');
+		}
+
+		$factory = $this->get_factory_by_model( $model );
+
+		try {
+			$request = $factory->get_request_by_method( $method );
+			return $request;
+		} catch( Exception $e ) {
+			throw $e;
+		}
+	}
+
+	/**
+	 * @param string $model
+	 * @return Naguro_Request_Factory
+	 */
+	private function get_factory_by_model( $model ) {
+		$factory_class_name = 'Naguro_' . ucwords( $model ) . '_Request_Factory';
+		return new $factory_class_name();
 	}
 }

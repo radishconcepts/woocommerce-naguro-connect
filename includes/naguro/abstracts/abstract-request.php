@@ -1,6 +1,6 @@
 <?php
 
-abstract class Naguro_Request {
+abstract class Naguro_Request implements Naguro_Request_Interface {
 	/** @var array */
 	protected $params;
 

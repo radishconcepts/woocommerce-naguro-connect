@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Session_Get_Request extends Naguro_Request {
+class Naguro_Session_Get_Request extends Naguro_Request {
 	private function get_product() {
 		return wc_get_product( $this->session->get('product_id'));
 	}

@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Order_Preview_Get_Request extends Naguro_Request {
+class Naguro_Order_Preview_Get_Request extends Naguro_Request {
 	public function output() {
 		$session = new Naguro_Session_Model( $this->params['session'] );
 		$design_areas = get_post_meta( $session->get('product_id'), 'naguro_design_area' );
