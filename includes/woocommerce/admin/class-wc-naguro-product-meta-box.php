@@ -65,6 +65,8 @@ class WC_Naguro_Product_Meta_Box {
 				$image_src = wp_get_attachment_image_src( $design_area['product_image_id'], 'full' );
 				$design_areas[ $key ]['product_image'] = $image_src[0];
 			}
+
+			$design_areas[ $key ] = apply_filters("naguro_woocommerce_design_area_data", $design_areas[ $key ]);
 		}
 
 		return $design_areas;
