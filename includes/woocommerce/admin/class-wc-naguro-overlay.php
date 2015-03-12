@@ -11,7 +11,7 @@ class WC_Naguro_Overlay {
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
 			"label"         => "Overlay image",
-			"description"   => "Upload an image that will serve as the overlay image that will display a top of the designer",
+			"description"   => "Upload an image that will serve as the overlay image that will display on top of the designer",
 			"name"          => $name,
 			"value"         => "",
 			"class"         => "",
