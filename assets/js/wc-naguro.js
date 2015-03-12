@@ -131,9 +131,14 @@
     }
 
     function placeImage(contents, designArea) {
-        $(".naguro-printable-product img", designArea).attr("src", contents);
+        $(".naguro-printable-product img", designArea).attr("src", contents).css({
+            height: "auto",
+            width: "auto"
+        });
 
-        open_design_area($(".naguro-define-image-area", designArea)[0]);
+        setTimeout(function () {
+            open_design_area($(".naguro-define-image-area", designArea)[0]);
+        }, 50);
     }
 
     function bind_edit_area(element) {
