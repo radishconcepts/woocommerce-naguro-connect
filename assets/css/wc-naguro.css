@@ -46,7 +46,7 @@
     height: 100%;
 }
 
-.naguro-printable-product img {
+.naguro-printable-product .background-image {
     display: block;
     max-width: 90%;
     max-height: 90%;
