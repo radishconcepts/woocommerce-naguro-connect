@@ -3,6 +3,7 @@
 class WC_Naguro_Overlay {
 	function __construct() {
 		add_action("naguro_woocommerce_before_printable_area_button", array($this, "add_design_area_overlay_upload"));
+		add_action("naguro_woocommerce_after_printable_area_image", array($this, "add_overlay_image"));
 	}
 
 	function add_design_area_overlay_upload($rand) {
@@ -17,5 +18,13 @@ class WC_Naguro_Overlay {
 			"class"         => "",
 			"type"          => "file"
 		));
+	}
+
+	function add_overlay_image() {
+		if ( isset( $design_area['product_overlay'] ) ) {
+			echo '<img class="overlay-image" src="' . $design_area['product_overlay'] . '" />';
+		} else {
+			echo '<img class="overlay-image" src="" />';
+		}
 	}
 }
