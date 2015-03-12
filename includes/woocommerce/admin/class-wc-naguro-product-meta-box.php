@@ -321,7 +321,7 @@ class WC_Naguro_Product_Meta_Box {
 		$stack = $_POST['naguro_designarea'];
 		$design_areas = array();
 
-		$keys = array(
+		$keys = apply_filters("naguro_woocommerce_save_keys", array(
 			'name',
 			'output_width',
 			'output_height',
@@ -331,7 +331,7 @@ class WC_Naguro_Product_Meta_Box {
 			'top',
 			'product_image_id',
 			'upload_key'
-		);
+		));
 
 		// Loop through the posted keys and collect them per design area
 		foreach ( $keys as $key ) {
