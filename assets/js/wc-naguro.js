@@ -12,7 +12,7 @@
             bind_close_area($(".naguro-printable-area-save-button", copy));
         });
 
-        bind_image_chosen($(".naguro-design-area input[type=file]"));
+        bind_image_chosen($(".naguro-design-area input[type=file][name*=image]"));
         bind_remove_row($(".naguro-design-area .remove_row"));
 
         bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
