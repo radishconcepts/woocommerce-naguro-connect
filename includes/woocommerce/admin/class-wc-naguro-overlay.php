@@ -20,7 +20,7 @@ class WC_Naguro_Overlay {
 		));
 	}
 
-	function add_overlay_image() {
+	function add_overlay_image($design_area) {
 		if ( isset( $design_area['product_overlay'] ) ) {
 			echo '<img class="overlay-image" src="' . $design_area['product_overlay'] . '" />';
 		} else {
