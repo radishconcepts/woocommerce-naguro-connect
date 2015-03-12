@@ -13,6 +13,7 @@
         });
 
         bind_image_chosen($(".naguro-design-area input[type=file][name*=image]"));
+        bind_overlay_chosen($(".naguro-design-area input[type=file][name*=overlay]"));
         bind_remove_row($(".naguro-design-area .remove_row"));
 
         bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
@@ -34,7 +35,11 @@
     }
 
     function bind_image_chosen(element) {
-        element.on("change", readSingleFile);
+        element.on("change", singleImage);
+    }
+
+    function bind_overlay_chosen(element) {
+        element.on("change", singleOverlay);
     }
 
     function bind_remove_row(element) {
@@ -108,7 +113,15 @@
         obj.find(".naguro_designarea_top").val(top);
     }
 
-    function readSingleFile(evt) {
+    function singleImage(evt) {
+        readSingleFile(evt, "image");
+    }
+
+    function singleOverlay(evt) {
+        readSingleFile(evt, "overlay");
+    }
+
+    function readSingleFile(evt, type) {
         //Retrieve the first (and only!) File from the FileList object
         var f = evt.target.files[0];
 
@@ -118,7 +131,7 @@
                 var contents = e.target.result;
 
                 if (f.type.substr(0, 5) === "image") {
-                    placeImage(contents, evt.target.parentNode.parentNode);
+                    placeImage(contents, evt.target.parentNode.parentNode, type);
                 } else {
                     alert("File type is not supported, choose an image.");
                 }
@@ -130,15 +143,17 @@
         }
     }
 
-    function placeImage(contents, designArea) {
-        $(".naguro-printable-product .background-image", designArea).attr("src", contents).css({
+    function placeImage(contents, designArea, type) {
+        $(".naguro-printable-product ." + (type === "image" ? "background-image" : "overlay-image"), designArea).attr("src", contents).css({
             height: "auto",
             width: "auto"
         });
 
-        setTimeout(function () {
-            open_design_area($(".naguro-define-image-area", designArea)[0]);
-        }, 50);
+        if (type === "image") {
+            setTimeout(function () {
+                open_design_area($(".naguro-define-image-area", designArea)[0]);
+            }, 50);
+        }
     }
 
     function bind_edit_area(element) {
