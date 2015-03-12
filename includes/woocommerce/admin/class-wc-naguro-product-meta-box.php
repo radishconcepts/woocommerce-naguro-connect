@@ -292,29 +292,36 @@ class WC_Naguro_Product_Meta_Box {
 		$files = array();
 
 		$keys = array( 'name', 'type', 'tmp_name', 'error', 'size' );
+		$file_keys = apply_filters("naguro_woocommerce_file_keys", array('image'));
 		// Loop through the posted keys and collect them per design area
 		foreach ( $keys as $key ) {
-			foreach( $stack[ $key ]['image'] as $item_key => $item ) {
-				$files[ $item_key ][ $key ] = $item;
+			foreach( $file_keys as $file_key ) {
+				foreach( $stack[ $key ][ $file_key ] as $item_key => $item ) {
+					$files[ $item_key ][$file_key][ $key ] = $item;
+				}
 			}
 		}
 
 		foreach ( $files as $key => $file ) {
-			if ( 0 == $file['size'] && 4 == $file['error'] ) {
-				unset( $files[ $key ] );
+			foreach( $file_keys as $file_key ) {
+				if ( 0 == $file[$file_key]['size'] && 4 == $file[$file_key]['error'] ) {
+					unset( $files[ $key ] );
+				}
 			}
 		}
 
 		$i = 0;
 		$image_ids = array();
 		foreach ( $files as $key => $file ) {
-			if ( empty( $file['name'] ) && 4 == $file['error'] ) {
-				$image_ids[$key] = 0;
-			} else {
-				$_FILES[ 'naguro_designarea_' . $i ] = $file;
-				$image_ids[$key] = media_handle_upload( 'naguro_designarea_' . $i, $post_id );
+			foreach( $file_keys as $file_key ) {
+				if ( empty( $file[$file_key]['name'] ) && 4 == $file[$file_key]['error'] ) {
+					$image_ids[$key] = 0;
+				} else {
+					$_FILES[ 'naguro_designarea_' . $i ] = $file[$file_key];
+					$image_ids[$key] = media_handle_upload( 'naguro_designarea_' . $i, $post_id );
+				}
+				$i++;
 			}
-			$i++;
 		}
 		// END file upload handler
 
