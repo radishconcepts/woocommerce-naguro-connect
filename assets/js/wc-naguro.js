@@ -40,7 +40,7 @@
     function bind_remove_row(element) {
         element.click(function () {
             var root = $(this).parent();
-            $('.naguro-printable-product img', root).imgAreaSelect({
+            $('.naguro-printable-product .background-image', root).imgAreaSelect({
                 remove: true
             });
             root.remove();
@@ -62,7 +62,7 @@
     function init_imgselectarea(x, y) {
         $('.naguro-printable-product').each(function () {
             var obj = $(this);
-            var img = obj.find("img");
+            var img = obj.find(".background-image");
             var imgWidth = img.width();
             var imgHeight = img.height();
             var printWidth = parseFloat(obj.find(".naguro_designarea_print_width").val());
@@ -131,7 +131,7 @@
     }
 
     function placeImage(contents, designArea) {
-        $(".naguro-printable-product img", designArea).attr("src", contents).css({
+        $(".naguro-printable-product .background-image", designArea).attr("src", contents).css({
             height: "auto",
             width: "auto"
         });
@@ -167,7 +167,7 @@
             height: (contentBox.height() - 90) + "px"
         });
 
-        var img = obj.find("img");
+        var img = obj.find(".background-image");
 
         if (img.height() >= img.width()) {
             img.css({
@@ -192,7 +192,7 @@
         element.on("click", function (e) {
             e.preventDefault();
 
-            $(this).parent().find('img').imgAreaSelect({
+            $(this).parent().find('.background-image').imgAreaSelect({
                 remove: true
             });
 
