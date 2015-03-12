@@ -23,11 +23,25 @@ class WC_Naguro_Overlay {
 	}
 
 	function add_overlay_image($design_area) {
+		if ( isset( $design_area['product_overlay_id'] ) ) {
+			$this->add_design_area_overlay_id($design_area['product_overlay_id']);
+		} else {
+			$this->add_design_area_overlay_id(0);
+		}
+
 		if ( isset( $design_area['product_overlay'] ) ) {
 			echo '<img class="overlay-image" src="' . $design_area['product_overlay'] . '" />';
 		} else {
 			echo '<img class="overlay-image" src="" />';
 		}
+	}
+
+	function add_design_area_overlay_id($id) {
+		$this->hidden_input(
+			WC_Naguro::$prefix . "designarea[product_overlay_id][]",
+			$id,
+			WC_Naguro::$prefix . "product_overlay_id"
+		);
 	}
 
 	function handle_design_area_data($design_area_data) {
