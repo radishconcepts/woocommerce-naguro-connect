@@ -209,7 +209,7 @@ class WC_Naguro_Product_Meta_Box {
 			echo '<img class="background-image" src="" />';
 		}
 
-		do_action("naguro_woocommerce_after_printable_area_image");
+		do_action("naguro_woocommerce_after_printable_area_image", $design_area);
 
 		echo '<a href="#" class="button naguro-printable-area-save-button">OK</a>';
 
