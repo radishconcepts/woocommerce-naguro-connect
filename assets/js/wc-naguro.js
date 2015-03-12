@@ -167,19 +167,24 @@
             height: (contentBox.height() - 90) + "px"
         });
 
-        var img = obj.find(".background-image");
+        var imgs = obj.find("img");
 
-        if (img.height() >= img.width()) {
-            img.css({
-                height: "100%",
-                width: "auto"
-            });
-        } else {
-            img.css({
-                height: "auto",
-                width: "100%"
-            });
+        for (var i = 0; i < imgs.length; i++) {
+            var img = $(imgs[i]);
+
+            if (img.height() >= img.width()) {
+                img.css({
+                    height: "100%",
+                    width: "auto"
+                });
+            } else {
+                img.css({
+                    height: "auto",
+                    width: "100%"
+                });
+            }
         }
+
 
         //remove close...
         $("#TB_overlay").off("click");
