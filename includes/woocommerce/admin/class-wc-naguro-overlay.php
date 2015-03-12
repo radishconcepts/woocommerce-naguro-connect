@@ -56,7 +56,7 @@ class WC_Naguro_Overlay {
 		return $design_area_data;
 	}
 
-	function add_overlays_to_key($keys) {
+	function add_overlay_to_keys($keys) {
 		array_push($keys, "overlay");
 		return $keys;
 	}
