@@ -12,7 +12,8 @@
             bind_close_area($(".naguro-printable-area-save-button", copy));
         });
 
-        bind_image_chosen($(".naguro-design-area input[type=file]"));
+        bind_image_chosen($(".naguro-design-area input[type=file][name*=image]"));
+        bind_overlay_chosen($(".naguro-design-area input[type=file][name*=overlay]"));
         bind_remove_row($(".naguro-design-area .remove_row"));
 
         bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
@@ -34,13 +35,17 @@
     }
 
     function bind_image_chosen(element) {
-        element.on("change", readSingleFile);
+        element.on("change", singleImage);
+    }
+
+    function bind_overlay_chosen(element) {
+        element.on("change", singleOverlay);
     }
 
     function bind_remove_row(element) {
         element.click(function () {
             var root = $(this).parent();
-            $('.naguro-printable-product img', root).imgAreaSelect({
+            $('.naguro-printable-product .background-image', root).imgAreaSelect({
                 remove: true
             });
             root.remove();
@@ -62,7 +67,7 @@
     function init_imgselectarea(x, y) {
         $('.naguro-printable-product').each(function () {
             var obj = $(this);
-            var img = obj.find("img");
+            var img = obj.find(".background-image");
             var imgWidth = img.width();
             var imgHeight = img.height();
             var printWidth = parseFloat(obj.find(".naguro_designarea_print_width").val());
@@ -108,7 +113,15 @@
         obj.find(".naguro_designarea_top").val(top);
     }
 
-    function readSingleFile(evt) {
+    function singleImage(evt) {
+        readSingleFile(evt, "image");
+    }
+
+    function singleOverlay(evt) {
+        readSingleFile(evt, "overlay");
+    }
+
+    function readSingleFile(evt, type) {
         //Retrieve the first (and only!) File from the FileList object
         var f = evt.target.files[0];
 
@@ -118,7 +131,7 @@
                 var contents = e.target.result;
 
                 if (f.type.substr(0, 5) === "image") {
-                    placeImage(contents, evt.target.parentNode.parentNode);
+                    placeImage(contents, evt.target.parentNode.parentNode, type);
                 } else {
                     alert("File type is not supported, choose an image.");
                 }
@@ -130,10 +143,17 @@
         }
     }
 
-    function placeImage(contents, designArea) {
-        $(".naguro-printable-product img", designArea).attr("src", contents);
+    function placeImage(contents, designArea, type) {
+        $(".naguro-printable-product ." + (type === "image" ? "background-image" : "overlay-image"), designArea).attr("src", contents).css({
+            height: "auto",
+            width: "auto"
+        });
 
-        open_design_area($(".naguro-define-image-area", designArea)[0]);
+        if (type === "image") {
+            setTimeout(function () {
+                open_design_area($(".naguro-define-image-area", designArea)[0]);
+            }, 50);
+        }
     }
 
     function bind_edit_area(element) {
@@ -155,26 +175,32 @@
         contentBox.css({
             width: "100%",
             height: "100%",
-            padding: "0"
+            padding: "0",
+            overflow: "visible"
         }).append(obj);
 
         contentBox.css({
             height: (contentBox.height() - 90) + "px"
         });
 
-        var img = obj.find("img");
+        var imgs = obj.find("img");
 
-        if (img.height() >= img.width()) {
-            img.css({
-                height: "100%",
-                width: "auto"
-            });
-        } else {
-            img.css({
-                height: "auto",
-                width: "100%"
-            });
+        for (var i = 0; i < imgs.length; i++) {
+            var img = $(imgs[i]);
+
+            if (img.height() >= img.width()) {
+                img.css({
+                    height: "100%",
+                    width: "auto"
+                });
+            } else {
+                img.css({
+                    height: "auto",
+                    width: "100%"
+                });
+            }
         }
+
 
         //remove close...
         $("#TB_overlay").off("click");
@@ -187,7 +213,7 @@
         element.on("click", function (e) {
             e.preventDefault();
 
-            $(this).parent().find('img').imgAreaSelect({
+            $(this).parent().find('.background-image').imgAreaSelect({
                 remove: true
             });
 
