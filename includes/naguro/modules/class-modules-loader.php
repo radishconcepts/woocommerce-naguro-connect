@@ -15,8 +15,8 @@ class Naguro_Modules_Loader {
 		}
 	}
 
-	private function load_module( $module ) {
-		$class_name = 'Naguro_' . ucwords($module) . '_Module';
-		return new $class_name();
+	private function load_module( $module_slug ) {
+		$module = Naguro_Modules_Repository::get_module_by_slug( $module_slug );
+		$module->load();
 	}
 }
