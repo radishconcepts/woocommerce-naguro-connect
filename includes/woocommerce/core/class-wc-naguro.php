@@ -23,7 +23,7 @@ class WC_Naguro {
 
 		add_action( 'naguro_api_handler_class', array( $this, 'api_handler_class' ), 10, 0 );
 
-		new WC_Naguro_Overlay();
+		new Naguro_Modules_Loader();
 		new Naguro_WordPress_Menu();
 		new Naguro_WordPress_Settings_Init();
 		new Naguro_WordPress_Action_Listener();
