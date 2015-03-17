@@ -90,6 +90,7 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 				$module_object->description = $module->description;
 				$module_object->always_on = $module->always_on;
 				$module_object->unlocked = $module->unlocked;
+				$module_object->purchase_url = $module->purchase_url;
 
 				if ( in_array( $module->slug, $active_modules_array ) ) {
 					$module_object->active = true;
