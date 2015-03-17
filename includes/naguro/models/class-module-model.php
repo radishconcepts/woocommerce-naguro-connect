@@ -1,6 +1,6 @@
 <?php
 
-class Naguro_Module_Model extends Naguro_Model {
+abstract class Naguro_Module_Model extends Naguro_Model implements Naguro_Module {
 	public $slug = '';
 	public $name = '';
 	public $active = false;
