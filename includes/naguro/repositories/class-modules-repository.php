@@ -55,6 +55,21 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	}
 
 	public static function get_modules() {
+		$transient_data = get_transient( 'naguro_modules' );
+		$active_modules_array = get_option('naguro_active_modules', array() );
+
+		if ( false !== $transient_data && ! empty( $transient_data ) ) {
+			foreach ( $transient_data as $key => $module ) {
+				if ( in_array( $module->slug, $active_modules_array ) ) {
+					$transient_data[ $key ]->active = true;
+				} else {
+					$transient_data[ $key ]->active = false;
+				}
+			}
+
+			return $transient_data;
+		}
+
 		$request = new Naguro_Get_Modules_Request( array() );
 		$modules = $request->do_request();
 		$modules = json_decode($modules['body']);
@@ -66,8 +81,6 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 		);
 
 		$module_array = array();
-
-		$active_modules_array = get_option('naguro_active_modules', array() );
 
 		foreach ( $modules->data as $module ) {
 			if ( isset( $module_map[ $module->slug ] ) ) {
@@ -85,6 +98,8 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 				$module_array[ $module->slug ] = $module_object;
 			}
 		}
+
+		set_transient( 'naguro_modules', $module_array, DAY_IN_SECONDS );
 
 		return $module_array;
 	}
