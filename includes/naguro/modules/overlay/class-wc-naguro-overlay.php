@@ -16,7 +16,8 @@ class WC_Naguro_Overlay {
 		WC_Naguro_Product_Meta_Box::upload_field($name,
 			"Overlay image",
 			"Upload an image that will serve as the overlay image that will display on top of the designer",
-			( isset( $design_area['product_overlay_id'] ) ? $design_area['product_overlay_id'] : "" ));
+			( isset( $design_area['product_overlay_id'] ) ? $design_area['product_overlay_id'] : "" ),
+			"naguro_designarea[product_overlay_id][]");
 	}
 
 	function add_overlay_image($design_area) {

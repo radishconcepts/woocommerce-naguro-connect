@@ -171,7 +171,7 @@ class WC_Naguro_Product_Meta_Box {
 	public function add_design_area_background_upload($rand, $image) {
 		$name = WC_Naguro::$prefix . "designarea[image][" . $rand . "]";
 
-		$this->upload_field($name, "Design area image", "Upload an image that will serve as the image that will be designed on", $image);
+		$this->upload_field($name, "Design area image", "Upload an image that will serve as the image that will be designed on", $image, "naguro_designarea[product_image_id][]");
 	}
 
 	public function add_design_area_upload_key($rand) {
@@ -374,12 +374,12 @@ class WC_Naguro_Product_Meta_Box {
 		delete_post_meta($post_id, 'naguro_design_area');
 	}
 
-	static function upload_field($name, $label, $description, $file_id) {
+	static function upload_field($name, $label, $description, $file_id, $hidden_name) {
 		$image_src = wp_get_attachment_image_src( $file_id, 'full' )[0];
 		$filename = basename($image_src);
 
 		?>
-		<section class="naguro-upload <?php echo ($image_src ? "opened" : "closed"); ?>">
+		<section class="naguro-upload <?php echo ($image_src ? "opened" : "closed"); ?>" data-hidden-name="<?php echo $hidden_name; ?>">
 			<div class="current-file">
 				<span class="filename"><?php echo $filename; ?></span>
 				<a href=""><?php echo __("Change file"); ?></a>
