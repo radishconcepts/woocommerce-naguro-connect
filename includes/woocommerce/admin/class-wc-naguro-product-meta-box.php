@@ -375,6 +375,18 @@ class WC_Naguro_Product_Meta_Box {
 	}
 
 	static function upload_field($name, $label, $description, $file_id) {
+		$image_src = wp_get_attachment_image_src( $file_id, 'full' )[0];
+		$filename = basename($image_src);
+
+		?>
+		<section class="naguro-upload">
+			<div class="current-file">
+				<span class="filename"><?php echo $filename; ?></span>
+				<a href=""><?php echo __("Change file"); ?></a>
+			</div>
+			<div class="upload-file"></div>
+		</section>
+		<?php
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
 			"label"         => $label,
