@@ -379,7 +379,7 @@ class WC_Naguro_Product_Meta_Box {
 		$filename = basename($image_src);
 
 		?>
-		<section class="naguro-upload">
+		<section class="naguro-upload <?php echo ($image_src ? "opened" : "closed"); ?>">
 			<div class="current-file">
 				<span class="filename"><?php echo $filename; ?></span>
 				<a href=""><?php echo __("Change file"); ?></a>
