@@ -172,15 +172,7 @@ class WC_Naguro_Product_Meta_Box {
 	public function add_design_area_background_upload($rand) {
 		$name = WC_Naguro::$prefix . "designarea[image][" . $rand . "]";
 
-		woocommerce_wp_text_input(array(
-			"id"            => $name,
-			"label"         => "Design area image",
-			"description"   => "Upload an image that will serve as the image that will be designed on",
-			"name"          => $name,
-			"value"         => "",
-			"class"         => "",
-			"type"          => "file"
-		));
+		$this->upload_field($name, "Design area image", "Upload an image that will serve as the image that will be designed on");
 	}
 
 	public function add_design_area_upload_key($rand) {
@@ -382,4 +374,17 @@ class WC_Naguro_Product_Meta_Box {
 	private function remove_old_meta_fields( $post_id ) {
 		delete_post_meta($post_id, 'naguro_design_area');
 	}
+
+	static function upload_field($name, $label, $description) {
+		woocommerce_wp_text_input(array(
+			"id"            => $name,
+			"label"         => $label,
+			"description"   => $description,
+			"name"          => $name,
+			"value"         => "",
+			"class"         => "",
+			"type"          => "file"
+		));
+	}
+
 }
