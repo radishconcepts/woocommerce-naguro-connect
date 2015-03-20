@@ -382,7 +382,7 @@ class WC_Naguro_Product_Meta_Box {
 		<section class="naguro-upload <?php echo ($image_src ? "opened" : "closed"); ?>" data-hidden-name="<?php echo $hidden_name; ?>">
 			<div class="current-file">
 				<span class="filename"><?php echo $filename; ?></span>
-				<a href=""><?php echo __("Change file"); ?></a>
+				<a><?php echo __("Change file"); ?></a>
 			</div>
 			<div class="upload-file"></div>
 		</section>
