@@ -10,6 +10,8 @@
 
             bind_edit_area($(".naguro-define-image-area", copy));
             bind_close_area($(".naguro-printable-area-save-button", copy));
+
+            activate_uploads($(".naguro-upload", copy));
         });
 
         bind_image_chosen($(".naguro-design-area input[type=file][name*=image]"));
@@ -21,17 +23,24 @@
 
         bind_float_check($(".naguro-float-val"));
 
-        activate_uploads();
+        activate_uploads($(".naguro-upload"));
     });
 
-    function activate_uploads() {
-        $(".naguro-upload").each(function () {
+    function activate_uploads(objs) {
+        objs.each(function () {
             var obj = $(this);
+            var root = obj.parent();
+            var hiddenInput = root.find("input[name='"+obj.data("hidden-name") + "']");
             var upload = obj.next();
             var uploadContainer = obj.find(".upload-file");
 
             upload.append(obj);
             uploadContainer.append(upload.find(".description, input"));
+            obj.find("a").css("cursor", "pointer").on("click", function () {
+                obj.removeClass("opened");
+                obj.addClass("closed");
+                hiddenInput.val("");
+            });
         });
     }
 
