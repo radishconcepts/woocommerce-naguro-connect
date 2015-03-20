@@ -159,7 +159,7 @@ class WC_Naguro_Product_Meta_Box {
 	public function add_design_area_background($design_area = array()) {
 		$rand = rand(10000, 99999);
 		$this->add_design_area_upload_key($rand);
-		$this->add_design_area_background_upload($rand, ( isset( $design_area['product_image_id'] ) ? $design_area['product_image'] : "" ));
+		$this->add_design_area_background_upload($rand, ( isset( $design_area['product_image_id'] ) ? $design_area['product_image_id'] : "" ));
 
 		do_action("naguro_woocommerce_before_printable_area_button", $rand, $design_area);
 
