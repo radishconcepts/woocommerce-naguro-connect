@@ -13,16 +13,7 @@ class WC_Naguro_Overlay {
 
 	function add_design_area_overlay_upload($rand) {
 		$name = WC_Naguro::$prefix . "designarea[overlay][" . $rand . "]";
-
-		woocommerce_wp_text_input(array(
-			"id"            => $name,
-			"label"         => "Overlay image",
-			"description"   => "Upload an image that will serve as the overlay image that will display on top of the designer",
-			"name"          => $name,
-			"value"         => "",
-			"class"         => "",
-			"type"          => "file"
-		));
+		WC_Naguro_Product_Meta_Box::upload_field($name, "Overlay image", "Upload an image that will serve as the overlay image that will display on top of the designer");
 	}
 
 	function add_overlay_image($design_area) {
