@@ -11,9 +11,9 @@ class WC_Naguro_Overlay {
 		add_filter("naguro_woocommerce_filter_save_image", array($this, "save_image"));
 	}
 
-	function add_design_area_overlay_upload($rand) {
+	function add_design_area_overlay_upload($rand, $design_area) {
 		$name = WC_Naguro::$prefix . "designarea[overlay][" . $rand . "]";
-		WC_Naguro_Product_Meta_Box::upload_field($name, "Overlay image", "Upload an image that will serve as the overlay image that will display on top of the designer");
+		WC_Naguro_Product_Meta_Box::upload_field($name, "Overlay image", "Upload an image that will serve as the overlay image that will display on top of the designer", ( isset( $design_area['product_image_id'] ) ? $design_area['product_image'] : "" ));
 	}
 
 	function add_overlay_image($design_area) {

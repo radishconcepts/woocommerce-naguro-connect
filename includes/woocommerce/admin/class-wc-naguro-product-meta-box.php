@@ -159,20 +159,19 @@ class WC_Naguro_Product_Meta_Box {
 	public function add_design_area_background($design_area = array()) {
 		$rand = rand(10000, 99999);
 		$this->add_design_area_upload_key($rand);
+		$this->add_design_area_background_upload($rand, ( isset( $design_area['product_image_id'] ) ? $design_area['product_image'] : "" ));
 
-		$this->add_design_area_background_upload($rand);
-
-		do_action("naguro_woocommerce_before_printable_area_button", $rand);
+		do_action("naguro_woocommerce_before_printable_area_button", $rand, $design_area);
 
 		echo "<p class='form-field'><a class='button naguro-define-image-area' data-id='" . $rand . "'>Edit printable area</a></p>";
 
 		$this->add_design_area_printable_area($design_area, $rand);
 	}
 
-	public function add_design_area_background_upload($rand) {
+	public function add_design_area_background_upload($rand, $image) {
 		$name = WC_Naguro::$prefix . "designarea[image][" . $rand . "]";
 
-		$this->upload_field($name, "Design area image", "Upload an image that will serve as the image that will be designed on");
+		$this->upload_field($name, "Design area image", "Upload an image that will serve as the image that will be designed on", $image);
 	}
 
 	public function add_design_area_upload_key($rand) {
@@ -375,7 +374,7 @@ class WC_Naguro_Product_Meta_Box {
 		delete_post_meta($post_id, 'naguro_design_area');
 	}
 
-	static function upload_field($name, $label, $description) {
+	static function upload_field($name, $label, $description, $image_file) {
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
 			"label"         => $label,
