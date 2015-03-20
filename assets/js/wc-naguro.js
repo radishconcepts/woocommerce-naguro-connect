@@ -20,7 +20,20 @@
         bind_close_area($(".naguro-printable-area-save-button"));
 
         bind_float_check($(".naguro-float-val"));
+
+        activate_uploads();
     });
+
+    function activate_uploads() {
+        $(".naguro-upload").each(function () {
+            var obj = $(this);
+            var upload = obj.next();
+            var uploadContainer = obj.find(".upload-file");
+
+            upload.append(obj);
+            uploadContainer.append(upload.find(".description, input"));
+        });
+    }
 
     function bind_float_check(element) {
         element.on("keyup", function (e) {
