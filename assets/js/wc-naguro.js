@@ -153,7 +153,7 @@
                 var contents = e.target.result;
 
                 if (f.type.substr(0, 5) === "image") {
-                    placeImage(contents, evt.target.parentNode.parentNode, type);
+                    placeImage(contents, evt.target.parentNode.parentNode.parentNode.parentNode, type);
                 } else {
                     alert("File type is not supported, choose an image.");
                 }
