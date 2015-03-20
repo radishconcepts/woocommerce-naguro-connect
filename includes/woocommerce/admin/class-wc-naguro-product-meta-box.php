@@ -374,7 +374,7 @@ class WC_Naguro_Product_Meta_Box {
 		delete_post_meta($post_id, 'naguro_design_area');
 	}
 
-	static function upload_field($name, $label, $description, $image_file) {
+	static function upload_field($name, $label, $description, $file_id) {
 		woocommerce_wp_text_input(array(
 			"id"            => $name,
 			"label"         => $label,
