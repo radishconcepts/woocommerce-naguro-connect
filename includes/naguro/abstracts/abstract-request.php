@@ -25,7 +25,7 @@ abstract class Naguro_Request implements Naguro_Request_Interface {
 				$this->params['session_id'] = $this->params['session'];
 			}
 
-			$this->session = new Naguro_Session_Model( $this->params['session'] );
+			$this->session = new Naguro_Session_Model( $this->params['session_id'] );
 		}
 
 		$this->handler = Naguro_API_Handlers_Repository::get_handler();
