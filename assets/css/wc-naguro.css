@@ -92,3 +92,19 @@
 .naguro-design-area .naguro-printable-product {
     display: none;
 }
+
+.naguro-upload.opened .upload-file {
+    display: none;
+}
+
+.naguro-upload.opened .current-file {
+    display: block;
+}
+
+.naguro-upload.closed .upload-file {
+    display: block;
+}
+
+.naguro-upload.closed .current-file {
+    display: none;
+}

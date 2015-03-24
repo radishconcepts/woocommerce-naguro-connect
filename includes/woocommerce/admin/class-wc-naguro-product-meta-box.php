@@ -159,28 +159,19 @@ class WC_Naguro_Product_Meta_Box {
 	public function add_design_area_background($design_area = array()) {
 		$rand = rand(10000, 99999);
 		$this->add_design_area_upload_key($rand);
+		$this->add_design_area_background_upload($rand, ( isset( $design_area['product_image_id'] ) ? $design_area['product_image_id'] : "" ));
 
-		$this->add_design_area_background_upload($rand);
-
-		do_action("naguro_woocommerce_before_printable_area_button", $rand);
+		do_action("naguro_woocommerce_before_printable_area_button", $rand, $design_area);
 
 		echo "<p class='form-field'><a class='button naguro-define-image-area' data-id='" . $rand . "'>Edit printable area</a></p>";
 
 		$this->add_design_area_printable_area($design_area, $rand);
 	}
 
-	public function add_design_area_background_upload($rand) {
+	public function add_design_area_background_upload($rand, $image) {
 		$name = WC_Naguro::$prefix . "designarea[image][" . $rand . "]";
 
-		woocommerce_wp_text_input(array(
-			"id"            => $name,
-			"label"         => "Design area image",
-			"description"   => "Upload an image that will serve as the image that will be designed on",
-			"name"          => $name,
-			"value"         => "",
-			"class"         => "",
-			"type"          => "file"
-		));
+		$this->upload_field($name, "Design area image", "Upload an image that will serve as the image that will be designed on", $image, "naguro_designarea[product_image_id][]");
 	}
 
 	public function add_design_area_upload_key($rand) {
@@ -374,6 +365,9 @@ class WC_Naguro_Product_Meta_Box {
 			}
 
 			$design_area = apply_filters("naguro_woocommerce_filter_save_image", array($design_area, $image_ids));
+			if (is_array($design_area)) {
+				$design_area = $design_area[0];
+			}
 
 			add_post_meta( $post_id, 'naguro_design_area', $design_area, false );
 		}
@@ -382,4 +376,29 @@ class WC_Naguro_Product_Meta_Box {
 	private function remove_old_meta_fields( $post_id ) {
 		delete_post_meta($post_id, 'naguro_design_area');
 	}
+
+	static function upload_field($name, $label, $description, $file_id, $hidden_name) {
+		$image_src = wp_get_attachment_image_src( $file_id, 'full' )[0];
+		$filename = basename($image_src);
+
+		?>
+		<section class="naguro-upload <?php echo ($image_src ? "opened" : "closed"); ?>" data-hidden-name="<?php echo $hidden_name; ?>">
+			<div class="current-file">
+				<span class="filename"><?php echo $filename; ?></span>
+				<a><?php echo __("Change file"); ?></a>
+			</div>
+			<div class="upload-file"></div>
+		</section>
+		<?php
+		woocommerce_wp_text_input(array(
+			"id"            => $name,
+			"label"         => $label,
+			"description"   => $description,
+			"name"          => $name,
+			"value"         => "",
+			"class"         => "",
+			"type"          => "file"
+		));
+	}
+
 }
