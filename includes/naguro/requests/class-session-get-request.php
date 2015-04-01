@@ -38,6 +38,8 @@ class Naguro_Session_Get_Request extends Naguro_Request {
 				'output_height' => $design_area['output_height'],
 				'print_width' => $design_area['print_width'],
 				'print_height' => $design_area['print_height'],
+				'src_width' => $design_area['src_width'],
+				'src_height' => $design_area['src_height'],
 				'left' => $design_area['left'],
 				'top' => $design_area['top'],
 				'size_description' => $design_area['size_description'],
