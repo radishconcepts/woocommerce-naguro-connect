@@ -31,6 +31,7 @@ class WC_Naguro_Designer {
 		$this->session = new Naguro_Session_Model();
 		$this->session->set( 'product_id', $this->product->id);
 		WC()->session->set('naguro_session_id', $this->session->get_id());
+		$this->session->save_data();
 
 		$this->request = new Naguro_HTML_Get_Request(array( 'session_id' => $this->session->get_id() ) );
 	}
