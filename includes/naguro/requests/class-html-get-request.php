@@ -19,9 +19,9 @@ class Naguro_HTML_Get_Request extends Naguro_Request {
 		}
 
 		if ( $use_overlay_module ) {
-			$url_params['modules'] = 'overlay';
+			$url_params['modules'] = 'main,overlay';
 		} else {
-			$url_params['modules'] = '';
+			$url_params['modules'] = 'main';
 		}
 
 		$url_params['version'] = '1.1';
