@@ -3,6 +3,7 @@
 class WC_Naguro_Editor_Manager {
 	public function __construct() {
 		add_action( 'save_post', array( $this, 'save_post' ) );
+		add_action( 'post_submitbox_misc_actions', array( $this, 'product_data_visibility' ) );
 	}
 
 	public function save_post( $post_id ) {
@@ -52,5 +53,29 @@ class WC_Naguro_Editor_Manager {
 	private function does_editor_exist( $hash ) {
 		$editor_option = get_option( 'naguro_editor_' . $hash, false );
 		return ( false === $editor_option ) ? false : true;
+	}
+
+	public function product_data_visibility() {
+		global $post;
+
+		if ( 'product' != $post->post_type ) {
+			return;
+		}
+
+		$editor_hash = get_post_meta( $post->ID, 'naguro_editor_hash', true);
+
+		if ( false == $editor_hash || empty( $editor_hash ) ) {
+			return;
+		}
+
+		echo '<div class="misc-pub-section" id="naguro-editor-availability">';
+
+		if ( $this->does_editor_exist( $editor_hash ) ) {
+			echo '<p>Naguro editor is available</p>';
+		} else {
+			echo '<p>Naguro editor is not available yet</p>';
+		}
+
+		echo '</div>';
 	}
 }
