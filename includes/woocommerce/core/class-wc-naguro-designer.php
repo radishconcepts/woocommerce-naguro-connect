@@ -19,7 +19,6 @@ class WC_Naguro_Designer {
 		$this->product = $product;
 		if ( $this->prepare_request() ) {
 			$this->html = $this->get_html();
-			dd($this->get_css_url());
 			wp_enqueue_script('naguro-designer', $this->get_js_url());
 			wp_enqueue_style('naguro-designer', $this->get_css_url());
 		} else {
