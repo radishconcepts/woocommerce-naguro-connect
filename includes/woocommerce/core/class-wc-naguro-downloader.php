@@ -25,11 +25,11 @@ class WC_Naguro_Downloader {
 		$data = $_POST['data'];
 		$store_array = array();
 
-		foreach ( array( 'html', 'css', 'js' ) as $key ) {
+		foreach ( array( 'html' => 'file', 'css' => 'url', 'js' => 'url' ) as $key => $value_to_store ) {
 			$assets_api_url = apply_filters( 'wc_naguro_assets_api_endpoint_url', 'http://api.naguro.com:5000/' );
 			$contents = file_get_contents( $assets_api_url . $data[$key] );
 			$file = $this->save_file_to_disk( $data['hash'], $key, $contents );
-			$store_array[$key] = $file['file'];
+			$store_array[$key] = $file[ $value_to_store ];
 		}
 
 		update_option( 'naguro_editor_' . $data['hash'], $store_array );
