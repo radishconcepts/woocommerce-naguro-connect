@@ -35,7 +35,7 @@ class WC_Naguro_Editor_Manager {
 		$params['version'] = '1.1';
 		$params['theme'] = 'standard';
 		$params['language'] = 'en_GB';
-		$params['callback'] = home_url();
+		$params['callback'] = home_url('naguro-editor/download');
 		$hash = $this->generate_editor_hash($params);
 
 		if ( ! $this->does_editor_exist($hash)) {
