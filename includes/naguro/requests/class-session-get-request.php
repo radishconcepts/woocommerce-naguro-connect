@@ -30,6 +30,32 @@ class Naguro_Session_Get_Request extends Naguro_Request {
 				'sort_order' => $i,
 			);
 
+			$settings = get_option( 'naguro_settings' );
+			$dimension = $settings['dimension_unit'];
+
+			$calulator = new WC_Size_Calculator();
+			$src_width = 0;
+			$src_height = 0;
+
+			switch( $dimension ) {
+				case 'yard':
+					$src_width = $calulator->yard_to_px($design_area['output_width']);
+					$src_height = $calulator->yard_to_px($design_area['output_height']);
+					break;
+				case 'cm':
+					$src_width = $calulator->cm_to_px($design_area['output_width']);
+					$src_height = $calulator->cm_to_px($design_area['output_height']);
+					break;
+				case 'inch':
+					$src_width = $calulator->cm_to_px($design_area['output_width']);
+					$src_height = $calulator->cm_to_px($design_area['output_height']);
+					break;
+				default: // mm
+					$src_width = $calulator->mm_to_px($design_area['output_width']);
+					$src_height = $calulator->mm_to_px($design_area['output_height']);
+					break;
+			}
+
 			$subtypes_array[] = array(
 				'product_subtype_id' => $i,
 				'product_design_area_id' => $i,
@@ -38,8 +64,8 @@ class Naguro_Session_Get_Request extends Naguro_Request {
 				'output_height' => $design_area['output_height'],
 				'print_width' => $design_area['print_width'],
 				'print_height' => $design_area['print_height'],
-				'src_width' => $design_area['src_width'],
-				'src_height' => $design_area['src_height'],
+				'src_width' => $src_width,
+				'src_height' => $src_height,
 				'left' => $design_area['left'],
 				'top' => $design_area['top'],
 				'size_description' => $design_area['size_description'],
