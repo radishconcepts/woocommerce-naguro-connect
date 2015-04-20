@@ -23,6 +23,7 @@ class WC_Naguro {
 
 		add_action( 'naguro_api_handler_class', array( $this, 'api_handler_class' ), 10, 0 );
 
+		new WC_Naguro_Downloader();
 		new Naguro_Modules_Loader();
 		new Naguro_WordPress_Menu();
 		new Naguro_WordPress_Settings_Init();
@@ -38,6 +39,7 @@ class WC_Naguro {
 	 */
 	private function admin_init() {
 		new WC_Naguro_Order_Admin();
+		new WC_Naguro_Editor_Manager();
 
 		$this->product_data_meta_box = new WC_Naguro_Product_Meta_Box();
 		add_action( 'save_post', array( $this->product_data_meta_box, 'save' ), 10, 1 );

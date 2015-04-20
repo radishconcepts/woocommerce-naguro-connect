@@ -2,7 +2,7 @@
 
 class WC_Naguro_Overlay {
 	function __construct() {
-		add_action("naguro_woocommerce_before_printable_area_button", array($this, "add_design_area_overlay_upload"));
+		add_action("naguro_woocommerce_before_printable_area_button", array($this, "add_design_area_overlay_upload"), 10, 2);
 		add_action("naguro_woocommerce_after_printable_area_image", array($this, "add_overlay_image"));
 
 		add_filter("naguro_woocommerce_design_area_data", array($this, "handle_design_area_data"));
