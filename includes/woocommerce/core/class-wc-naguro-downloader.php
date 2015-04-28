@@ -32,7 +32,7 @@ class WC_Naguro_Downloader {
 		foreach ( $type_arr as $key => $value_to_store ) {
 			$assets_api_url = apply_filters( 'wc_naguro_assets_api_endpoint_url', 'http://api.naguro.com/' );
 			$file_url = $assets_api_url . $data[$key];
-			$temp_file = download_url( $file_url );
+			$temp_file = download_url( $file_url, 600 );
 
 			// array based on $_FILE as seen in PHP file uploads
 			$file = array(
