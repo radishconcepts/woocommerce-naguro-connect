@@ -24,6 +24,9 @@ class Naguro_Session_Get_Request extends Naguro_Request {
 			$image_src = wp_get_attachment_image_src( $design_area['product_image_id'], 'full' );
 			$image_src = $image_src[0];
 
+			$overlay_src = wp_get_attachment_image_src( $design_area['product_overlay_id'], 'full' );
+			$overlay_src = $overlay_src[0];
+
 			$design_areas_array[] = array(
 				'product_design_area_id' => $i,
 				'name' => $design_area['name'],
@@ -70,7 +73,7 @@ class Naguro_Session_Get_Request extends Naguro_Request {
 				'top' => $design_area['top'],
 				'size_description' => $design_area['size_description'],
 				'image_src' => $image_src,
-				'overlay_src' => '',
+				'overlay_src' => $overlay_src,
 			);
 
 			$i++;
