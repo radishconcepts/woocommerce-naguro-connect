@@ -5,7 +5,8 @@
             randomizeId(copy);
             copy.appendTo($(".naguro-design-areas-container"));
 
-            bind_image_chosen($("input[type=file]", copy));
+            bind_image_chosen($(".naguro-design-area input[type=file][name*='[image]']"), copy);
+            bind_overlay_chosen($(".naguro-design-area input[type=file][name*='[overlay]']"), copy);
             bind_remove_row($(".remove_row", copy));
 
             bind_edit_area($(".naguro-define-image-area", copy));
@@ -14,8 +15,8 @@
             activate_uploads($(".naguro-upload", copy));
         });
 
-        bind_image_chosen($(".naguro-design-area input[type=file][name*=image]"));
-        bind_overlay_chosen($(".naguro-design-area input[type=file][name*=overlay]"));
+        bind_image_chosen($(".naguro-design-area input[type=file][name*='[image]']"));
+        bind_overlay_chosen($(".naguro-design-area input[type=file][name*='[overlay]']"));
         bind_remove_row($(".naguro-design-area .remove_row"));
 
         bind_edit_area($(".naguro-design-area .naguro-define-image-area"));
@@ -78,10 +79,14 @@
         var rand = Math.floor((Math.random() * 89999) + 1);
 
         element.find(".naguro_designarea_upload_key").val(rand);
-        element.find("input[type=file]").attr({
+        element.find("input[type=file][name*='[image]']").attr({
             name: "naguro_designarea[image][" + rand + "]",
             id: "naguro_designarea[image][" + rand + "]"
         });
+		element.find("input[type=file][name*='[overlay]']").attr({
+			name: "naguro_designarea[overlay][" + rand + "]",
+			id: "naguro_designarea[overlay][" + rand + "]"
+		});
         element.find(".naguro-define-image-area").attr("data-id", rand);
         element.find(".naguro-printable-product").attr("id", rand);
     }
