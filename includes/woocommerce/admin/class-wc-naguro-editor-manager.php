@@ -2,7 +2,7 @@
 
 class WC_Naguro_Editor_Manager {
 	public function __construct() {
-		add_action( 'save_post', array( $this, 'save_post' ) );
+		add_action( 'save_post', array( $this, 'save_post' ), 11, 1 );
 		add_action( 'post_submitbox_misc_actions', array( $this, 'product_data_visibility' ) );
 	}
 

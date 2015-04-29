@@ -295,8 +295,8 @@ class WC_Naguro_Product_Meta_Box {
 
 		foreach ( $files as $key => $file ) {
 			foreach( $file_keys as $file_key ) {
-				if ( 0 == $file[$file_key]['size'] && 4 == $file[$file_key]['error'] ) {
-					unset( $files[ $key ] );
+				if ( isset( $file[$file_key] ) && 0 == $file[$file_key]['size'] && 4 == $file[$file_key]['error'] ) {
+					unset( $files[ $key ][$file_key] );
 				}
 			}
 		}
@@ -305,11 +305,13 @@ class WC_Naguro_Product_Meta_Box {
 		$image_ids = array();
 		foreach ( $files as $key => $file ) {
 			foreach( $file_keys as $file_key ) {
-				if ( empty( $file[$file_key]['name'] ) && 4 == $file[$file_key]['error'] ) {
-					$image_ids[$file_key][$key] = 0;
-				} else {
-					$_FILES[ 'naguro_designarea_' . $i ] = $file[$file_key];
-					$image_ids[$file_key][$key] = media_handle_upload( 'naguro_designarea_' . $i, $post_id );
+				if ( isset( $file[$file_key] ) ) {
+					if ( empty( $file[ $file_key ]['name'] ) && 4 == $file[ $file_key ]['error'] ) {
+						$image_ids[ $file_key ][ $key ] = 0;
+					} else {
+						$_FILES[ 'naguro_designarea_' . $i ] = $file[ $file_key ];
+						$image_ids[ $file_key ][ $key ]      = media_handle_upload( 'naguro_designarea_' . $i, $post_id );
+					}
 				}
 				$i++;
 			}
