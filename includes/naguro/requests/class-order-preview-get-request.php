@@ -5,19 +5,21 @@ class Naguro_Order_Preview_Get_Request extends Naguro_Request {
 		$session = new Naguro_Session_Model( $this->params['session'] );
 		$design_areas = get_post_meta( $session->get('product_id'), 'naguro_design_area' );
 
+		$options = get_option('naguro_settings');
+		$dimension_unit = isset( $options['dimension_unit'] ) ? $options['dimension_unit'] : get_option('woocommerce_dimension_unit');
+		$dpi = isset( $options['dpi'] ) ? intval( $options['dpi'] ) : 300;
+
 		foreach ( $_POST['data'] as $key => $subtype ) {
 			if ( isset( $subtype['layers'] ) ) {
 				foreach ( $subtype['layers'] as $layer_key => $layer ) {
 					if ( 'image' == $layer['type'] ) {
 						$image_src = wp_get_attachment_image_src( $layer['image_id'], 'full' );
 						$this->params['data'][$key]['layers'][$layer_key]['image_src'] = base64_encode(file_get_contents($image_src[0]));
+						$this->params['data'][$key]['dpi'] = $dpi;
 					}
 				}
 			}
 		}
-
-		$options = get_option('naguro_settings');
-		$dimension_unit = isset( $options['dimension_unit'] ) ? $options['dimension_unit'] : get_option('woocommerce_dimension_unit');
 
 		$this->params['design_area_array'] = array();
 		foreach ( $design_areas as $key => $design_area ) {
