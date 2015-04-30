@@ -14,7 +14,7 @@ class Naguro_Order_Preview_Get_Request extends Naguro_Request {
 				foreach ( $subtype['layers'] as $layer_key => $layer ) {
 					if ( 'image' == $layer['type'] ) {
 						$image_src = wp_get_attachment_image_src( $layer['image_id'], 'full' );
-						$this->params['data'][$key]['layers'][$layer_key]['image_src'] = base64_encode(file_get_contents($image_src[0]));
+						$this->params['data'][$key]['layers'][$layer_key]['image_src'] = $image_src[0];
 						$this->params['data'][$key]['dpi'] = $dpi;
 					}
 				}
