@@ -38,7 +38,9 @@ class Naguro_Order_Preview_Get_Request extends Naguro_Request {
 			);
 		}
 
-		$this->handler->handle_request('order-preview', $this->params, 'post' );
+		$request_params['timeout'] = 30;
+
+		$this->handler->handle_request('order-preview', $this->params, 'post', $request_params );
 		$data = $this->handler->get_data();
 		$output_array = array();
 
