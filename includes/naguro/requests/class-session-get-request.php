@@ -71,7 +71,7 @@ class Naguro_Session_Get_Request extends Naguro_Request {
 				'src_height' => $src_height,
 				'left' => $design_area['left'],
 				'top' => $design_area['top'],
-				'size_description' => $design_area['size_description'],
+				'size_description' => $design_area['size_description'] . ' ('.$src_width.' x '. $src_height . ' px)',
 				'image_src' => $image_src,
 				'overlay_src' => $overlay_src,
 			);
