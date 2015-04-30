@@ -1,9 +1,13 @@
 <?php
 
 class WC_Size_Calculator {
-	private $dpi = 300;
+	private $dpi;
 	private $cm_to_in_conversion = 0.393700787; // 1cm = 0.393700787 inches
 	private $yard_to_in_conversion = 36; // 1 yard = 36 inches
+
+	public function __construct( $dpi = 300 ) {
+		$this->dpi = intval( $dpi );
+	}
 
 	public function cm_to_px( $cm ) {
 		$inch = $this->cm_to_in( $cm );
