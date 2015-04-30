@@ -38,8 +38,6 @@ class Naguro_Session_Get_Request extends Naguro_Request {
 			$dpi = isset( $settings['dpi'] ) ? intval( $settings['dpi'] ) : 300;
 
 			$calulator = new WC_Size_Calculator( $dpi );
-			$src_width = 0;
-			$src_height = 0;
 
 			switch( $dimension ) {
 				case 'yard':
