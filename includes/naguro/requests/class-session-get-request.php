@@ -1,6 +1,6 @@
 <?php
 
-class WC_Naguro_Session_Get_Request extends Naguro_Request {
+class Naguro_Session_Get_Request extends Naguro_Request {
 	private function get_product() {
 		return wc_get_product( $this->session->get('product_id'));
 	}
@@ -24,11 +24,39 @@ class WC_Naguro_Session_Get_Request extends Naguro_Request {
 			$image_src = wp_get_attachment_image_src( $design_area['product_image_id'], 'full' );
 			$image_src = $image_src[0];
 
+			$overlay_src = wp_get_attachment_image_src( $design_area['product_overlay_id'], 'full' );
+			$overlay_src = $overlay_src[0];
+
 			$design_areas_array[] = array(
 				'product_design_area_id' => $i,
 				'name' => $design_area['name'],
 				'sort_order' => $i,
 			);
+
+			$settings = get_option( 'naguro_settings' );
+			$dimension = $settings['dimension_unit'];
+			$dpi = isset( $settings['dpi'] ) ? intval( $settings['dpi'] ) : 300;
+
+			$calulator = new WC_Size_Calculator( $dpi );
+
+			switch( $dimension ) {
+				case 'yard':
+					$src_width = $calulator->yard_to_px($design_area['output_width']);
+					$src_height = $calulator->yard_to_px($design_area['output_height']);
+					break;
+				case 'cm':
+					$src_width = $calulator->cm_to_px($design_area['output_width']);
+					$src_height = $calulator->cm_to_px($design_area['output_height']);
+					break;
+				case 'inch':
+					$src_width = $calulator->cm_to_px($design_area['output_width']);
+					$src_height = $calulator->cm_to_px($design_area['output_height']);
+					break;
+				default: // mm
+					$src_width = $calulator->mm_to_px($design_area['output_width']);
+					$src_height = $calulator->mm_to_px($design_area['output_height']);
+					break;
+			}
 
 			$subtypes_array[] = array(
 				'product_subtype_id' => $i,
@@ -38,11 +66,13 @@ class WC_Naguro_Session_Get_Request extends Naguro_Request {
 				'output_height' => $design_area['output_height'],
 				'print_width' => $design_area['print_width'],
 				'print_height' => $design_area['print_height'],
+				'src_width' => $src_width,
+				'src_height' => $src_height,
 				'left' => $design_area['left'],
 				'top' => $design_area['top'],
-				'size_description' => $design_area['size_description'],
+				'size_description' => $design_area['size_description'] . ' ('.$src_width.' x '. $src_height . ' px)',
 				'image_src' => $image_src,
-				'overlay_src' => '',
+				'overlay_src' => $overlay_src,
 			);
 
 			$i++;

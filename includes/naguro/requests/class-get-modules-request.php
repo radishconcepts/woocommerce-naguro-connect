@@ -1,8 +1,8 @@
 <?php
 
-class Naguro_Activate_Key_Request extends Naguro_Request {
+class Naguro_Get_Modules_Request extends Naguro_Request {
 	public function do_request() {
-		$this->handler->handle_request( 'key/activate', $this->params, 'post' );
+		$this->handler->handle_request( 'modules', $this->params, 'get' );
 		return $this->handler->get_data();
 	}
 

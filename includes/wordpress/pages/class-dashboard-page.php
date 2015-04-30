@@ -1,6 +1,6 @@
 <?php
 
-class Naguro_WordPress_Dashboard extends Abstract_Naguro_WordPress_Settings_Page {
+class Naguro_Dashboard_Page extends Abstract_Naguro_WordPress_Settings_Page {
 	private $errors = array();
 
 	public function __construct() {
