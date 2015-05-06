@@ -6,6 +6,8 @@ This repository uses [Semantic Versioning 2.0.0](http://semver.org/). We maintai
 
 * Version 1.1.x on branch [release-1.1](https://github.com/radishconcepts/woocommerce-naguro-connect/tree/release-1.1)
 
+The master branch always contains the next minor (feature), or major release. At this moment, that is 1.2.0. Note that the master branch doesn't always have to contain a working version, this is our main development branch for future versions.
+
 Please report the version you are working on in any issues you might report and target the correct branch for any pull requests. If you want to provide a bug fix, please target it to the lowest maintenance branch that is still maintained.
 
 ### Unmaintained versions
