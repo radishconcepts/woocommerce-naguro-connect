@@ -39,6 +39,9 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 
 == Changelog ==
 
+= 1.1.1 - xx/xx/xxxx =
+* Fix: Request trial key error resolved
+
 = 1.1.0 =
 * Support for modules to be installed via the new settings panel
 * Added overlay module
