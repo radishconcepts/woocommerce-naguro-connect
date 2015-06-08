@@ -24,8 +24,12 @@ class Naguro_Session_Get_Request extends Naguro_Request {
 			$image_src = wp_get_attachment_image_src( $design_area['product_image_id'], 'full' );
 			$image_src = $image_src[0];
 
-			$overlay_src = wp_get_attachment_image_src( $design_area['product_overlay_id'], 'full' );
-			$overlay_src = $overlay_src[0];
+			$overlay_src = '';
+
+			if ( isset( $design_area['product_overlay_id'] ) ) {
+				$overlay_src = wp_get_attachment_image_src( $design_area['product_overlay_id'], 'full' );
+				$overlay_src = $overlay_src[0];
+			}
 
 			$design_areas_array[] = array(
 				'product_design_area_id' => $i,
