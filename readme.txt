@@ -39,6 +39,10 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 
 == Changelog ==
 
+= 1.1.2 - 08/06/2015 =
+* Fix: Fixed default return value on the naguro_woocommerce_filter_save_image filter
+* Fix: Fixed notice in session get request when overlay is not used
+
 = 1.1.1 - 06/05/2015 =
 * Fix: Request trial key error resolved
 
