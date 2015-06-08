@@ -366,7 +366,7 @@ class WC_Naguro_Product_Meta_Box {
 				$design_area['product_image_id'] = $image_id;
 			}
 
-			$design_area = apply_filters("naguro_woocommerce_filter_save_image", array($design_area, $image_ids));
+			$design_area = apply_filters( "naguro_woocommerce_filter_save_image", $design_area, $image_ids );
 
 			add_post_meta( $post_id, 'naguro_design_area', $design_area, false );
 		}
