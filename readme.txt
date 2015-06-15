@@ -40,6 +40,7 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 == Changelog ==
 
 = 1.1.3 - xx/xx/xxxx =
+* Fix: Prevent warning related to parameters on saving product with Naguro overlay enabled
 
 = 1.1.2 - 08/06/2015 =
 * Fix: Fixed default return value on the naguro_woocommerce_filter_save_image filter
