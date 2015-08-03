@@ -377,7 +377,8 @@ class WC_Naguro_Product_Meta_Box {
 	}
 
 	static function upload_field($name, $label, $description, $file_id, $hidden_name) {
-		$image_src = wp_get_attachment_image_src( $file_id, 'full' )[0];
+		$image_src = wp_get_attachment_image_src( $file_id, 'full' );
+		$image_src = $image_src[0];
 		$filename = basename($image_src);
 
 		?>
