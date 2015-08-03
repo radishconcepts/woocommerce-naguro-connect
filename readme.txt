@@ -39,8 +39,9 @@ You can find extensive documentation on [how to install plugins](http://codex.wo
 
 == Changelog ==
 
-= 1.1.3 - xx/xx/xxxx =
+= 1.1.3 - 03/08/2015 =
 * Fix: Prevent warning related to parameters on saving product with Naguro overlay enabled
+* Fix: Prevent errors in < PHP 5.4 in regards to array dereferencing in meta boxes
 
 = 1.1.2 - 08/06/2015 =
 * Fix: Fixed default return value on the naguro_woocommerce_filter_save_image filter
