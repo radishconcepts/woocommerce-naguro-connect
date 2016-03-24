@@ -17,14 +17,22 @@ class Naguro_Modules_Page extends Abstract_Naguro_WordPress_Settings_Page {
 		echo '<h3>Unlocked modules</h3>';
 		$list = new Naguro_Modules_List();
 		$list->prepare_items();
-		$list->items = Naguro_Modules_Repository::get_unlocked_modules();
+		try {
+			$list->items = Naguro_Modules_Repository::get_unlocked_modules();
+		} catch ( Exception $e ) {
+			echo '<b>Caught exception</b>: ', $e->getMessage(), "<br />\n";
+		}
 		$list->display();
 
 		echo '<h3>Available modules</h3>';
 		echo '<p>These modules have not yet been unlocked. You can unlock them via your account on the Naguro website.</p>';
 		$list = new Naguro_Modules_List();
 		$list->prepare_items();
-		$list->items = Naguro_Modules_Repository::get_locked_modules();
+		try {
+			$list->items = Naguro_Modules_Repository::get_locked_modules();
+		} catch ( Exception $e ) {
+			echo '<b>Caught exception</b>: ', $e->getMessage(), "<br />\n";
+		}
 		$list->display();
 	}
 

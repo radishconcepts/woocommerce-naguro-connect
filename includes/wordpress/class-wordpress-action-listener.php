@@ -20,7 +20,11 @@ class Naguro_WordPress_Action_Listener {
 			return;
 		}
 
-		$module = Naguro_Modules_Repository::get_module_by_slug( $_GET['naguro-module'] );
+		try {
+			$module = Naguro_Modules_Repository::get_module_by_slug( $_GET['naguro-module'] );
+		} catch ( Exception $e ) {
+			echo '<b>Caught exception</b>: ', $e->getMessage(), "<br />\n";
+		}
 
 		if ( false === $module ) {
 			return;
@@ -36,7 +40,11 @@ class Naguro_WordPress_Action_Listener {
 			return;
 		}
 
-		$module = Naguro_Modules_Repository::get_module_by_slug( $_GET['naguro-module'] );
+		try {
+			$module = Naguro_Modules_Repository::get_module_by_slug( $_GET['naguro-module'] );
+		} catch ( Exception $e ) {
+			echo '<b>Caught exception</b>: ', $e->getMessage(), "<br />\n";
+		}
 
 		if ( false === $module ) {
 			return;

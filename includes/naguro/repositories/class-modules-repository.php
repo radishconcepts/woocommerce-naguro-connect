@@ -7,7 +7,11 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	 * @return Naguro_Module_Model
 	 */
 	public static function get_module_by_slug( $slug ) {
-		$modules = self::get_modules();
+		$modules = self::get_modules_and_check_for_exceptions();
+
+		if ( ! isset ( $modules ) ) {
+			throw new Naguro_Module_Not_Found( 'Module not found by slug: ' . $slug );
+		}
 
 		foreach ( $modules as $key => $module ) {
 			if ( $module->slug === $slug ) {
@@ -19,7 +23,11 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	}
 
 	public static function get_active_modules() {
-		$modules = self::get_modules();
+		$modules = self::get_modules_and_check_for_exceptions();
+
+		if ( ! isset ( $modules ) ) {
+			throw new Naguro_Module_Not_Found( 'Active modules not found' );
+		}
 
 		foreach ( $modules as $key => $module ) {
 			if ( ! $module->active ) {
@@ -31,7 +39,11 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	}
 
 	public static function get_locked_modules() {
-		$modules = self::get_modules();
+		$modules = self::get_modules_and_check_for_exceptions();
+
+		if ( ! isset ( $modules ) ) {
+			throw new Naguro_Module_Not_Found( 'Locked modules not found' );
+		}
 
 		foreach ( $modules as $key => $module ) {
 			if ( $module->unlocked ) {
@@ -43,7 +55,11 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	}
 
 	public static function get_unlocked_modules() {
-		$modules = self::get_modules();
+		$modules = self::get_modules_and_check_for_exceptions();
+
+		if ( ! isset ( $modules ) ) {
+			throw new Naguro_Module_Not_Found( 'Unlocked modules not found' );
+		}
 
 		foreach ( $modules as $key => $module ) {
 			if ( ! $module->unlocked ) {
@@ -72,6 +88,11 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 
 		$request = new Naguro_Get_Modules_Request( array() );
 		$modules = $request->do_request();
+
+		if ( true === is_wp_error( $modules ) ) {
+			throw new Naguro_API_Connection_Error( 'Can not connect to the API' );
+		}
+
 		$modules = json_decode($modules['body']);
 
 		$module_map = array(
@@ -103,5 +124,15 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 		set_transient( 'naguro_modules', $module_array, DAY_IN_SECONDS );
 
 		return $module_array;
+	}
+
+	private function get_modules_and_check_for_exceptions() {
+		try {
+			$modules = self::get_modules();
+			return $modules;
+
+		} catch ( Exception $e ) {
+			echo '<b>Caught exception</b>: ', $e->getMessage(), "<br />\n";
+		}
 	}
 }
