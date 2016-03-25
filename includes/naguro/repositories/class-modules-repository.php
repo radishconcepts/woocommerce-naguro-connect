@@ -7,10 +7,12 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	 * @return Naguro_Module_Model
 	 */
 	public static function get_module_by_slug( $slug ) {
-		$modules = self::get_modules_and_check_for_exceptions();
-
-		if ( ! isset ( $modules ) ) {
-			throw new Naguro_Module_Not_Found( 'Module not found by slug: ' . $slug );
+		try {
+			$modules = self::get_modules_and_check_for_exceptions();
+		} catch ( Exception $e ) {
+			$message = $e->getMessage() . ' - ' . 
+				'Module not found by slug: ' . $slug;			
+			throw new Naguro_Module_Not_Found( $message );
 		}
 
 		foreach ( $modules as $key => $module ) {
@@ -23,10 +25,11 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	}
 
 	public static function get_active_modules() {
-		$modules = self::get_modules_and_check_for_exceptions();
-
-		if ( ! isset ( $modules ) ) {
-			throw new Naguro_Module_Not_Found( 'Active modules not found' );
+		try {
+			$modules = self::get_modules_and_check_for_exceptions();
+		} catch ( Exception $e ) {
+			$message = $e->getMessage() . ' - ' .  'Active modules not found'; 
+			throw new Naguro_Module_Not_Found( $message );
 		}
 
 		foreach ( $modules as $key => $module ) {
@@ -39,10 +42,11 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	}
 
 	public static function get_locked_modules() {
-		$modules = self::get_modules_and_check_for_exceptions();
-
-		if ( ! isset ( $modules ) ) {
-			throw new Naguro_Module_Not_Found( 'Locked modules not found' );
+		try {
+			$modules = self::get_modules_and_check_for_exceptions();
+		} catch ( Exception $e ) {
+			$message = $e->getMessage() . ' - ' .  'Locked modules not found'; 
+			throw new Naguro_Module_Not_Found( $message );
 		}
 
 		foreach ( $modules as $key => $module ) {
@@ -55,10 +59,11 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 	}
 
 	public static function get_unlocked_modules() {
-		$modules = self::get_modules_and_check_for_exceptions();
-
-		if ( ! isset ( $modules ) ) {
-			throw new Naguro_Module_Not_Found( 'Unlocked modules not found' );
+		try {
+			$modules = self::get_modules_and_check_for_exceptions();
+		} catch ( Exception $e ) {
+			$message = $e->getMessage() . ' - ' .  'Unlocked modules not found'; 
+			throw new Naguro_Module_Not_Found( $message );
 		}
 
 		foreach ( $modules as $key => $module ) {
@@ -132,7 +137,8 @@ class Naguro_Modules_Repository extends Naguro_Repository {
 			return $modules;
 
 		} catch ( Exception $e ) {
-			echo '<b>Caught exception</b>: ', $e->getMessage(), "<br />\n";
+			$message = $e->getMessage() . ' - ' . 'Modules not found';
+			throw new Naguro_Module_Not_Found( $message );
 		}
 	}
 }
